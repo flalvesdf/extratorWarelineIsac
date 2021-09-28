@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
-
+@EnableScheduling
 //@ComponentScan(basePackages = {"br.org.isac.extrator.extratorWarelineIsac"})
 //@SpringBootApplication(scanBasePackages= {"br.org.isac.extrator.extratorWarelineIsac.mysql.repository","br.org.isac.extrator.extratorWarelineIsac.postgre.repository"})
 public class ExtratorWarelineIsacApplication {
