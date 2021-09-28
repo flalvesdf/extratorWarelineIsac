@@ -2,5 +2,34 @@
 	<head></head>
 	<body>
 		<p>Extrator Wareline - ISAC</p>
+		
+		
+		<span th:unless="${#lists.isEmpty(cads)}">
+			<div class="table-responsive">
+								                                <table class="table table-hover" id="dataTable2" >
+								                                    <thead style="background-color: #4E73DF;color: white;">
+								                                        <tr> 
+	 							                                        		<th>Quando</th> 
+	 							                                            <th>Compromisso</th>
+	 							                                            <th>Tipo</th>
+	 							                                         </tr>   
+	
+								                                    </thead>
+								
+								                                    <tbody>
+									                            		<tr th:each="comp : ${cads}">
+									                            			<td width="20%" align="left" th:text="comp.codprest">
+									                            			</td>
+									                            			<td width="40%" align="left" th:text="comp.datnasfunc">
+									                            			</td>
+									                            			<td width="20%" align="left" th:text="comp.sexofunc">
+									                            			</td>
+									                            		</tr>
+									                            	</tbody>	
+								                                </table>
+								                                    
+								                                </div>
+		
+		</span>
 	</body>
 </html>
