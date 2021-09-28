@@ -1,4 +1,4 @@
-package br.org.isac.extrator.extratorWarelineIsac.app.domain;
+package br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "cadfunc")
-public class CadFunc {
+public class CadFuncPostGre {
 	
 	@Id
 	@Column(name="codprest")
