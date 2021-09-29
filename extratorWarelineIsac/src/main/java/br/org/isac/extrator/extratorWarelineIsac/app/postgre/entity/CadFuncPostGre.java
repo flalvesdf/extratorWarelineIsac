@@ -1,5 +1,7 @@
 package br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,6 +26,129 @@ public class CadFuncPostGre {
 	
 	@Column(name="enderfunc")
 	private String enderfunc;
+	
+	@Column(name="cepfunc")
+	private String cepfunc;
+	
+	@Column(name="bairrofunc")
+	private String bairrofunc;
+	
+	@Column(name="cidadefunc")
+	private String cidadefunc;
+	
+	@Column(name="uffunc")
+	private String uffunc;
+	
+	@Column(name="cidnasfunc")
+	private String cidnasfunc;
+	
+	@Column(name="ufnasfunc")
+	private String ufnasfunc;
+	
+	@Column(name="nacnasfunc")
+	private String nacnasfunc;
+	
+	@Column(name="datentfunc")
+	private Date datentfunc;
+	
+	@Column(name="fonefunc")
+	private String fonefunc;
+	
+	@Column(name="faxfunc")
+	private String faxfunc;
+	
+	@Column(name="celfunc")
+	private String celfunc;
+	
+	@Column(name="bipfunc")
+	private String bipfunc;
+	
+	@Column(name="emailfunc")
+	private String emailfunc;
+	
+	@Column(name="paifunc")
+	private String paifunc;
+	
+	@Column(name="maefunc")
+	private String maefunc;
+	
+	@Column(name="conjfunc")
+	private String conjfunc;
+	
+	@Column(name="rgfunc")
+	private String rgfunc;
+	
+	@Column(name="ufrgfunc")
+	private String ufrgfunc;
+	
+	@Column(name="orgrgfunc")
+	private String orgrgfunc;
+	
+	@Column(name="datargfunc")
+	private Date datargfunc;
+	
+	@Column(name="tipcerfunc")
+	private String tipcerfunc;
+	
+	@Column(name="cartofunc")
+	private String cartofunc;
+	
+	@Column(name="livrofunc")
+	private String livrofunc;
+	
+	@Column(name="flsfunc")
+	private String flsfunc;
+	
+	@Column(name="termofunc")
+	private String termofunc;
+	
+	@Column(name="datcerfunc")
+	private Date datcerfunc;
+	
+	@Column(name="cpffunc")
+	private String cpffunc;
+	
+	@Column(name="pisfunc")
+	private String pisfunc;
+
+	@Column(name="corfunc")
+	private String corfunc;
+	
+	@Column(name="cartrafunc")
+	private String cartrafunc;
+	
+	@Column(name="corpocli")
+	private String corpocli;
+	
+	@Column(name="guerrafunc")
+	private String guerrafunc;
+	
+	@Column(name="emirgfunc")
+	private String emirgfunc;
+	
+	@Column(name="numdepend")
+	private Integer numdepend;
+	
+	@Column(name="tipologrfu")
+	private String tipologrfu;
+	
+	@Column(name="lografu")
+	private String lografu;
+	
+	@Column(name="numlogrfu")
+	private String numlogrfu;
+	
+	@Column(name="complefu")
+	private String complefu;
+	
+	@Column(name="ibgefu")
+	private String ibgefu;
+	
+	@Column(name="email2func")
+	private String email2func;
+	
+	@Column(name="serietrfunc")
+	private String serietrfunc;
 
 	public String getCodprest() {
 		return codprest;
@@ -64,62 +189,332 @@ public class CadFuncPostGre {
 	public void setEnderfunc(String enderfunc) {
 		this.enderfunc = enderfunc;
 	}
-	
-	
-	
-//	CREATE TABLE "PACIENTE".cadfunc
-//	(
-//	  codprest character varying(6) NOT NULL,
-//	  datnasfunc date NOT NULL,
-//	  sexofunc character varying(1) NOT NULL,
-//	  estcivfunc character varying(1) NOT NULL,
-//	  enderfunc character varying(70) NOT NULL,
-//	  cepfunc character varying(8) NOT NULL,
-//	  bairrofunc character varying(30),
-//	  cidadefunc character varying(30) NOT NULL,
-//	  uffunc character varying(2) NOT NULL,
-//	  cidnasfunc character varying(30) NOT NULL,
-//	  ufnasfunc character varying(2) NOT NULL,
-//	  nacnasfunc character varying(10) NOT NULL,
-//	  datentfunc date,
-//	  fonefunc character varying(15),
-//	  faxfunc character varying(15),
-//	  celfunc character varying(15),
-//	  bipfunc character varying(15),
-//	  emailfunc character varying(100),
-//	  paifunc character varying(50),
-//	  maefunc character varying(50),
-//	  conjfunc character varying(50),
-//	  rgfunc character varying(15),
-//	  ufrgfunc character varying(2),
-//	  orgrgfunc character varying(2),
-//	  datargfunc date,
-//	  tipcerfunc character varying(1),
-//	  cartofunc character varying(20),
-//	  livrofunc character varying(8),
-//	  flsfunc character varying(4),
-//	  termofunc character varying(8),
-//	  datcerfunc date,
-//	  cpffunc character varying(11),
-//	  pisfunc character varying(11),
-//	  corfunc character varying(1),
-//	  cartrafunc character varying(15),
-//	  corpocli character varying(1) DEFAULT 'N'::character varying,
-//	  guerrafunc character varying(15),
-//	  emirgfunc character varying(10),
-//	  numdepend numeric(2,0),
-//	  tipologrfu character varying(10),
-//	  lografu character varying(40),
-//	  numlogrfu character varying(7),
-//	  complefu character varying(15),
-//	  ibgefu character varying(6),
-//	  email2func character varying(100),
-//	  serietrfunc character varying(10),
-//	  CONSTRAINT cadfunc_codprest_pk PRIMARY KEY (codprest),
-//	  CONSTRAINT cadfunc_codprest_fk FOREIGN KEY (codprest)
-//	      REFERENCES "PACIENTE".cadprest (codprest) MATCH SIMPLE
-//	      ON UPDATE NO ACTION ON DELETE CASCADE,
-//	  CONSTRAINT cadfunc_cpffunc_uk UNIQUE (cpffunc)
-//	)
 
+	public String getCepfunc() {
+		return cepfunc;
+	}
+
+	public void setCepfunc(String cepfunc) {
+		this.cepfunc = cepfunc;
+	}
+
+	public String getBairrofunc() {
+		return bairrofunc;
+	}
+
+	public void setBairrofunc(String bairrofunc) {
+		this.bairrofunc = bairrofunc;
+	}
+
+	public String getCidadefunc() {
+		return cidadefunc;
+	}
+
+	public void setCidadefunc(String cidadefunc) {
+		this.cidadefunc = cidadefunc;
+	}
+
+	public String getUffunc() {
+		return uffunc;
+	}
+
+	public void setUffunc(String uffunc) {
+		this.uffunc = uffunc;
+	}
+
+	public String getCidnasfunc() {
+		return cidnasfunc;
+	}
+
+	public void setCidnasfunc(String cidnasfunc) {
+		this.cidnasfunc = cidnasfunc;
+	}
+
+	public String getUfnasfunc() {
+		return ufnasfunc;
+	}
+
+	public void setUfnasfunc(String ufnasfunc) {
+		this.ufnasfunc = ufnasfunc;
+	}
+
+	public String getNacnasfunc() {
+		return nacnasfunc;
+	}
+
+	public void setNacnasfunc(String nacnasfunc) {
+		this.nacnasfunc = nacnasfunc;
+	}
+
+	public Date getDatentfunc() {
+		return datentfunc;
+	}
+
+	public void setDatentfunc(Date datentfunc) {
+		this.datentfunc = datentfunc;
+	}
+
+	public String getFonefunc() {
+		return fonefunc;
+	}
+
+	public void setFonefunc(String fonefunc) {
+		this.fonefunc = fonefunc;
+	}
+
+	public String getFaxfunc() {
+		return faxfunc;
+	}
+
+	public void setFaxfunc(String faxfunc) {
+		this.faxfunc = faxfunc;
+	}
+
+	public String getCelfunc() {
+		return celfunc;
+	}
+
+	public void setCelfunc(String celfunc) {
+		this.celfunc = celfunc;
+	}
+
+	public String getBipfunc() {
+		return bipfunc;
+	}
+
+	public void setBipfunc(String bipfunc) {
+		this.bipfunc = bipfunc;
+	}
+
+	public String getEmailfunc() {
+		return emailfunc;
+	}
+
+	public void setEmailfunc(String emailfunc) {
+		this.emailfunc = emailfunc;
+	}
+
+	public String getPaifunc() {
+		return paifunc;
+	}
+
+	public void setPaifunc(String paifunc) {
+		this.paifunc = paifunc;
+	}
+
+	public String getMaefunc() {
+		return maefunc;
+	}
+
+	public void setMaefunc(String maefunc) {
+		this.maefunc = maefunc;
+	}
+
+	public String getConjfunc() {
+		return conjfunc;
+	}
+
+	public void setConjfunc(String conjfunc) {
+		this.conjfunc = conjfunc;
+	}
+
+	public String getRgfunc() {
+		return rgfunc;
+	}
+
+	public void setRgfunc(String rgfunc) {
+		this.rgfunc = rgfunc;
+	}
+
+	public String getUfrgfunc() {
+		return ufrgfunc;
+	}
+
+	public void setUfrgfunc(String ufrgfunc) {
+		this.ufrgfunc = ufrgfunc;
+	}
+
+	public String getOrgrgfunc() {
+		return orgrgfunc;
+	}
+
+	public void setOrgrgfunc(String orgrgfunc) {
+		this.orgrgfunc = orgrgfunc;
+	}
+
+	public Date getDatargfunc() {
+		return datargfunc;
+	}
+
+	public void setDatargfunc(Date datargfunc) {
+		this.datargfunc = datargfunc;
+	}
+
+	public String getTipcerfunc() {
+		return tipcerfunc;
+	}
+
+	public void setTipcerfunc(String tipcerfunc) {
+		this.tipcerfunc = tipcerfunc;
+	}
+
+	public String getCartofunc() {
+		return cartofunc;
+	}
+
+	public void setCartofunc(String cartofunc) {
+		this.cartofunc = cartofunc;
+	}
+
+	public String getLivrofunc() {
+		return livrofunc;
+	}
+
+	public void setLivrofunc(String livrofunc) {
+		this.livrofunc = livrofunc;
+	}
+
+	public String getFlsfunc() {
+		return flsfunc;
+	}
+
+	public void setFlsfunc(String flsfunc) {
+		this.flsfunc = flsfunc;
+	}
+
+	public String getTermofunc() {
+		return termofunc;
+	}
+
+	public void setTermofunc(String termofunc) {
+		this.termofunc = termofunc;
+	}
+
+	public Date getDatcerfunc() {
+		return datcerfunc;
+	}
+
+	public void setDatcerfunc(Date datcerfunc) {
+		this.datcerfunc = datcerfunc;
+	}
+
+	public String getCpffunc() {
+		return cpffunc;
+	}
+
+	public void setCpffunc(String cpffunc) {
+		this.cpffunc = cpffunc;
+	}
+
+	public String getPisfunc() {
+		return pisfunc;
+	}
+
+	public void setPisfunc(String pisfunc) {
+		this.pisfunc = pisfunc;
+	}
+
+	public String getCorfunc() {
+		return corfunc;
+	}
+
+	public void setCorfunc(String corfunc) {
+		this.corfunc = corfunc;
+	}
+
+	public String getCartrafunc() {
+		return cartrafunc;
+	}
+
+	public void setCartrafunc(String cartrafunc) {
+		this.cartrafunc = cartrafunc;
+	}
+
+	public String getCorpocli() {
+		return corpocli;
+	}
+
+	public void setCorpocli(String corpocli) {
+		this.corpocli = corpocli;
+	}
+
+	public String getGuerrafunc() {
+		return guerrafunc;
+	}
+
+	public void setGuerrafunc(String guerrafunc) {
+		this.guerrafunc = guerrafunc;
+	}
+
+	public String getEmirgfunc() {
+		return emirgfunc;
+	}
+
+	public void setEmirgfunc(String emirgfunc) {
+		this.emirgfunc = emirgfunc;
+	}
+
+	public Integer getNumdepend() {
+		return numdepend;
+	}
+
+	public void setNumdepend(Integer numdepend) {
+		this.numdepend = numdepend;
+	}
+
+	public String getTipologrfu() {
+		return tipologrfu;
+	}
+
+	public void setTipologrfu(String tipologrfu) {
+		this.tipologrfu = tipologrfu;
+	}
+
+	public String getLografu() {
+		return lografu;
+	}
+
+	public void setLografu(String lografu) {
+		this.lografu = lografu;
+	}
+
+	public String getNumlogrfu() {
+		return numlogrfu;
+	}
+
+	public void setNumlogrfu(String numlogrfu) {
+		this.numlogrfu = numlogrfu;
+	}
+
+	public String getComplefu() {
+		return complefu;
+	}
+
+	public void setComplefu(String complefu) {
+		this.complefu = complefu;
+	}
+
+	public String getIbgefu() {
+		return ibgefu;
+	}
+
+	public void setIbgefu(String ibgefu) {
+		this.ibgefu = ibgefu;
+	}
+
+	public String getEmail2func() {
+		return email2func;
+	}
+
+	public void setEmail2func(String email2func) {
+		this.email2func = email2func;
+	}
+
+	public String getSerietrfunc() {
+		return serietrfunc;
+	}
+
+	public void setSerietrfunc(String serietrfunc) {
+		this.serietrfunc = serietrfunc;
+	}
 }

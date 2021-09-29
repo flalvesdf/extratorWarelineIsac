@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
 
 @Repository
-public interface CadFuncPostGreRepository extends JpaRepository<CadFuncPostGre, String> {
+public interface CadFuncPostGreRepository extends JpaRepository<CadFuncPostGre, Integer> {
 
 }
