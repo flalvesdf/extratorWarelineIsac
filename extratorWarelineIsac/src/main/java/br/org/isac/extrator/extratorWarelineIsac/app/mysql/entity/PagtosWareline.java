@@ -1,38 +1,52 @@
-package br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity;
+package br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "pagtos")
-public class PagtosPostGre {
+@Table(name = "pt_wl_pagtos")
+public class PagtosWareline {
 
 	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	@Column(name="numpagto")
-	private String numpagto ;
+	private Integer numpagto ;
 
+	@Size(min=0, max=2)
 	@Column(name="tipodoc")
 	private String tipodoc ;
 
 	@Column(name="numentr")
-	private String numentr ;
+	private Integer numentr ;
 
+	@Size(min=0, max=15)
 	@Column(name="numdoc")
 	private String numdoc ;
 
+	@Size(min=0, max=2)
 	@Column(name="codfilial")
 	private String codfilial ;
 
+	@Size(min=0, max=6)
 	@Column(name="codprest")
 	private String codprest;
 
+	@Size(min=0, max=3)
 	@Column(name="portador")
 	private String portador;
 
+	@Size(min=0, max=100)
 	@Column(name="observa")
 	private String observa ;
 
@@ -45,221 +59,298 @@ public class PagtosPostGre {
 	@Column(name="datdigita")
 	private Date datdigita ;
 
+	@Size(min=0, max=6)
 	@Column(name="codope")
 	private String codope ;
 
 	@Column(name="dataultatu")
 	private Date dataultatu ;
 
+	@Size(min=0, max=6)
 	@Column(name="codopeatu")
 	private String codopeatu ;
 
+	@Size(min=0, max=3)
 	@Column(name="parcelas")
 	private String parcelas ;
 
+	@Size(min=0, max=20)
 	@Column(name="valortot")
 	private String valortot;
 
+	@Size(min=0, max=2)
 	@Column(name="codmoeda")
 	private String codmoeda;
 
+	@Size(min=0, max=3)
 	@Column(name="numnotas")
 	private String numnotas;
 
+	@Size(min=0, max=1)
 	@Column(name="tipocobr")
 	private String tipocobr;
 
+	@Size(min=0, max=1)
 	@Column(name="posicao")
 	private String posicao;
 
+	@Size(min=0, max=1)
 	@Column(name="contabinc")
 	private String contabinc;
 
+	@Size(min=0, max=5)
 	@Column(name="codeveninc")
 	private String codeveninc;
 
+	@Size(min=0, max=1)
 	@Column(name="contabbai")
 	private String contabbai;
 
+	@Size(min=0, max=5)
 	@Column(name="codevenbai")
 	private String codevenbai;
 
+	@Size(min=0, max=20)
 	@Column(name="percjurosm")
 	private String percjurosm;
 
+	@Size(min=0, max=20)
 	@Column(name="percjurosd")
 	private String percjurosd;
 
+	@Size(min=0, max=20)
 	@Column(name="valorjurod")
 	private String valorjurod;
 
+	@Size(min=0, max=2)
 	@Column(name="diasjuros")
 	private String diasjuros;
 
+	@Size(min=0, max=10)
 	@Column(name="percmulta")
 	private String percmulta;
 
+	@Size(min=0, max=20)
 	@Column(name="valormulta")
 	private String valormulta;
 
+	@Size(min=0, max=3)
 	@Column(name="diasmulta")
 	private String diasmulta;
 
+	@Size(min=0, max=20)
 	@Column(name="percdescd")
 	private String percdescd ;
 
+	@Size(min=0, max=1)
 	@Column(name="fluxo")
 	private String fluxo;
 
+	@Size(min=0, max=1)
 	@Column(name="provisiona")
 	private String provisiona ;
 
+	@Size(min=0, max=7) //formato 042019
 	@Column(name="mesiniprov")
 	private String mesiniprov ;
-
+	
+	@Size(min=0, max=7) //formato 042019
 	@Column(name="mesfimprov")
 	private String mesfimprov ;
-
+	
+	@Size(min=0, max=20)
 	@Column(name="valoradian")
 	private String valoradian;
 
 	@Column(name="dataadian")
 	private Date dataadian ;
 
+	@Size(min=0, max=20)
 	@Column(name="valordev")
 	private String valordev ;
 
 	@Column(name="datadev")
 	private Date datadev ;
 
+	@Size(min=0, max=20)
 	@Column(name="valorirf")
 	private String valorirf ;
 
+	@Size(min=0, max=20)
 	@Column(name="valoripi")
 	private String valoripi ;
 
+	@Size(min=0, max=20)
 	@Column(name="valoriss")
 	private String valoriss ;
 
+	@Size(min=0, max=20)
 	@Column(name="valorinss")
 	private String valorinss ;
 
+	@Size(min=0, max=20)
 	@Column(name="valcofins")
 	private String valcofins ;
 
+	@Size(min=0, max=3)
 	@Column(name="codcondpg")
 	private String codcondpg ;
 
+	@Size(min=0, max=30)
 	@Column(name="codbarra")
 	private String codbarra ;
 
+	@Size(min=0, max=20)
 	@Column(name="valpis")
 	private String valpis ;
 
+	@Size(min=0, max=20)
 	@Column(name="valcsll")
 	private String valcsll ;
 
+	@Size(min=0, max=20)
 	@Column(name="valcpc")
 	private String valcpc;
 
+	@Size(min=0, max=20)
 	@Column(name="valororig")
 	private String valororig;
 
+	@Size(min=0, max=20)
 	@Column(name="valorfrete")
 	private String valorfrete;
 
+	@Size(min=0, max=80)
 	@Column(name="nomefornec")
 	private String nomefornec;
 
 	@Column(name="numatend")
-	private String numatend;
+	private Integer numatend;
 
 	@Column(name="numconta")
-	private String numconta;
+	private Integer numconta;
 
 	@Column(name="numpgtori")
-	private String numpgtori;
+	private Integer numpgtori;
 
+	@Size(min=0, max=1)
 	@Column(name="nfservicos")
 	private String nfservicos;
 
+	@Size(min=0, max=6)
 	@Column(name="codimposto")
 	private String codimposto;
 
+	@Size(min=0, max=3)
 	@Column(name="numparcori")
 	private String numparcori;
 
+	@Size(min=0, max=10)
 	@Column(name="numbaiori")
 	private String numbaiori;
 
+	@Size(min=0, max=10)
 	@Column(name="qtd1")
 	private String qtd1;
 
+	@Size(min=0, max=10)
 	@Column(name="codbansuge")
 	private String codbansuge;
 
+	@Size(min=0, max=1)
 	@Column(name="formasuge")
 	private String formasuge ;
 
+	@Size(min=0, max=4)
 	@Column(name="coddarf")
 	private String coddarf;
 
+	@Size(min=0, max=1)
 	@Column(name="exportada")
 	private String exportada ;
 
+	@Size(min=0, max=8)
 	@Column(name="codserv3")
 	private String codserv3;
 
+	@Size(min=0, max=3)
 	@Column(name="seriedoc")
 	private String seriedoc;
 
+	@Size(min=0, max=45)
 	@Column(name="chavenf")
 	private String chavenf;
 
+	@Size(min=0, max=20)
 	@Column(name="valiva")
 	private String valiva ;
 
+	@Size(min=0, max=20)
 	@Column(name="valit")
 	private String valit ;
 
+	@Size(min=0, max=20)
 	@Column(name="valiue")
 	private String valiue;
 
+	@Size(min=0, max=15)
 	@Column(name="numcontbol")
 	private String numcontbol ;
 
+	@Size(min=0, max=9)
 	@Column(name="traspaso")
 	private String traspaso ;
 
 	@Column(name="numprojeto")
-	private String numprojeto ;
+	private Integer numprojeto ;
 
+	@Size(min=0, max=7) //formato 09/2021
 	@Column(name="mescomp")
 	private String mescomp ;
 
+	@Size(min=0, max=1)
 	@Column(name="classidoc")
 	private String classidoc;
 
+	@Size(min=0, max=3)
 	@Column(name="codorcaf")
 	private String codorcaf;
 
+	@Size(min=0, max=6)
 	@Column(name="mesorcaf")
 	private String mesorcaf ;
 
+	@Size(min=0, max=2)
 	@Column(name="matriz")
 	private String matriz ;
 
+	@Size(min=0, max=10)
 	@Column(name="regdirf")
 	private String regdirf;
 
+	@Size(min=0, max=100)
 	@Column(name="desregdirf")
 	private String desregdirf ;
 	
-	public String getNumpagto() {
+	@Column(name="idUnidade")
+	private String idUnidade;
+	
+	@Column(name="tsObtencaoInformacao")
+	private Timestamp tsObtencaoInformacao;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getNumpagto() {
 		return numpagto;
 	}
 
-	public void setNumpagto(String numpagto) {
+	public void setNumpagto(Integer numpagto) {
 		this.numpagto = numpagto;
 	}
 
@@ -271,11 +362,11 @@ public class PagtosPostGre {
 		this.tipodoc = tipodoc;
 	}
 
-	public String getNumentr() {
+	public Integer getNumentr() {
 		return numentr;
 	}
 
-	public void setNumentr(String numentr) {
+	public void setNumentr(Integer numentr) {
 		this.numentr = numentr;
 	}
 
@@ -679,27 +770,27 @@ public class PagtosPostGre {
 		this.nomefornec = nomefornec;
 	}
 
-	public String getNumatend() {
+	public Integer getNumatend() {
 		return numatend;
 	}
 
-	public void setNumatend(String numatend) {
+	public void setNumatend(Integer numatend) {
 		this.numatend = numatend;
 	}
 
-	public String getNumconta() {
+	public Integer getNumconta() {
 		return numconta;
 	}
 
-	public void setNumconta(String numconta) {
+	public void setNumconta(Integer numconta) {
 		this.numconta = numconta;
 	}
 
-	public String getNumpgtori() {
+	public Integer getNumpgtori() {
 		return numpgtori;
 	}
 
-	public void setNumpgtori(String numpgtori) {
+	public void setNumpgtori(Integer numpgtori) {
 		this.numpgtori = numpgtori;
 	}
 
@@ -839,11 +930,11 @@ public class PagtosPostGre {
 		this.traspaso = traspaso;
 	}
 
-	public String getNumprojeto() {
+	public Integer getNumprojeto() {
 		return numprojeto;
 	}
 
-	public void setNumprojeto(String numprojeto) {
+	public void setNumprojeto(Integer numprojeto) {
 		this.numprojeto = numprojeto;
 	}
 
@@ -901,5 +992,21 @@ public class PagtosPostGre {
 
 	public void setDesregdirf(String desregdirf) {
 		this.desregdirf = desregdirf;
+	}
+
+	public String getIdUnidade() {
+		return idUnidade;
+	}
+
+	public void setIdUnidade(String idUnidade) {
+		this.idUnidade = idUnidade;
+	}
+
+	public Timestamp getTsObtencaoInformacao() {
+		return tsObtencaoInformacao;
+	}
+
+	public void setTsObtencaoInformacao(Timestamp tsObtencaoInformacao) {
+		this.tsObtencaoInformacao = tsObtencaoInformacao;
 	}
 }
