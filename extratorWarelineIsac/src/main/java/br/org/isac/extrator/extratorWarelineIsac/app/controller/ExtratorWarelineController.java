@@ -128,7 +128,7 @@ public class ExtratorWarelineController {
 		return now1;
 	}
 	
-	@GetMapping(value = "/saveMysql")
+	@GetMapping(value = "/teste1")
 	public void teste1(ModelMap model, HttpSession session) {
 		System.out.println("comecando: "+ currentTimestamp());
 		
@@ -160,9 +160,9 @@ public class ExtratorWarelineController {
 		for(PagtosPostGre p: pgtos) {
 			PagamentosWareline pg = new PagamentosWareline();
 			pg.setNumpagto(p.getNumpagto());
-			pg.setNumdoc(Integer.parseInt(p.getNumdoc()));
-			pg.setCodfilial(Integer.parseInt(p.getCodfilial()));
-			pg.setCodprest(Integer.parseInt(p.getCodprest()));
+			pg.setNumdoc(p.getNumdoc());
+			pg.setCodfilial(p.getCodfilial());
+			pg.setCodprest(p.getCodprest());
 			pg.setObserva(p.getObserva());
 			pg.setDatemissao(p.getDatemissao());
 			pg.setDatentrada(p.getDatentrada());
@@ -175,15 +175,15 @@ public class ExtratorWarelineController {
 			pg.setCategprest(p.getCategprest());
 			pg.setNomeprest(p.getNomeprest());
 			
-			if(pg.getCodfilial().intValue() == ParametrosUnidade.AMB_MUNIC_ARAGUAINA) {
+			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.AMB_MUNIC_ARAGUAINA) {
 				pg.setIdUnidade(ParametrosUnidade.AMB_MUNIC_ARAGUAINA);
 			}
 			
-			if(pg.getCodfilial().intValue() == ParametrosUnidade.HMA) {
+			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.HMA) {
 				pg.setIdUnidade(ParametrosUnidade.HMA);
 			}
 			
-			if(pg.getCodfilial().intValue() == ParametrosUnidade.UTI_HRA) {
+			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.UTI_HRA) {
 				pg.setIdUnidade(ParametrosUnidade.UTI_HRA);
 			}
 			

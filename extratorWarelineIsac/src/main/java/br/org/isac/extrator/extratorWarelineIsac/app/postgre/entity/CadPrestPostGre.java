@@ -301,7 +301,7 @@ public class CadPrestPostGre {
 	@Column(name="agendaweb")
 	private String agendaweb;
 	
-	@Column(name="tiposervico")
+	@Column(name="prestprec")
 	private String prestprec;
 	
 	@Column(name="datultatu")

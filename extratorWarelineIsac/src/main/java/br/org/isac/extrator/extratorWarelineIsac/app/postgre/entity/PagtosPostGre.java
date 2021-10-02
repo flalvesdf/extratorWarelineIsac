@@ -14,13 +14,13 @@ public class PagtosPostGre {
 
 	@Id
 	@Column(name="numpagto")
-	private Integer numpagto ;
+	private String numpagto ;
 
 	@Column(name="tipodoc")
 	private String tipodoc ;
 
 	@Column(name="numentr")
-	private Integer numentr ;
+	private String numentr ;
 
 	@Column(name="numdoc")
 	private String numdoc ;
@@ -56,16 +56,16 @@ public class PagtosPostGre {
 	private String codopeatu ;
 
 	@Column(name="parcelas")
-	private Integer parcelas ;
+	private String parcelas ;
 
 	@Column(name="valortot")
-	private Double valortot;
+	private String valortot;
 
 	@Column(name="codmoeda")
 	private String codmoeda;
 
 	@Column(name="numnotas")
-	private Integer numnotas;
+	private String numnotas;
 
 	@Column(name="tipocobr")
 	private String tipocobr;
@@ -86,28 +86,28 @@ public class PagtosPostGre {
 	private String codevenbai;
 
 	@Column(name="percjurosm")
-	private Double percjurosm;
+	private String percjurosm;
 
 	@Column(name="percjurosd")
-	private Double percjurosd;
+	private String percjurosd;
 
 	@Column(name="valorjurod")
-	private Double valorjurod;
+	private String valorjurod;
 
 	@Column(name="diasjuros")
-	private Integer diasjuros;
+	private String diasjuros;
 
 	@Column(name="percmulta")
-	private Double percmulta;
+	private String percmulta;
 
 	@Column(name="valormulta")
-	private Double valormulta;
+	private String valormulta;
 
 	@Column(name="diasmulta")
-	private Integer diasmulta;
+	private String diasmulta;
 
 	@Column(name="percdescd")
-	private Double percdescd ;
+	private String percdescd ;
 
 	@Column(name="fluxo")
 	private String fluxo;
@@ -122,31 +122,31 @@ public class PagtosPostGre {
 	private String mesfimprov ;
 
 	@Column(name="valoradian")
-	private Double valoradian;
+	private String valoradian;
 
 	@Column(name="dataadian")
 	private Date dataadian ;
 
 	@Column(name="valordev")
-	private Double valordev ;
+	private String valordev ;
 
 	@Column(name="datadev")
 	private Date datadev ;
 
 	@Column(name="valorirf")
-	private Double valorirf ;
+	private String valorirf ;
 
 	@Column(name="valoripi")
-	private Double valoripi ;
+	private String valoripi ;
 
 	@Column(name="valoriss")
-	private Double valoriss ;
+	private String valoriss ;
 
 	@Column(name="valorinss")
-	private Double valorinss ;
+	private String valorinss ;
 
 	@Column(name="valcofins")
-	private Double valcofins ;
+	private String valcofins ;
 
 	@Column(name="codcondpg")
 	private String codcondpg ;
@@ -155,31 +155,31 @@ public class PagtosPostGre {
 	private String codbarra ;
 
 	@Column(name="valpis")
-	private Double valpis ;
+	private String valpis ;
 
 	@Column(name="valcsll")
-	private Double valcsll ;
+	private String valcsll ;
 
 	@Column(name="valcpc")
-	private Double valcpc;
+	private String valcpc;
 
 	@Column(name="valororig")
-	private Double valororig;
+	private String valororig;
 
 	@Column(name="valorfrete")
-	private Double valorfrete;
+	private String valorfrete;
 
 	@Column(name="nomefornec")
 	private String nomefornec;
 
 	@Column(name="numatend")
-	private Integer numatend;
+	private String numatend;
 
 	@Column(name="numconta")
-	private Integer numconta;
+	private String numconta;
 
 	@Column(name="numpgtori")
-	private Integer numpgtori;
+	private String numpgtori;
 
 	@Column(name="nfservicos")
 	private String nfservicos;
@@ -188,13 +188,13 @@ public class PagtosPostGre {
 	private String codimposto;
 
 	@Column(name="numparcori")
-	private Integer numparcori;
+	private String numparcori;
 
 	@Column(name="numbaiori")
-	private Integer numbaiori;
+	private String numbaiori;
 
 	@Column(name="qtd1")
-	private Integer qtd1;
+	private String qtd1;
 
 	@Column(name="codbansuge")
 	private String codbansuge;
@@ -218,13 +218,13 @@ public class PagtosPostGre {
 	private String chavenf;
 
 	@Column(name="valiva")
-	private Double valiva ;
+	private String valiva ;
 
 	@Column(name="valit")
-	private Double valit ;
+	private String valit ;
 
 	@Column(name="valiue")
-	private Double valiue;
+	private String valiue;
 
 	@Column(name="numcontbol")
 	private String numcontbol ;
@@ -233,7 +233,7 @@ public class PagtosPostGre {
 	private String traspaso ;
 
 	@Column(name="numprojeto")
-	private Integer numprojeto ;
+	private String numprojeto ;
 
 	@Column(name="mescomp")
 	private String mescomp ;
@@ -242,7 +242,7 @@ public class PagtosPostGre {
 	private String classidoc;
 
 	@Column(name="codorcaf")
-	private Integer codorcaf;
+	private String codorcaf;
 
 	@Column(name="mesorcaf")
 	private String mesorcaf ;
@@ -264,36 +264,12 @@ public class PagtosPostGre {
 	
 	@Transient
 	private String nomeprest;
-	
-	public String getTipoprest() {
-		return tipoprest;
-	}
 
-	public void setTipoprest(String tipoprest) {
-		this.tipoprest = tipoprest;
-	}
-
-	public String getCategprest() {
-		return categprest;
-	}
-
-	public void setCategprest(String categprest) {
-		this.categprest = categprest;
-	}
-
-	public String getNomeprest() {
-		return nomeprest;
-	}
-
-	public void setNomeprest(String nomeprest) {
-		this.nomeprest = nomeprest;
-	}
-
-	public Integer getNumpagto() {
+	public String getNumpagto() {
 		return numpagto;
 	}
 
-	public void setNumpagto(Integer numpagto) {
+	public void setNumpagto(String numpagto) {
 		this.numpagto = numpagto;
 	}
 
@@ -305,11 +281,11 @@ public class PagtosPostGre {
 		this.tipodoc = tipodoc;
 	}
 
-	public Integer getNumentr() {
+	public String getNumentr() {
 		return numentr;
 	}
 
-	public void setNumentr(Integer numentr) {
+	public void setNumentr(String numentr) {
 		this.numentr = numentr;
 	}
 
@@ -401,19 +377,19 @@ public class PagtosPostGre {
 		this.codopeatu = codopeatu;
 	}
 
-	public Integer getParcelas() {
+	public String getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(Integer parcelas) {
+	public void setParcelas(String parcelas) {
 		this.parcelas = parcelas;
 	}
 
-	public Double getValortot() {
+	public String getValortot() {
 		return valortot;
 	}
 
-	public void setValortot(Double valortot) {
+	public void setValortot(String valortot) {
 		this.valortot = valortot;
 	}
 
@@ -425,11 +401,11 @@ public class PagtosPostGre {
 		this.codmoeda = codmoeda;
 	}
 
-	public Integer getNumnotas() {
+	public String getNumnotas() {
 		return numnotas;
 	}
 
-	public void setNumnotas(Integer numnotas) {
+	public void setNumnotas(String numnotas) {
 		this.numnotas = numnotas;
 	}
 
@@ -481,67 +457,67 @@ public class PagtosPostGre {
 		this.codevenbai = codevenbai;
 	}
 
-	public Double getPercjurosm() {
+	public String getPercjurosm() {
 		return percjurosm;
 	}
 
-	public void setPercjurosm(Double percjurosm) {
+	public void setPercjurosm(String percjurosm) {
 		this.percjurosm = percjurosm;
 	}
 
-	public Double getPercjurosd() {
+	public String getPercjurosd() {
 		return percjurosd;
 	}
 
-	public void setPercjurosd(Double percjurosd) {
+	public void setPercjurosd(String percjurosd) {
 		this.percjurosd = percjurosd;
 	}
 
-	public Double getValorjurod() {
+	public String getValorjurod() {
 		return valorjurod;
 	}
 
-	public void setValorjurod(Double valorjurod) {
+	public void setValorjurod(String valorjurod) {
 		this.valorjurod = valorjurod;
 	}
 
-	public Integer getDiasjuros() {
+	public String getDiasjuros() {
 		return diasjuros;
 	}
 
-	public void setDiasjuros(Integer diasjuros) {
+	public void setDiasjuros(String diasjuros) {
 		this.diasjuros = diasjuros;
 	}
 
-	public Double getPercmulta() {
+	public String getPercmulta() {
 		return percmulta;
 	}
 
-	public void setPercmulta(Double percmulta) {
+	public void setPercmulta(String percmulta) {
 		this.percmulta = percmulta;
 	}
 
-	public Double getValormulta() {
+	public String getValormulta() {
 		return valormulta;
 	}
 
-	public void setValormulta(Double valormulta) {
+	public void setValormulta(String valormulta) {
 		this.valormulta = valormulta;
 	}
 
-	public Integer getDiasmulta() {
+	public String getDiasmulta() {
 		return diasmulta;
 	}
 
-	public void setDiasmulta(Integer diasmulta) {
+	public void setDiasmulta(String diasmulta) {
 		this.diasmulta = diasmulta;
 	}
 
-	public Double getPercdescd() {
+	public String getPercdescd() {
 		return percdescd;
 	}
 
-	public void setPercdescd(Double percdescd) {
+	public void setPercdescd(String percdescd) {
 		this.percdescd = percdescd;
 	}
 
@@ -577,11 +553,11 @@ public class PagtosPostGre {
 		this.mesfimprov = mesfimprov;
 	}
 
-	public Double getValoradian() {
+	public String getValoradian() {
 		return valoradian;
 	}
 
-	public void setValoradian(Double valoradian) {
+	public void setValoradian(String valoradian) {
 		this.valoradian = valoradian;
 	}
 
@@ -593,11 +569,11 @@ public class PagtosPostGre {
 		this.dataadian = dataadian;
 	}
 
-	public Double getValordev() {
+	public String getValordev() {
 		return valordev;
 	}
 
-	public void setValordev(Double valordev) {
+	public void setValordev(String valordev) {
 		this.valordev = valordev;
 	}
 
@@ -609,43 +585,43 @@ public class PagtosPostGre {
 		this.datadev = datadev;
 	}
 
-	public Double getValorirf() {
+	public String getValorirf() {
 		return valorirf;
 	}
 
-	public void setValorirf(Double valorirf) {
+	public void setValorirf(String valorirf) {
 		this.valorirf = valorirf;
 	}
 
-	public Double getValoripi() {
+	public String getValoripi() {
 		return valoripi;
 	}
 
-	public void setValoripi(Double valoripi) {
+	public void setValoripi(String valoripi) {
 		this.valoripi = valoripi;
 	}
 
-	public Double getValoriss() {
+	public String getValoriss() {
 		return valoriss;
 	}
 
-	public void setValoriss(Double valoriss) {
+	public void setValoriss(String valoriss) {
 		this.valoriss = valoriss;
 	}
 
-	public Double getValorinss() {
+	public String getValorinss() {
 		return valorinss;
 	}
 
-	public void setValorinss(Double valorinss) {
+	public void setValorinss(String valorinss) {
 		this.valorinss = valorinss;
 	}
 
-	public Double getValcofins() {
+	public String getValcofins() {
 		return valcofins;
 	}
 
-	public void setValcofins(Double valcofins) {
+	public void setValcofins(String valcofins) {
 		this.valcofins = valcofins;
 	}
 
@@ -665,43 +641,43 @@ public class PagtosPostGre {
 		this.codbarra = codbarra;
 	}
 
-	public Double getValpis() {
+	public String getValpis() {
 		return valpis;
 	}
 
-	public void setValpis(Double valpis) {
+	public void setValpis(String valpis) {
 		this.valpis = valpis;
 	}
 
-	public Double getValcsll() {
+	public String getValcsll() {
 		return valcsll;
 	}
 
-	public void setValcsll(Double valcsll) {
+	public void setValcsll(String valcsll) {
 		this.valcsll = valcsll;
 	}
 
-	public Double getValcpc() {
+	public String getValcpc() {
 		return valcpc;
 	}
 
-	public void setValcpc(Double valcpc) {
+	public void setValcpc(String valcpc) {
 		this.valcpc = valcpc;
 	}
 
-	public Double getValororig() {
+	public String getValororig() {
 		return valororig;
 	}
 
-	public void setValororig(Double valororig) {
+	public void setValororig(String valororig) {
 		this.valororig = valororig;
 	}
 
-	public Double getValorfrete() {
+	public String getValorfrete() {
 		return valorfrete;
 	}
 
-	public void setValorfrete(Double valorfrete) {
+	public void setValorfrete(String valorfrete) {
 		this.valorfrete = valorfrete;
 	}
 
@@ -713,27 +689,27 @@ public class PagtosPostGre {
 		this.nomefornec = nomefornec;
 	}
 
-	public Integer getNumatend() {
+	public String getNumatend() {
 		return numatend;
 	}
 
-	public void setNumatend(Integer numatend) {
+	public void setNumatend(String numatend) {
 		this.numatend = numatend;
 	}
 
-	public Integer getNumconta() {
+	public String getNumconta() {
 		return numconta;
 	}
 
-	public void setNumconta(Integer numconta) {
+	public void setNumconta(String numconta) {
 		this.numconta = numconta;
 	}
 
-	public Integer getNumpgtori() {
+	public String getNumpgtori() {
 		return numpgtori;
 	}
 
-	public void setNumpgtori(Integer numpgtori) {
+	public void setNumpgtori(String numpgtori) {
 		this.numpgtori = numpgtori;
 	}
 
@@ -753,27 +729,27 @@ public class PagtosPostGre {
 		this.codimposto = codimposto;
 	}
 
-	public Integer getNumparcori() {
+	public String getNumparcori() {
 		return numparcori;
 	}
 
-	public void setNumparcori(Integer numparcori) {
+	public void setNumparcori(String numparcori) {
 		this.numparcori = numparcori;
 	}
 
-	public Integer getNumbaiori() {
+	public String getNumbaiori() {
 		return numbaiori;
 	}
 
-	public void setNumbaiori(Integer numbaiori) {
+	public void setNumbaiori(String numbaiori) {
 		this.numbaiori = numbaiori;
 	}
 
-	public Integer getQtd1() {
+	public String getQtd1() {
 		return qtd1;
 	}
 
-	public void setQtd1(Integer qtd1) {
+	public void setQtd1(String qtd1) {
 		this.qtd1 = qtd1;
 	}
 
@@ -833,27 +809,27 @@ public class PagtosPostGre {
 		this.chavenf = chavenf;
 	}
 
-	public Double getValiva() {
+	public String getValiva() {
 		return valiva;
 	}
 
-	public void setValiva(Double valiva) {
+	public void setValiva(String valiva) {
 		this.valiva = valiva;
 	}
 
-	public Double getValit() {
+	public String getValit() {
 		return valit;
 	}
 
-	public void setValit(Double valit) {
+	public void setValit(String valit) {
 		this.valit = valit;
 	}
 
-	public Double getValiue() {
+	public String getValiue() {
 		return valiue;
 	}
 
-	public void setValiue(Double valiue) {
+	public void setValiue(String valiue) {
 		this.valiue = valiue;
 	}
 
@@ -873,11 +849,11 @@ public class PagtosPostGre {
 		this.traspaso = traspaso;
 	}
 
-	public Integer getNumprojeto() {
+	public String getNumprojeto() {
 		return numprojeto;
 	}
 
-	public void setNumprojeto(Integer numprojeto) {
+	public void setNumprojeto(String numprojeto) {
 		this.numprojeto = numprojeto;
 	}
 
@@ -897,11 +873,11 @@ public class PagtosPostGre {
 		this.classidoc = classidoc;
 	}
 
-	public Integer getCodorcaf() {
+	public String getCodorcaf() {
 		return codorcaf;
 	}
 
-	public void setCodorcaf(Integer codorcaf) {
+	public void setCodorcaf(String codorcaf) {
 		this.codorcaf = codorcaf;
 	}
 
@@ -936,4 +912,30 @@ public class PagtosPostGre {
 	public void setDesregdirf(String desregdirf) {
 		this.desregdirf = desregdirf;
 	}
+
+	public String getTipoprest() {
+		return tipoprest;
+	}
+
+	public void setTipoprest(String tipoprest) {
+		this.tipoprest = tipoprest;
+	}
+
+	public String getCategprest() {
+		return categprest;
+	}
+
+	public void setCategprest(String categprest) {
+		this.categprest = categprest;
+	}
+
+	public String getNomeprest() {
+		return nomeprest;
+	}
+
+	public void setNomeprest(String nomeprest) {
+		this.nomeprest = nomeprest;
+	}
+	
+	
 }

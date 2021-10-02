@@ -62,16 +62,16 @@ public class PagamentosWareline {
 
 	@Id
 	@Column(name="numpagto")
-	private Integer numpagto;
+	private String numpagto;
 	
 	@Column(name="numdoc")
-	private Integer numdoc;
+	private String numdoc;
 	
 	@Column(name="codfilial")
-	private Integer codfilial;
+	private String codfilial;
 	
 	@Column(name="codprest")
-	private Integer codprest;
+	private String codprest;
 	
 	@Column(name="observa")
 	private String observa;
@@ -89,10 +89,10 @@ public class PagamentosWareline {
 	private Date dataultatu;
 	
 	@Column(name="parcelas")
-	private Integer parcelas;
+	private String parcelas;
 	
 	@Column(name="valortot")
-	private Double valortot;
+	private String valortot;
 	
 	@Column(name="mesiniprov")
 	private String mesiniprov;
@@ -113,7 +113,7 @@ public class PagamentosWareline {
 	private String codopeatu;
 	
 	@Column(name="coduni")
-	private Integer coduni;
+	private String coduni;
 	
 	@Column(name="nomeuni")
 	private String nomeuni;
@@ -150,52 +150,36 @@ public class PagamentosWareline {
 	
 	@Column(name="idUnidade")
 	private Integer idUnidade;
-	
-	public Timestamp getTsAtualizacao() {
-		return tsAtualizacao;
-	}
 
-	public void setTsAtualizacao(Timestamp tsAtualizacao) {
-		this.tsAtualizacao = tsAtualizacao;
-	}
-
-	public Integer getIdUnidade() {
-		return idUnidade;
-	}
-
-	public void setIdUnidade(Integer idUnidade) {
-		this.idUnidade = idUnidade;
-	}
-
-	public Integer getNumpagto() {
+	public String getNumpagto() {
 		return numpagto;
 	}
 
-	public void setNumpagto(Integer numpagto) {
+	public void setNumpagto(String numpagto) {
 		this.numpagto = numpagto;
 	}
 
-	public Integer getNumdoc() {
+	public String getNumdoc() {
 		return numdoc;
 	}
 
-	public void setNumdoc(Integer numdoc) {
+	public void setNumdoc(String numdoc) {
 		this.numdoc = numdoc;
 	}
 
-	public Integer getCodfilial() {
+	public String getCodfilial() {
 		return codfilial;
 	}
 
-	public void setCodfilial(Integer codfilial) {
+	public void setCodfilial(String codfilial) {
 		this.codfilial = codfilial;
 	}
 
-	public Integer getCodprest() {
+	public String getCodprest() {
 		return codprest;
 	}
 
-	public void setCodprest(Integer codprest) {
+	public void setCodprest(String codprest) {
 		this.codprest = codprest;
 	}
 
@@ -239,19 +223,19 @@ public class PagamentosWareline {
 		this.dataultatu = dataultatu;
 	}
 
-	public Integer getParcelas() {
+	public String getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(Integer parcelas) {
+	public void setParcelas(String parcelas) {
 		this.parcelas = parcelas;
 	}
 
-	public Double getValortot() {
+	public String getValortot() {
 		return valortot;
 	}
 
-	public void setValortot(Double valortot) {
+	public void setValortot(String valortot) {
 		this.valortot = valortot;
 	}
 
@@ -303,11 +287,11 @@ public class PagamentosWareline {
 		this.codopeatu = codopeatu;
 	}
 
-	public Integer getCoduni() {
+	public String getCoduni() {
 		return coduni;
 	}
 
-	public void setCoduni(Integer coduni) {
+	public void setCoduni(String coduni) {
 		this.coduni = coduni;
 	}
 
@@ -390,4 +374,22 @@ public class PagamentosWareline {
 	public void setDatultatu(Date datultatu) {
 		this.datultatu = datultatu;
 	}
+
+	public Timestamp getTsAtualizacao() {
+		return tsAtualizacao;
+	}
+
+	public void setTsAtualizacao(Timestamp tsAtualizacao) {
+		this.tsAtualizacao = tsAtualizacao;
+	}
+
+	public Integer getIdUnidade() {
+		return idUnidade;
+	}
+
+	public void setIdUnidade(Integer idUnidade) {
+		this.idUnidade = idUnidade;
+	}
+	
+	
 }

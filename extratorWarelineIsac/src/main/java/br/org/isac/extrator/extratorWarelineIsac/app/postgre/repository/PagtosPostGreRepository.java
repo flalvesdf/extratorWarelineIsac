@@ -21,9 +21,9 @@ public interface PagtosPostGreRepository extends JpaRepository<PagtosPostGre, St
 	 * @return
 	 */
 	
-	@Query("SELECT a.numpagto, a.tipodoc, a.numentr, a.numdoc, a.codfilial, a.codprest, a.portador, a.observa, a.datemissao, a.datentrada, "
+	@Query(value = "SELECT a.numpagto, a.tipodoc, a.numentr, a.numdoc, a.codfilial, a.codprest, a.portador, a.observa, a.datemissao, a.datentrada, "
 			+ "a.datdigita, a.codope, a.dataultatu, a.codopeatu, a.parcelas, a.valortot, a.nomefornec, a.mescomp, b.tipoprest, b.categprest, "
-			+ "b.nomeprest FROM PagtosPostGre a INNER JOIN CadPrestPostGre b on (a.codprest = b.codprest) where a.mescomp = '2021/09'")
+			+ "b.nomeprest FROM PagtosPostGre a INNER JOIN CadPrestPostGre b on (a.codprest = b.codprest) where a.mescomp = '2021/09'", nativeQuery = true)
 	public List<PagtosPostGre> obterPagamentosWarelinePorMesCompetencia();
 
 }
