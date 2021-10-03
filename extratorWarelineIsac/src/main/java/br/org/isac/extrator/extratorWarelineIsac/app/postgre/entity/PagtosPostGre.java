@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pagtos")
@@ -13,26 +14,32 @@ public class PagtosPostGre {
 
 	@Id
 	@Column(name="numpagto")
-	private String numpagto ;
+	private Integer numpagto ;
 
+	@Size(min=0, max=2)
 	@Column(name="tipodoc")
 	private String tipodoc ;
-
+	
 	@Column(name="numentr")
-	private String numentr ;
+	private Integer numentr ;
 
+	@Size(min=0, max=15)
 	@Column(name="numdoc")
 	private String numdoc ;
 
+	@Size(min=0, max=2)
 	@Column(name="codfilial")
 	private String codfilial ;
 
+	@Size(min=0, max=6)
 	@Column(name="codprest")
 	private String codprest;
 
+	@Size(min=0, max=3)
 	@Column(name="portador")
 	private String portador;
 
+	@Size(min=0, max=100)
 	@Column(name="observa")
 	private String observa ;
 
@@ -45,221 +52,254 @@ public class PagtosPostGre {
 	@Column(name="datdigita")
 	private Date datdigita ;
 
+	@Size(min=0, max=6)
 	@Column(name="codope")
 	private String codope ;
 
 	@Column(name="dataultatu")
 	private Date dataultatu ;
 
+	@Size(min=0, max=6)
 	@Column(name="codopeatu")
 	private String codopeatu ;
 
 	@Column(name="parcelas")
-	private String parcelas ;
+	private Integer parcelas ;
 
 	@Column(name="valortot")
-	private String valortot;
+	private Double valortot;
 
+	@Size(min=0, max=2)
 	@Column(name="codmoeda")
 	private String codmoeda;
 
 	@Column(name="numnotas")
-	private String numnotas;
+	private Integer numnotas;
 
+	@Size(min=0, max=1)
 	@Column(name="tipocobr")
 	private String tipocobr;
 
+	@Size(min=0, max=1)
 	@Column(name="posicao")
 	private String posicao;
 
+	@Size(min=0, max=1)
 	@Column(name="contabinc")
 	private String contabinc;
 
+	@Size(min=0, max=5)
 	@Column(name="codeveninc")
 	private String codeveninc;
 
+	@Size(min=0, max=1)
 	@Column(name="contabbai")
 	private String contabbai;
 
+	@Size(min=0, max=5)
 	@Column(name="codevenbai")
 	private String codevenbai;
 
 	@Column(name="percjurosm")
-	private String percjurosm;
+	private Double percjurosm;
 
 	@Column(name="percjurosd")
-	private String percjurosd;
+	private Double percjurosd;
 
 	@Column(name="valorjurod")
-	private String valorjurod;
+	private Double valorjurod;
 
 	@Column(name="diasjuros")
-	private String diasjuros;
+	private Integer diasjuros;
 
 	@Column(name="percmulta")
-	private String percmulta;
+	private Double percmulta;
 
 	@Column(name="valormulta")
-	private String valormulta;
+	private Double valormulta;
 
 	@Column(name="diasmulta")
-	private String diasmulta;
+	private Integer diasmulta;
 
 	@Column(name="percdescd")
-	private String percdescd ;
+	private Double percdescd ;
 
+	@Size(min=0, max=1)
 	@Column(name="fluxo")
 	private String fluxo;
 
+	@Size(min=0, max=1)
 	@Column(name="provisiona")
 	private String provisiona ;
 
+	@Size(min=0, max=7) //formato 042019
 	@Column(name="mesiniprov")
 	private String mesiniprov ;
-
+	
+	@Size(min=0, max=7) //formato 042019
 	@Column(name="mesfimprov")
 	private String mesfimprov ;
-
+	
 	@Column(name="valoradian")
-	private String valoradian;
+	private Double valoradian;
 
 	@Column(name="dataadian")
 	private Date dataadian ;
 
 	@Column(name="valordev")
-	private String valordev ;
+	private Double valordev ;
 
 	@Column(name="datadev")
 	private Date datadev ;
 
 	@Column(name="valorirf")
-	private String valorirf ;
+	private Double valorirf ;
 
 	@Column(name="valoripi")
-	private String valoripi ;
+	private Double valoripi ;
 
 	@Column(name="valoriss")
-	private String valoriss ;
+	private Double valoriss ;
 
 	@Column(name="valorinss")
-	private String valorinss ;
+	private Double valorinss ;
 
 	@Column(name="valcofins")
-	private String valcofins ;
+	private Double valcofins ;
 
+	@Size(min=0, max=3)
 	@Column(name="codcondpg")
 	private String codcondpg ;
 
+	@Size(min=0, max=30)
 	@Column(name="codbarra")
 	private String codbarra ;
 
 	@Column(name="valpis")
-	private String valpis ;
+	private Double valpis ;
 
 	@Column(name="valcsll")
-	private String valcsll ;
+	private Double valcsll ;
 
 	@Column(name="valcpc")
-	private String valcpc;
+	private Double valcpc;
 
 	@Column(name="valororig")
-	private String valororig;
+	private Double valororig;
 
 	@Column(name="valorfrete")
-	private String valorfrete;
+	private Double valorfrete;
 
+	@Size(min=0, max=80)
 	@Column(name="nomefornec")
 	private String nomefornec;
 
 	@Column(name="numatend")
-	private String numatend;
+	private Integer numatend;
 
 	@Column(name="numconta")
-	private String numconta;
+	private Integer numconta;
 
 	@Column(name="numpgtori")
-	private String numpgtori;
+	private Integer numpgtori;
 
+	@Size(min=0, max=1)
 	@Column(name="nfservicos")
 	private String nfservicos;
 
+	@Size(min=0, max=6)
 	@Column(name="codimposto")
 	private String codimposto;
 
 	@Column(name="numparcori")
-	private String numparcori;
+	private Integer numparcori;
 
 	@Column(name="numbaiori")
-	private String numbaiori;
+	private Integer numbaiori;
 
 	@Column(name="qtd1")
-	private String qtd1;
+	private Integer qtd1;
 
+	@Size(min=0, max=10)
 	@Column(name="codbansuge")
 	private String codbansuge;
 
+	@Size(min=0, max=1)
 	@Column(name="formasuge")
 	private String formasuge ;
 
+	@Size(min=0, max=4)
 	@Column(name="coddarf")
 	private String coddarf;
 
+	@Size(min=0, max=1)
 	@Column(name="exportada")
 	private String exportada ;
 
+	@Size(min=0, max=8)
 	@Column(name="codserv3")
 	private String codserv3;
 
+	@Size(min=0, max=3)
 	@Column(name="seriedoc")
 	private String seriedoc;
 
+	@Size(min=0, max=45)
 	@Column(name="chavenf")
 	private String chavenf;
 
 	@Column(name="valiva")
-	private String valiva ;
+	private Double valiva ;
 
 	@Column(name="valit")
-	private String valit ;
+	private Double valit ;
 
 	@Column(name="valiue")
-	private String valiue;
+	private Double valiue;
 
+	@Size(min=0, max=15)
 	@Column(name="numcontbol")
 	private String numcontbol ;
 
+	@Size(min=0, max=9)
 	@Column(name="traspaso")
 	private String traspaso ;
 
 	@Column(name="numprojeto")
-	private String numprojeto ;
+	private Integer numprojeto ;
 
+	@Size(min=0, max=7) //formato 2021/09
 	@Column(name="mescomp")
 	private String mescomp ;
 
+	@Size(min=0, max=1)
 	@Column(name="classidoc")
 	private String classidoc;
 
 	@Column(name="codorcaf")
-	private String codorcaf;
+	private Integer codorcaf;
 
+	@Size(min=0, max=6)
 	@Column(name="mesorcaf")
 	private String mesorcaf ;
 
+	@Size(min=0, max=2)
 	@Column(name="matriz")
 	private String matriz ;
 
+	@Size(min=0, max=10)
 	@Column(name="regdirf")
 	private String regdirf;
 
+	@Size(min=0, max=100)
 	@Column(name="desregdirf")
 	private String desregdirf ;
-	
-	public String getNumpagto() {
+
+	public Integer getNumpagto() {
 		return numpagto;
 	}
 
-	public void setNumpagto(String numpagto) {
+	public void setNumpagto(Integer numpagto) {
 		this.numpagto = numpagto;
 	}
 
@@ -271,11 +311,11 @@ public class PagtosPostGre {
 		this.tipodoc = tipodoc;
 	}
 
-	public String getNumentr() {
+	public Integer getNumentr() {
 		return numentr;
 	}
 
-	public void setNumentr(String numentr) {
+	public void setNumentr(Integer numentr) {
 		this.numentr = numentr;
 	}
 
@@ -367,19 +407,19 @@ public class PagtosPostGre {
 		this.codopeatu = codopeatu;
 	}
 
-	public String getParcelas() {
+	public Integer getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(String parcelas) {
+	public void setParcelas(Integer parcelas) {
 		this.parcelas = parcelas;
 	}
 
-	public String getValortot() {
+	public Double getValortot() {
 		return valortot;
 	}
 
-	public void setValortot(String valortot) {
+	public void setValortot(Double valortot) {
 		this.valortot = valortot;
 	}
 
@@ -391,11 +431,11 @@ public class PagtosPostGre {
 		this.codmoeda = codmoeda;
 	}
 
-	public String getNumnotas() {
+	public Integer getNumnotas() {
 		return numnotas;
 	}
 
-	public void setNumnotas(String numnotas) {
+	public void setNumnotas(Integer numnotas) {
 		this.numnotas = numnotas;
 	}
 
@@ -447,67 +487,67 @@ public class PagtosPostGre {
 		this.codevenbai = codevenbai;
 	}
 
-	public String getPercjurosm() {
+	public Double getPercjurosm() {
 		return percjurosm;
 	}
 
-	public void setPercjurosm(String percjurosm) {
+	public void setPercjurosm(Double percjurosm) {
 		this.percjurosm = percjurosm;
 	}
 
-	public String getPercjurosd() {
+	public Double getPercjurosd() {
 		return percjurosd;
 	}
 
-	public void setPercjurosd(String percjurosd) {
+	public void setPercjurosd(Double percjurosd) {
 		this.percjurosd = percjurosd;
 	}
 
-	public String getValorjurod() {
+	public Double getValorjurod() {
 		return valorjurod;
 	}
 
-	public void setValorjurod(String valorjurod) {
+	public void setValorjurod(Double valorjurod) {
 		this.valorjurod = valorjurod;
 	}
 
-	public String getDiasjuros() {
+	public Integer getDiasjuros() {
 		return diasjuros;
 	}
 
-	public void setDiasjuros(String diasjuros) {
+	public void setDiasjuros(Integer diasjuros) {
 		this.diasjuros = diasjuros;
 	}
 
-	public String getPercmulta() {
+	public Double getPercmulta() {
 		return percmulta;
 	}
 
-	public void setPercmulta(String percmulta) {
+	public void setPercmulta(Double percmulta) {
 		this.percmulta = percmulta;
 	}
 
-	public String getValormulta() {
+	public Double getValormulta() {
 		return valormulta;
 	}
 
-	public void setValormulta(String valormulta) {
+	public void setValormulta(Double valormulta) {
 		this.valormulta = valormulta;
 	}
 
-	public String getDiasmulta() {
+	public Integer getDiasmulta() {
 		return diasmulta;
 	}
 
-	public void setDiasmulta(String diasmulta) {
+	public void setDiasmulta(Integer diasmulta) {
 		this.diasmulta = diasmulta;
 	}
 
-	public String getPercdescd() {
+	public Double getPercdescd() {
 		return percdescd;
 	}
 
-	public void setPercdescd(String percdescd) {
+	public void setPercdescd(Double percdescd) {
 		this.percdescd = percdescd;
 	}
 
@@ -543,11 +583,11 @@ public class PagtosPostGre {
 		this.mesfimprov = mesfimprov;
 	}
 
-	public String getValoradian() {
+	public Double getValoradian() {
 		return valoradian;
 	}
 
-	public void setValoradian(String valoradian) {
+	public void setValoradian(Double valoradian) {
 		this.valoradian = valoradian;
 	}
 
@@ -559,11 +599,11 @@ public class PagtosPostGre {
 		this.dataadian = dataadian;
 	}
 
-	public String getValordev() {
+	public Double getValordev() {
 		return valordev;
 	}
 
-	public void setValordev(String valordev) {
+	public void setValordev(Double valordev) {
 		this.valordev = valordev;
 	}
 
@@ -575,43 +615,43 @@ public class PagtosPostGre {
 		this.datadev = datadev;
 	}
 
-	public String getValorirf() {
+	public Double getValorirf() {
 		return valorirf;
 	}
 
-	public void setValorirf(String valorirf) {
+	public void setValorirf(Double valorirf) {
 		this.valorirf = valorirf;
 	}
 
-	public String getValoripi() {
+	public Double getValoripi() {
 		return valoripi;
 	}
 
-	public void setValoripi(String valoripi) {
+	public void setValoripi(Double valoripi) {
 		this.valoripi = valoripi;
 	}
 
-	public String getValoriss() {
+	public Double getValoriss() {
 		return valoriss;
 	}
 
-	public void setValoriss(String valoriss) {
+	public void setValoriss(Double valoriss) {
 		this.valoriss = valoriss;
 	}
 
-	public String getValorinss() {
+	public Double getValorinss() {
 		return valorinss;
 	}
 
-	public void setValorinss(String valorinss) {
+	public void setValorinss(Double valorinss) {
 		this.valorinss = valorinss;
 	}
 
-	public String getValcofins() {
+	public Double getValcofins() {
 		return valcofins;
 	}
 
-	public void setValcofins(String valcofins) {
+	public void setValcofins(Double valcofins) {
 		this.valcofins = valcofins;
 	}
 
@@ -631,43 +671,43 @@ public class PagtosPostGre {
 		this.codbarra = codbarra;
 	}
 
-	public String getValpis() {
+	public Double getValpis() {
 		return valpis;
 	}
 
-	public void setValpis(String valpis) {
+	public void setValpis(Double valpis) {
 		this.valpis = valpis;
 	}
 
-	public String getValcsll() {
+	public Double getValcsll() {
 		return valcsll;
 	}
 
-	public void setValcsll(String valcsll) {
+	public void setValcsll(Double valcsll) {
 		this.valcsll = valcsll;
 	}
 
-	public String getValcpc() {
+	public Double getValcpc() {
 		return valcpc;
 	}
 
-	public void setValcpc(String valcpc) {
+	public void setValcpc(Double valcpc) {
 		this.valcpc = valcpc;
 	}
 
-	public String getValororig() {
+	public Double getValororig() {
 		return valororig;
 	}
 
-	public void setValororig(String valororig) {
+	public void setValororig(Double valororig) {
 		this.valororig = valororig;
 	}
 
-	public String getValorfrete() {
+	public Double getValorfrete() {
 		return valorfrete;
 	}
 
-	public void setValorfrete(String valorfrete) {
+	public void setValorfrete(Double valorfrete) {
 		this.valorfrete = valorfrete;
 	}
 
@@ -679,27 +719,27 @@ public class PagtosPostGre {
 		this.nomefornec = nomefornec;
 	}
 
-	public String getNumatend() {
+	public Integer getNumatend() {
 		return numatend;
 	}
 
-	public void setNumatend(String numatend) {
+	public void setNumatend(Integer numatend) {
 		this.numatend = numatend;
 	}
 
-	public String getNumconta() {
+	public Integer getNumconta() {
 		return numconta;
 	}
 
-	public void setNumconta(String numconta) {
+	public void setNumconta(Integer numconta) {
 		this.numconta = numconta;
 	}
 
-	public String getNumpgtori() {
+	public Integer getNumpgtori() {
 		return numpgtori;
 	}
 
-	public void setNumpgtori(String numpgtori) {
+	public void setNumpgtori(Integer numpgtori) {
 		this.numpgtori = numpgtori;
 	}
 
@@ -719,27 +759,27 @@ public class PagtosPostGre {
 		this.codimposto = codimposto;
 	}
 
-	public String getNumparcori() {
+	public Integer getNumparcori() {
 		return numparcori;
 	}
 
-	public void setNumparcori(String numparcori) {
+	public void setNumparcori(Integer numparcori) {
 		this.numparcori = numparcori;
 	}
 
-	public String getNumbaiori() {
+	public Integer getNumbaiori() {
 		return numbaiori;
 	}
 
-	public void setNumbaiori(String numbaiori) {
+	public void setNumbaiori(Integer numbaiori) {
 		this.numbaiori = numbaiori;
 	}
 
-	public String getQtd1() {
+	public Integer getQtd1() {
 		return qtd1;
 	}
 
-	public void setQtd1(String qtd1) {
+	public void setQtd1(Integer qtd1) {
 		this.qtd1 = qtd1;
 	}
 
@@ -799,27 +839,27 @@ public class PagtosPostGre {
 		this.chavenf = chavenf;
 	}
 
-	public String getValiva() {
+	public Double getValiva() {
 		return valiva;
 	}
 
-	public void setValiva(String valiva) {
+	public void setValiva(Double valiva) {
 		this.valiva = valiva;
 	}
 
-	public String getValit() {
+	public Double getValit() {
 		return valit;
 	}
 
-	public void setValit(String valit) {
+	public void setValit(Double valit) {
 		this.valit = valit;
 	}
 
-	public String getValiue() {
+	public Double getValiue() {
 		return valiue;
 	}
 
-	public void setValiue(String valiue) {
+	public void setValiue(Double valiue) {
 		this.valiue = valiue;
 	}
 
@@ -839,11 +879,11 @@ public class PagtosPostGre {
 		this.traspaso = traspaso;
 	}
 
-	public String getNumprojeto() {
+	public Integer getNumprojeto() {
 		return numprojeto;
 	}
 
-	public void setNumprojeto(String numprojeto) {
+	public void setNumprojeto(Integer numprojeto) {
 		this.numprojeto = numprojeto;
 	}
 
@@ -863,11 +903,11 @@ public class PagtosPostGre {
 		this.classidoc = classidoc;
 	}
 
-	public String getCodorcaf() {
+	public Integer getCodorcaf() {
 		return codorcaf;
 	}
 
-	public void setCodorcaf(String codorcaf) {
+	public void setCodorcaf(Integer codorcaf) {
 		this.codorcaf = codorcaf;
 	}
 

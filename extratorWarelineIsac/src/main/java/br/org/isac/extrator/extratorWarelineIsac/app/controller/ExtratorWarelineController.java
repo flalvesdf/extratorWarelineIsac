@@ -174,9 +174,9 @@ public class ExtratorWarelineController {
 
 		//somente para HMA
 		Integer codFilial = Integer.parseInt(p.getCodfilial());
-		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1);
-		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2);
-		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3);
+		if(codFilial == 1) c.setUnidade(ID_FILIAL_1);
+		if(codFilial == 2) c.setUnidade(ID_FILIAL_2);
+		if(codFilial == 3) c.setUnidade(ID_FILIAL_3);
 
 		c.setChavenf(p.getChavenf());
 		c.setClassidoc(p.getClassidoc());
@@ -215,17 +215,17 @@ public class ExtratorWarelineController {
 		c.setMesorcaf(p.getMesorcaf());
 		c.setNfservicos(p.getNfservicos());
 		c.setNomefornec(p.getNomefornec());
-		c.setNumatend(Integer.parseInt((p.getNumatend()!= null?p.getNumatend():"0")));
+		c.setNumatend(p.getNumatend());
 		c.setNumbaiori(p.getNumbaiori());
-		c.setNumconta(Integer.parseInt(p.getNumconta()!=null ? p.getNumconta():"0"));
+		c.setNumconta(p.getNumconta());
 		c.setNumcontbol(p.getNumcontbol());
 		c.setNumdoc(p.getNumdoc());
-		c.setNumentr(Integer.parseInt(p.getNumentr()!= null?p.getNumentr():"0"));
+		c.setNumentr(p.getNumentr());
 		c.setNumnotas(p.getNumnotas());
-		c.setNumpagto(Integer.parseInt(p.getNumpagto()!= null?p.getNumpagto():"0"));
+		c.setNumpagto(p.getNumpagto());
 		c.setNumparcori(p.getNumparcori());
-		c.setNumpgtori(Integer.parseInt(p.getNumpgtori()!=null?p.getNumpgtori():"0"));
-		c.setNumprojeto(Integer.parseInt(p.getNumprojeto()!= null ? p.getNumprojeto():"0"));
+		c.setNumpgtori(p.getNumpgtori());
+		c.setNumprojeto(p.getNumprojeto());
 		c.setObserva(p.getObserva());
 		c.setParcelas(p.getParcelas());
 		c.setPercdescd(p.getPercdescd());
@@ -241,7 +241,7 @@ public class ExtratorWarelineController {
 		c.setTipocobr(p.getTipocobr());
 		c.setTipodoc(p.getTipodoc());
 		c.setTraspaso(p.getTraspaso());
-		c.setTsObtencaoInformacao(currentTimestamp());
+		c.setTimestamp(currentTimestamp());
 		c.setValcofins(p.getValcofins());
 		c.setValcpc(p.getValcpc());
 		c.setValcsll(p.getValcsll());

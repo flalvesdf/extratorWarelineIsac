@@ -26,7 +26,7 @@ public class PagtosWareline {
 	@Size(min=0, max=2)
 	@Column(name="tipodoc")
 	private String tipodoc ;
-
+	
 	@Column(name="numentr")
 	private Integer numentr ;
 
@@ -70,21 +70,18 @@ public class PagtosWareline {
 	@Column(name="codopeatu")
 	private String codopeatu ;
 
-	@Size(min=0, max=3)
 	@Column(name="parcelas")
-	private String parcelas ;
+	private Integer parcelas ;
 
-	@Size(min=0, max=20)
 	@Column(name="valortot")
-	private String valortot;
+	private Double valortot;
 
 	@Size(min=0, max=2)
 	@Column(name="codmoeda")
 	private String codmoeda;
 
-	@Size(min=0, max=3)
 	@Column(name="numnotas")
-	private String numnotas;
+	private Integer numnotas;
 
 	@Size(min=0, max=1)
 	@Column(name="tipocobr")
@@ -110,37 +107,29 @@ public class PagtosWareline {
 	@Column(name="codevenbai")
 	private String codevenbai;
 
-	@Size(min=0, max=20)
 	@Column(name="percjurosm")
-	private String percjurosm;
+	private Double percjurosm;
 
-	@Size(min=0, max=20)
 	@Column(name="percjurosd")
-	private String percjurosd;
+	private Double percjurosd;
 
-	@Size(min=0, max=20)
 	@Column(name="valorjurod")
-	private String valorjurod;
+	private Double valorjurod;
 
-	@Size(min=0, max=2)
 	@Column(name="diasjuros")
-	private String diasjuros;
+	private Integer diasjuros;
 
-	@Size(min=0, max=10)
 	@Column(name="percmulta")
-	private String percmulta;
+	private Double percmulta;
 
-	@Size(min=0, max=20)
 	@Column(name="valormulta")
-	private String valormulta;
+	private Double valormulta;
 
-	@Size(min=0, max=3)
 	@Column(name="diasmulta")
-	private String diasmulta;
+	private Integer diasmulta;
 
-	@Size(min=0, max=20)
 	@Column(name="percdescd")
-	private String percdescd ;
+	private Double percdescd ;
 
 	@Size(min=0, max=1)
 	@Column(name="fluxo")
@@ -158,39 +147,32 @@ public class PagtosWareline {
 	@Column(name="mesfimprov")
 	private String mesfimprov ;
 	
-	@Size(min=0, max=20)
 	@Column(name="valoradian")
-	private String valoradian;
+	private Double valoradian;
 
 	@Column(name="dataadian")
 	private Date dataadian ;
 
-	@Size(min=0, max=20)
 	@Column(name="valordev")
-	private String valordev ;
+	private Double valordev ;
 
 	@Column(name="datadev")
 	private Date datadev ;
 
-	@Size(min=0, max=20)
 	@Column(name="valorirf")
-	private String valorirf ;
+	private Double valorirf ;
 
-	@Size(min=0, max=20)
 	@Column(name="valoripi")
-	private String valoripi ;
+	private Double valoripi ;
 
-	@Size(min=0, max=20)
 	@Column(name="valoriss")
-	private String valoriss ;
+	private Double valoriss ;
 
-	@Size(min=0, max=20)
 	@Column(name="valorinss")
-	private String valorinss ;
+	private Double valorinss ;
 
-	@Size(min=0, max=20)
 	@Column(name="valcofins")
-	private String valcofins ;
+	private Double valcofins ;
 
 	@Size(min=0, max=3)
 	@Column(name="codcondpg")
@@ -200,25 +182,20 @@ public class PagtosWareline {
 	@Column(name="codbarra")
 	private String codbarra ;
 
-	@Size(min=0, max=20)
 	@Column(name="valpis")
-	private String valpis ;
+	private Double valpis ;
 
-	@Size(min=0, max=20)
 	@Column(name="valcsll")
-	private String valcsll ;
+	private Double valcsll ;
 
-	@Size(min=0, max=20)
 	@Column(name="valcpc")
-	private String valcpc;
+	private Double valcpc;
 
-	@Size(min=0, max=20)
 	@Column(name="valororig")
-	private String valororig;
+	private Double valororig;
 
-	@Size(min=0, max=20)
 	@Column(name="valorfrete")
-	private String valorfrete;
+	private Double valorfrete;
 
 	@Size(min=0, max=80)
 	@Column(name="nomefornec")
@@ -241,17 +218,14 @@ public class PagtosWareline {
 	@Column(name="codimposto")
 	private String codimposto;
 
-	@Size(min=0, max=3)
 	@Column(name="numparcori")
-	private String numparcori;
+	private Integer numparcori;
 
-	@Size(min=0, max=10)
 	@Column(name="numbaiori")
-	private String numbaiori;
+	private Integer numbaiori;
 
-	@Size(min=0, max=10)
 	@Column(name="qtd1")
-	private String qtd1;
+	private Integer qtd1;
 
 	@Size(min=0, max=10)
 	@Column(name="codbansuge")
@@ -281,17 +255,14 @@ public class PagtosWareline {
 	@Column(name="chavenf")
 	private String chavenf;
 
-	@Size(min=0, max=20)
 	@Column(name="valiva")
-	private String valiva ;
+	private Double valiva ;
 
-	@Size(min=0, max=20)
 	@Column(name="valit")
-	private String valit ;
+	private Double valit ;
 
-	@Size(min=0, max=20)
 	@Column(name="valiue")
-	private String valiue;
+	private Double valiue;
 
 	@Size(min=0, max=15)
 	@Column(name="numcontbol")
@@ -304,7 +275,7 @@ public class PagtosWareline {
 	@Column(name="numprojeto")
 	private Integer numprojeto ;
 
-	@Size(min=0, max=7) //formato 09/2021
+	@Size(min=0, max=7) //formato 2021/09
 	@Column(name="mescomp")
 	private String mescomp ;
 
@@ -312,9 +283,8 @@ public class PagtosWareline {
 	@Column(name="classidoc")
 	private String classidoc;
 
-	@Size(min=0, max=3)
 	@Column(name="codorcaf")
-	private String codorcaf;
+	private Integer codorcaf;
 
 	@Size(min=0, max=6)
 	@Column(name="mesorcaf")
@@ -332,11 +302,11 @@ public class PagtosWareline {
 	@Column(name="desregdirf")
 	private String desregdirf ;
 	
-	@Column(name="idUnidade")
-	private Integer idUnidade;
+	@Column(name="unidade")
+	private Integer unidade;
 	
-	@Column(name="tsObtencaoInformacao")
-	private Timestamp tsObtencaoInformacao;
+	@Column(name="timestamp")
+	private Timestamp timestamp;
 
 	public Integer getId() {
 		return id;
@@ -458,19 +428,19 @@ public class PagtosWareline {
 		this.codopeatu = codopeatu;
 	}
 
-	public String getParcelas() {
+	public Integer getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(String parcelas) {
+	public void setParcelas(Integer parcelas) {
 		this.parcelas = parcelas;
 	}
 
-	public String getValortot() {
+	public Double getValortot() {
 		return valortot;
 	}
 
-	public void setValortot(String valortot) {
+	public void setValortot(Double valortot) {
 		this.valortot = valortot;
 	}
 
@@ -482,11 +452,11 @@ public class PagtosWareline {
 		this.codmoeda = codmoeda;
 	}
 
-	public String getNumnotas() {
+	public Integer getNumnotas() {
 		return numnotas;
 	}
 
-	public void setNumnotas(String numnotas) {
+	public void setNumnotas(Integer numnotas) {
 		this.numnotas = numnotas;
 	}
 
@@ -538,67 +508,67 @@ public class PagtosWareline {
 		this.codevenbai = codevenbai;
 	}
 
-	public String getPercjurosm() {
+	public Double getPercjurosm() {
 		return percjurosm;
 	}
 
-	public void setPercjurosm(String percjurosm) {
+	public void setPercjurosm(Double percjurosm) {
 		this.percjurosm = percjurosm;
 	}
 
-	public String getPercjurosd() {
+	public Double getPercjurosd() {
 		return percjurosd;
 	}
 
-	public void setPercjurosd(String percjurosd) {
+	public void setPercjurosd(Double percjurosd) {
 		this.percjurosd = percjurosd;
 	}
 
-	public String getValorjurod() {
+	public Double getValorjurod() {
 		return valorjurod;
 	}
 
-	public void setValorjurod(String valorjurod) {
+	public void setValorjurod(Double valorjurod) {
 		this.valorjurod = valorjurod;
 	}
 
-	public String getDiasjuros() {
+	public Integer getDiasjuros() {
 		return diasjuros;
 	}
 
-	public void setDiasjuros(String diasjuros) {
+	public void setDiasjuros(Integer diasjuros) {
 		this.diasjuros = diasjuros;
 	}
 
-	public String getPercmulta() {
+	public Double getPercmulta() {
 		return percmulta;
 	}
 
-	public void setPercmulta(String percmulta) {
+	public void setPercmulta(Double percmulta) {
 		this.percmulta = percmulta;
 	}
 
-	public String getValormulta() {
+	public Double getValormulta() {
 		return valormulta;
 	}
 
-	public void setValormulta(String valormulta) {
+	public void setValormulta(Double valormulta) {
 		this.valormulta = valormulta;
 	}
 
-	public String getDiasmulta() {
+	public Integer getDiasmulta() {
 		return diasmulta;
 	}
 
-	public void setDiasmulta(String diasmulta) {
+	public void setDiasmulta(Integer diasmulta) {
 		this.diasmulta = diasmulta;
 	}
 
-	public String getPercdescd() {
+	public Double getPercdescd() {
 		return percdescd;
 	}
 
-	public void setPercdescd(String percdescd) {
+	public void setPercdescd(Double percdescd) {
 		this.percdescd = percdescd;
 	}
 
@@ -634,11 +604,11 @@ public class PagtosWareline {
 		this.mesfimprov = mesfimprov;
 	}
 
-	public String getValoradian() {
+	public Double getValoradian() {
 		return valoradian;
 	}
 
-	public void setValoradian(String valoradian) {
+	public void setValoradian(Double valoradian) {
 		this.valoradian = valoradian;
 	}
 
@@ -650,11 +620,11 @@ public class PagtosWareline {
 		this.dataadian = dataadian;
 	}
 
-	public String getValordev() {
+	public Double getValordev() {
 		return valordev;
 	}
 
-	public void setValordev(String valordev) {
+	public void setValordev(Double valordev) {
 		this.valordev = valordev;
 	}
 
@@ -666,43 +636,43 @@ public class PagtosWareline {
 		this.datadev = datadev;
 	}
 
-	public String getValorirf() {
+	public Double getValorirf() {
 		return valorirf;
 	}
 
-	public void setValorirf(String valorirf) {
+	public void setValorirf(Double valorirf) {
 		this.valorirf = valorirf;
 	}
 
-	public String getValoripi() {
+	public Double getValoripi() {
 		return valoripi;
 	}
 
-	public void setValoripi(String valoripi) {
+	public void setValoripi(Double valoripi) {
 		this.valoripi = valoripi;
 	}
 
-	public String getValoriss() {
+	public Double getValoriss() {
 		return valoriss;
 	}
 
-	public void setValoriss(String valoriss) {
+	public void setValoriss(Double valoriss) {
 		this.valoriss = valoriss;
 	}
 
-	public String getValorinss() {
+	public Double getValorinss() {
 		return valorinss;
 	}
 
-	public void setValorinss(String valorinss) {
+	public void setValorinss(Double valorinss) {
 		this.valorinss = valorinss;
 	}
 
-	public String getValcofins() {
+	public Double getValcofins() {
 		return valcofins;
 	}
 
-	public void setValcofins(String valcofins) {
+	public void setValcofins(Double valcofins) {
 		this.valcofins = valcofins;
 	}
 
@@ -722,43 +692,43 @@ public class PagtosWareline {
 		this.codbarra = codbarra;
 	}
 
-	public String getValpis() {
+	public Double getValpis() {
 		return valpis;
 	}
 
-	public void setValpis(String valpis) {
+	public void setValpis(Double valpis) {
 		this.valpis = valpis;
 	}
 
-	public String getValcsll() {
+	public Double getValcsll() {
 		return valcsll;
 	}
 
-	public void setValcsll(String valcsll) {
+	public void setValcsll(Double valcsll) {
 		this.valcsll = valcsll;
 	}
 
-	public String getValcpc() {
+	public Double getValcpc() {
 		return valcpc;
 	}
 
-	public void setValcpc(String valcpc) {
+	public void setValcpc(Double valcpc) {
 		this.valcpc = valcpc;
 	}
 
-	public String getValororig() {
+	public Double getValororig() {
 		return valororig;
 	}
 
-	public void setValororig(String valororig) {
+	public void setValororig(Double valororig) {
 		this.valororig = valororig;
 	}
 
-	public String getValorfrete() {
+	public Double getValorfrete() {
 		return valorfrete;
 	}
 
-	public void setValorfrete(String valorfrete) {
+	public void setValorfrete(Double valorfrete) {
 		this.valorfrete = valorfrete;
 	}
 
@@ -810,27 +780,27 @@ public class PagtosWareline {
 		this.codimposto = codimposto;
 	}
 
-	public String getNumparcori() {
+	public Integer getNumparcori() {
 		return numparcori;
 	}
 
-	public void setNumparcori(String numparcori) {
+	public void setNumparcori(Integer numparcori) {
 		this.numparcori = numparcori;
 	}
 
-	public String getNumbaiori() {
+	public Integer getNumbaiori() {
 		return numbaiori;
 	}
 
-	public void setNumbaiori(String numbaiori) {
+	public void setNumbaiori(Integer numbaiori) {
 		this.numbaiori = numbaiori;
 	}
 
-	public String getQtd1() {
+	public Integer getQtd1() {
 		return qtd1;
 	}
 
-	public void setQtd1(String qtd1) {
+	public void setQtd1(Integer qtd1) {
 		this.qtd1 = qtd1;
 	}
 
@@ -890,27 +860,27 @@ public class PagtosWareline {
 		this.chavenf = chavenf;
 	}
 
-	public String getValiva() {
+	public Double getValiva() {
 		return valiva;
 	}
 
-	public void setValiva(String valiva) {
+	public void setValiva(Double valiva) {
 		this.valiva = valiva;
 	}
 
-	public String getValit() {
+	public Double getValit() {
 		return valit;
 	}
 
-	public void setValit(String valit) {
+	public void setValit(Double valit) {
 		this.valit = valit;
 	}
 
-	public String getValiue() {
+	public Double getValiue() {
 		return valiue;
 	}
 
-	public void setValiue(String valiue) {
+	public void setValiue(Double valiue) {
 		this.valiue = valiue;
 	}
 
@@ -954,11 +924,11 @@ public class PagtosWareline {
 		this.classidoc = classidoc;
 	}
 
-	public String getCodorcaf() {
+	public Integer getCodorcaf() {
 		return codorcaf;
 	}
 
-	public void setCodorcaf(String codorcaf) {
+	public void setCodorcaf(Integer codorcaf) {
 		this.codorcaf = codorcaf;
 	}
 
@@ -994,19 +964,19 @@ public class PagtosWareline {
 		this.desregdirf = desregdirf;
 	}
 
-	public Integer getIdUnidade() {
-		return idUnidade;
+	public Integer getUnidade() {
+		return unidade;
 	}
 
-	public void setIdUnidade(Integer idUnidade) {
-		this.idUnidade = idUnidade;
+	public void setUnidade(Integer unidade) {
+		this.unidade = unidade;
 	}
 
-	public Timestamp getTsObtencaoInformacao() {
-		return tsObtencaoInformacao;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setTsObtencaoInformacao(Timestamp tsObtencaoInformacao) {
-		this.tsObtencaoInformacao = tsObtencaoInformacao;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 }
