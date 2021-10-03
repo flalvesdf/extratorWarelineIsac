@@ -71,8 +71,6 @@ public class ExtratorWarelineController {
 	@Autowired
 	private PagtosMySqlRepository pagtosMySqlRepo;
 
-
-
 	@GetMapping(value = "/cadUni")
 	public ModelAndView cadUni(ModelMap model, HttpSession session) {
 
@@ -95,7 +93,6 @@ public class ExtratorWarelineController {
 
 		return new ModelAndView("index", model);
 	}
-
 
 	@GetMapping(value = "/cadFunc")
 	public ModelAndView cadFunc(ModelMap model, HttpSession session) {
@@ -166,9 +163,6 @@ public class ExtratorWarelineController {
 		return new ModelAndView("index", model);
 	}
 
-
-
-
 	private PagtosWareline convertePagamentosPostPreToMySql(PagtosPostGre p) {
 		PagtosWareline c = new PagtosWareline();
 
@@ -177,6 +171,13 @@ public class ExtratorWarelineController {
 		if(codFilial == 1) c.setUnidade(ID_FILIAL_1);
 		if(codFilial == 2) c.setUnidade(ID_FILIAL_2);
 		if(codFilial == 3) c.setUnidade(ID_FILIAL_3);
+		
+		String mescomp = p.getMescomp();
+		Integer ano = Integer.parseInt(mescomp.substring(0, 4));
+		Integer mes = Integer.parseInt(mescomp.substring(5));
+		
+		c.setAnocompetencia(ano);
+		c.setMescompetencia(mes);
 
 		c.setChavenf(p.getChavenf());
 		c.setClassidoc(p.getClassidoc());
