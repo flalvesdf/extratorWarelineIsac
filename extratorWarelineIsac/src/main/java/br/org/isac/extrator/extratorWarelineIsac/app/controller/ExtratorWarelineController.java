@@ -46,138 +46,138 @@ public class ExtratorWarelineController {
 	private Integer ID_FILIAL_1 = ParametrosUnidade.HMA.intValue();
 	private Integer ID_FILIAL_2 = ParametrosUnidade.AMB_MUNIC_ARAGUAINA.intValue();
 	private Integer ID_FILIAL_3 = ParametrosUnidade.UTI_HRA.intValue();
-	
+
 	@Autowired
 	private CadUniPostGreRepository cadUniPostGreRepo;
-	
+
 	@Autowired
 	private CadUniMySqlRepository cadUniMySqlRepo;
-	
+
 	@Autowired
 	private CadFuncPostGreRepository cadFuncPostGreRepo;
-	
+
 	@Autowired
 	private CadFuncMySqlRepository cadFuncMySqlRepo;
-	
+
 	@Autowired
 	private CadPrestPostGreRepository cadPrestPostGreRepo;
-	
+
 	@Autowired
 	private CadPrestMySqlRepository cadPrestMySqlRepo;
-	
+
 	@Autowired
 	private PagtosPostGreRepository pagtosPostGreRepo;
-	
+
 	@Autowired
 	private PagtosMySqlRepository pagtosMySqlRepo;
-	
-	
-	
+
+
+
 	@GetMapping(value = "/cadUni")
 	public ModelAndView cadUni(ModelMap model, HttpSession session) {
-		
+
 		System.out.println("Comecando a recuperacao de registros de CadUni: "+ currentTimestamp());
 
 		List<CadUniPostGre> cadastros = cadUniPostGreRepo.findAll();
-		
+
 		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de CadUni (convert to Caduni - MySQL): "+ currentTimestamp());
-		
+
 		List<CadUniWareline> cadsPt = new ArrayList<CadUniWareline>();
 		for(CadUniPostGre c : cadastros) {
 			cadsPt.add(converteUnidadesPostGreeToMySql(c));
 		}
-		
+
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		cadUniMySqlRepo.saveAll(cadsPt);
-		
+
 		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		return new ModelAndView("index", model);
 	}
-	
-	
+
+
 	@GetMapping(value = "/cadFunc")
 	public ModelAndView cadFunc(ModelMap model, HttpSession session) {
-		
+
 		System.out.println("Comecando a recuperacao de registros de cadFunc: "+ currentTimestamp());
 
 		List<CadFuncPostGre> cadastros = cadFuncPostGreRepo.findAll();
-		
+
 		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadFunc (convert to cadFunc - MySQL): "+ currentTimestamp());
-		
+
 		List<CadFuncWareline> cadsPt = new ArrayList<CadFuncWareline>();
 		for(CadFuncPostGre c : cadastros) {
 			cadsPt.add(converteFuncionariosPostGreToMySql(c));
 		}
-		
+
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		cadFuncMySqlRepo.saveAll(cadsPt);
-		
+
 		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		return new ModelAndView("index", model);
 	}
-	
+
 	@GetMapping(value = "/cadPrest")
 	public ModelAndView cadPrest(ModelMap model, HttpSession session) {
-		
+
 		System.out.println("Comecando a recuperacao de registros de cadPrest: "+ currentTimestamp());
 
 		List<CadPrestPostGre> cadastros = cadPrestPostGreRepo.findAll();
-		
+
 		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadPrest (convert to cadPrest - MySQL): "+ currentTimestamp());
-		
+
 		List<CadPrestWareline> cadsPt = new ArrayList<CadPrestWareline>();
 		for(CadPrestPostGre c : cadastros) {
 			cadsPt.add(convertePrestadoresPostPreToMySql(c));
 		}
-		
+
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		cadPrestMySqlRepo.saveAll(cadsPt);
-		
+
 		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		return new ModelAndView("index", model);
 	}
-	
+
 	@GetMapping(value = "/pagtos")
 	public ModelAndView pagtos(@ModelAttribute("mesComp") String mesComp, ModelMap model, HttpSession session) {
-		
+
 		System.out.println("Comecando a recuperacao de registros de pagtos: "+ currentTimestamp());
 
 		List<PagtosPostGre> pgtos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mesComp);
-		
+
 		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pagtos (convert to pagtos - MySQL): "+ currentTimestamp());
-		
+
 		List<PagtosWareline> cadsPt = new ArrayList<PagtosWareline>();
 		for(PagtosPostGre c : pgtos) {
 			cadsPt.add(convertePagamentosPostPreToMySql(c));
 		}
-		
+
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		pagtosMySqlRepo.saveAll(cadsPt);
-		
+
 		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ currentTimestamp());
-		
+
 		return new ModelAndView("index", model);
 	}
-	
-	
-	
-	
+
+
+
+
 	private PagtosWareline convertePagamentosPostPreToMySql(PagtosPostGre p) {
 		PagtosWareline c = new PagtosWareline();
-		
+
 		//somente para HMA
 		Integer codFilial = Integer.parseInt(p.getCodfilial());
-		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1+"");
-		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2+"");
-		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3+"");
-		
+		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1);
+		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2);
+		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3);
+
 		c.setChavenf(p.getChavenf());
 		c.setClassidoc(p.getClassidoc());
 		c.setCodbansuge(p.getCodbansuge());
@@ -260,13 +260,13 @@ public class ExtratorWarelineController {
 		c.setValororig(p.getValororig());
 		c.setValortot(p.getValortot());
 		c.setValpis(p.getValpis());
-		
+
 		return c;
 	}
-	
+
 	private CadPrestWareline convertePrestadoresPostPreToMySql(CadPrestPostGre p) {
 		CadPrestWareline c = new CadPrestWareline();
-		
+
 		c.setAgendaweb(p.getAgendaweb());
 		c.setAgeprest(p.getAgeprest());
 		c.setApelido(p.getApelido());
@@ -374,13 +374,13 @@ public class ExtratorWarelineController {
 		c.setUfcr(p.getUfcr());
 		c.setValiprop(p.getValiprop());
 		c.setVincsus(p.getVincsus());
-		
+
 		return c;
 	}
-	
+
 	private CadFuncWareline converteFuncionariosPostGreToMySql(CadFuncPostGre p) {
 		CadFuncWareline c = new CadFuncWareline();
-		
+
 		c.setBairrofunc(p.getBairrofunc());
 		c.setBipfunc(p.getBairrofunc());
 		c.setCartofunc(p.getCartofunc());
@@ -428,19 +428,19 @@ public class ExtratorWarelineController {
 		c.setUffunc(p.getUffunc());
 		c.setUfnasfunc(p.getUfnasfunc());
 		c.setUfrgfunc(p.getUfrgfunc());
-		
+
 		return c;
 	}
 
 	private CadUniWareline converteUnidadesPostGreeToMySql(CadUniPostGre p) {
 		CadUniWareline c = new CadUniWareline();
-		
+
 		//somente para HMA
 		Integer codFilial = Integer.parseInt(p.getCoduni());
-		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1+"");
-		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2+"");
-		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3+"");
-		
+		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1);
+		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2);
+		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3);
+
 		c.setCnes(p.getCnes());
 		c.setCodconexa(p.getCodconexa());
 		c.setCodprest(p.getCodprest());
@@ -464,184 +464,30 @@ public class ExtratorWarelineController {
 		c.setSecretdest(p.getSecretdest());
 		c.setTiposecret(p.getTiposecret());
 		c.setTsObtencaoInformacao(currentTimestamp());
-		
+
 		return c;
 	}
-	
+
 	private Timestamp currentTimestamp() {
-	Timestamp now1 = null;
-	try {
-		ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+		Timestamp now1 = null;
+		try {
+			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
-		int ano = Integer.parseInt(now.toString().substring(0, 4));
-		int mes = Integer.parseInt(now.toString().substring(5, 7));
-		int dias = Integer.parseInt(now.toString().substring(8, 10));
-		int horas = Integer.parseInt(now.toString().substring(11, 13));
-		int minutos = Integer.parseInt(now.toString().substring(14, 16));
-		int segundos = Integer.parseInt(now.toString().substring(17, 19));
-		int nanoSegundos = Integer.parseInt(now.toString().substring(20, 23));
+			int ano = Integer.parseInt(now.toString().substring(0, 4));
+			int mes = Integer.parseInt(now.toString().substring(5, 7));
+			int dias = Integer.parseInt(now.toString().substring(8, 10));
+			int horas = Integer.parseInt(now.toString().substring(11, 13));
+			int minutos = Integer.parseInt(now.toString().substring(14, 16));
+			int segundos = Integer.parseInt(now.toString().substring(17, 19));
+			int nanoSegundos = Integer.parseInt(now.toString().substring(20, 23));
 
-		LocalDateTime localDateTime = LocalDateTime.of(ano, mes, dias, horas, minutos, segundos, nanoSegundos);
-		Timestamp currentTimestamp = Timestamp.valueOf(localDateTime);
-		now1 = currentTimestamp;
-	}catch (Exception e) {
-		now1 = new Timestamp(System.currentTimeMillis());
+			LocalDateTime localDateTime = LocalDateTime.of(ano, mes, dias, horas, minutos, segundos, nanoSegundos);
+			Timestamp currentTimestamp = Timestamp.valueOf(localDateTime);
+			now1 = currentTimestamp;
+		}catch (Exception e) {
+			now1 = new Timestamp(System.currentTimeMillis());
+		}
+
+		return now1;
 	}
-	
-	return now1;
-}
-	
-	
-//	@GetMapping(value = "/start")
-//	public ModelAndView start(ModelMap model, HttpSession session) {
-//
-//		List<CadFuncPostGre> cads = cfPRepo.findAll();
-//		model.addAttribute("cads", cads);
-//		return new ModelAndView("index", model);
-//	}
-//	
-//	@GetMapping(value = "/start2")
-//	public ModelAndView start2(ModelMap model, HttpSession session) {
-//
-//		List<CadFuncMySql> cads = cfMsRepo.findAll();
-//		model.addAttribute("cads2", cads);
-//		return new ModelAndView("index", model);
-//	}
-//	
-//	@GetMapping(value = "/saveMysql")
-//	public ModelAndView saveMysql(ModelMap model, HttpSession session) {
-//		
-//		CadFuncMySql c = new CadFuncMySql();
-//		c.setCodprest("1795");
-//		c.setDatnasfunc("23/06/1984");
-//		c.setEnderfunc("GFDGHGH");
-//		c.setEstcivfunc("F");
-//		c.setSexofunc("F");
-//				
-//		cfMsRepo.save(c);
-//
-//		List<CadFuncMySql> cads = cfMsRepo.findAll();
-//		model.addAttribute("cads2", cads);
-//		return new ModelAndView("index", model);
-//	}
-//	
-//	
-//	//@Scheduled(cron = "0 15 10 15 * ?") //todo dia 15 do mes as 10:15 da manha
-//	@Scheduled(fixedDelay = 1000*60)
-//	public void scheduleTaskUsingCronExpression() {
-//		Timestamp now1 = null;
-//		try {
-//			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
-//
-//			int ano = Integer.parseInt(now.toString().substring(0, 4));
-//			int mes = Integer.parseInt(now.toString().substring(5, 7));
-//			int dias = Integer.parseInt(now.toString().substring(8, 10));
-//			int horas = Integer.parseInt(now.toString().substring(11, 13));
-//			int minutos = Integer.parseInt(now.toString().substring(14, 16));
-//			int segundos = Integer.parseInt(now.toString().substring(17, 19));
-//			int nanoSegundos = Integer.parseInt(now.toString().substring(20, 23));
-//
-//			LocalDateTime localDateTime = LocalDateTime.of(ano, mes, dias, horas, minutos, segundos, nanoSegundos);
-//			Timestamp currentTimestamp = Timestamp.valueOf(localDateTime);
-//			now1 = currentTimestamp;
-//		}catch (Exception e) {
-//			now1 = new Timestamp(System.currentTimeMillis());
-//		}
-//	 
-//	    //long now = System.currentTimeMillis() / 1000;
-//	    System.out.println(
-//	      "schedule tasks using cron jobs - " + now1);
-//	}
-//	
-//	private Timestamp currentTimestamp() {
-//		Timestamp now1 = null;
-//		try {
-//			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
-//
-//			int ano = Integer.parseInt(now.toString().substring(0, 4));
-//			int mes = Integer.parseInt(now.toString().substring(5, 7));
-//			int dias = Integer.parseInt(now.toString().substring(8, 10));
-//			int horas = Integer.parseInt(now.toString().substring(11, 13));
-//			int minutos = Integer.parseInt(now.toString().substring(14, 16));
-//			int segundos = Integer.parseInt(now.toString().substring(17, 19));
-//			int nanoSegundos = Integer.parseInt(now.toString().substring(20, 23));
-//
-//			LocalDateTime localDateTime = LocalDateTime.of(ano, mes, dias, horas, minutos, segundos, nanoSegundos);
-//			Timestamp currentTimestamp = Timestamp.valueOf(localDateTime);
-//			now1 = currentTimestamp;
-//		}catch (Exception e) {
-//			now1 = new Timestamp(System.currentTimeMillis());
-//		}
-//		
-//		return now1;
-//	}
-//	
-//	@GetMapping(value = "/teste1")
-//	public void teste1(ModelMap model, HttpSession session) {
-//		System.out.println("comecando: "+ currentTimestamp());
-//		
-//		List<PagtosPostGre> pgtos = obterPagamentosMesCompentencia();
-//		salvarPagamentosPortalTransparencia(pgtos);
-//		
-//		System.out.println("fim: "+ currentTimestamp());
-//	}
-//	
-//	private List<PagtosPostGre> obterPagamentosMesCompentencia(){
-//		List<PagtosPostGre> pgtos = pagtosWareline.obterPagamentosWarelinePorMesCompetencia();
-//		return pgtos;
-//	}
-//	
-//	
-//	/***
-//	 * SELECT a.numpagto, a.tipodoc, a.numentr, a.numdoc, a.codfilial, a.codprest, a.portador, 
-//       a.observa, a.datemissao, a.datentrada, a.datdigita, a.codope, a.dataultatu, 
-//       a.codopeatu, a.parcelas, a.valortot, a.nomefornec, a.mescomp, 
-//       b.tipoprest, b.categprest, b.nomeprest FROM "PACIENTE".pagtos a INNER JOIN "PACIENTE".cadprest b on (a.codprest = b.codprest) 
-//
-//  where a.mescomp = '2021/09';
-//	 * @param idUnidade
-//	 * @return
-//	 */
-//	private void salvarPagamentosPortalTransparencia(List<PagtosPostGre> pgtos) {
-//		
-//		List<PagamentosWareline> pagamentos = new ArrayList<>();
-//		for(PagtosPostGre p: pgtos) {
-//			PagamentosWareline pg = new PagamentosWareline();
-//			pg.setNumpagto(p.getNumpagto());
-//			pg.setNumdoc(p.getNumdoc());
-//			pg.setCodfilial(p.getCodfilial());
-//			pg.setCodprest(p.getCodprest());
-//			pg.setObserva(p.getObserva());
-//			pg.setDatemissao(p.getDatemissao());
-//			pg.setDatentrada(p.getDatentrada());
-//			pg.setDatdigita(p.getDatdigita());
-//			pg.setDataultatu(p.getDataultatu());
-//			pg.setValortot(p.getValortot());
-//			pg.setNomefornec(p.getNomefornec());
-//			pg.setMescomp(p.getMescomp());
-//			pg.setTipoprest(p.getTipoprest());
-//			pg.setCategprest(p.getCategprest());
-//			pg.setNomeprest(p.getNomeprest());
-//			
-//			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.AMB_MUNIC_ARAGUAINA) {
-//				pg.setIdUnidade(ParametrosUnidade.AMB_MUNIC_ARAGUAINA);
-//			}
-//			
-//			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.HMA) {
-//				pg.setIdUnidade(ParametrosUnidade.HMA);
-//			}
-//			
-//			if(null != pg.getCodfilial() && Integer.parseInt(pg.getCodfilial()) == ParametrosUnidade.UTI_HRA) {
-//				pg.setIdUnidade(ParametrosUnidade.UTI_HRA);
-//			}
-//			
-//			pagamentos.add(pg);
-//			
-//			ptPagtos.saveAll(pagamentos);
-//
-//		}
-//	}
-	
-	
-
 }

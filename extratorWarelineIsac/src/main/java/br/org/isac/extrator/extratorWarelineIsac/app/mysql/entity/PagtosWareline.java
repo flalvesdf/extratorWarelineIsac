@@ -333,7 +333,7 @@ public class PagtosWareline {
 	private String desregdirf ;
 	
 	@Column(name="idUnidade")
-	private String idUnidade;
+	private Integer idUnidade;
 	
 	@Column(name="tsObtencaoInformacao")
 	private Timestamp tsObtencaoInformacao;
@@ -994,11 +994,11 @@ public class PagtosWareline {
 		this.desregdirf = desregdirf;
 	}
 
-	public String getIdUnidade() {
+	public Integer getIdUnidade() {
 		return idUnidade;
 	}
 
-	public void setIdUnidade(String idUnidade) {
+	public void setIdUnidade(Integer idUnidade) {
 		this.idUnidade = idUnidade;
 	}
 
