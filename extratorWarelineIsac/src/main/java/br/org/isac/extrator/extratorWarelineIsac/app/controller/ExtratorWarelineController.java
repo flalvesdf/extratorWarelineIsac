@@ -44,11 +44,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadPrest
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadUniPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreDao;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreRepository;
-
-
 
 @RestController
 public class ExtratorWarelineController {
@@ -90,14 +86,8 @@ public class ExtratorWarelineController {
 	@Autowired
 	private CadDespMySqlRepository cadDespMySqlRepo;
 	
-	//@Autowired
-	//private PgDespPostGreRepository pgDespPostGreRepo;
-	
 	@Autowired
 	private PgDespMySqlRepository pgDespMyRepo;
-	
-	//@Autowired
-	//private PgParcelPostGreRepository pgParcelPostGreRepo;
 	
 	@Autowired
 	private PgParcelMySqlRepository pgParcelMySqlRepo;
@@ -258,7 +248,7 @@ public class ExtratorWarelineController {
 
 		List<PgDespMySql> cadsPt = new ArrayList<PgDespMySql>();
 		for(PgDespPostGre c : pgtos) {
-			cadsPt.add(ConversorObjetos.convertePgDespPostGreToMySql(c));
+			cadsPt.add(ConversorObjetos.convertePgDespPostGreToMySql(c, mesComp));
 		}
 
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
@@ -281,7 +271,7 @@ public class ExtratorWarelineController {
 
 		List<PgParcelMySql> cadsPt = new ArrayList<PgParcelMySql>();
 		for(PgParcelPostGre c : pgtos) {
-			cadsPt.add(ConversorObjetos.convertePgParcelPostGreToMySql(c));
+			cadsPt.add(ConversorObjetos.convertePgParcelPostGreToMySql(c, mesComp));
 		}
 
 		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());

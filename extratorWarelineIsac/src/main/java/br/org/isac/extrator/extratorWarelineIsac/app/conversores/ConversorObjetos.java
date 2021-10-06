@@ -34,7 +34,7 @@ public class ConversorObjetos {
 	private static final Integer ID_FILIAL_2 = ParametrosUnidade.AMB_MUNIC_ARAGUAINA.intValue();
 	private static final Integer ID_FILIAL_3 = ParametrosUnidade.UTI_HRA.intValue();
 	
-	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPostGre p) {
+	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPostGre p, String mescomp) {
 		PgParcelMySql c = new PgParcelMySql();
 		c.setCnabitem(p.getCnabitem());
 		c.setCnabseq(p.getCnabseq());
@@ -81,10 +81,12 @@ public class ConversorObjetos {
 		c.setVlexcede(p.getVlexcede());
 		c.setVlimpostos(p.getVlimpostos());
 		c.setVlimpprev(p.getVlimpprev());
+		c.setMescompetencia(Integer.parseInt(mescomp.substring(0, 4)));
+		c.setAnocompetencia(Integer.parseInt(mescomp.substring(5)));
 		return c;
 	}
 	
-	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPostGre p) {
+	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPostGre p, String mescomp) {
 		PgDespMySql c = new PgDespMySql();
 		c.setCodcc(p.getCodcc());
 		c.setCoddesp(p.getCoddesp());
@@ -94,6 +96,8 @@ public class ConversorObjetos {
 		c.setUnidade(ID_FILIAL_1);
 		c.setValor(p.getValor());
 		c.setValorperc(p.getValorperc());
+		c.setMescompetencia(Integer.parseInt(mescomp.substring(0, 4)));
+		c.setAnocompetencia(Integer.parseInt(mescomp.substring(5)));
 		
 		return c;
 	}

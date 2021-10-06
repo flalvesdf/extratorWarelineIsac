@@ -153,6 +153,28 @@ public class PgParcelMySql {
 	
 	@Column(name="timestamp")
 	private Timestamp timestamp;
+	
+	@Column(name="mescompetencia")
+	private Integer mescompetencia;
+	
+	@Column(name="anocompetencia")
+	private Integer anocompetencia;
+	
+	public Integer getMescompetencia() {
+		return mescompetencia;
+	}
+
+	public void setMescompetencia(Integer mescompetencia) {
+		this.mescompetencia = mescompetencia;
+	}
+
+	public Integer getAnocompetencia() {
+		return anocompetencia;
+	}
+
+	public void setAnocompetencia(Integer anocompetencia) {
+		this.anocompetencia = anocompetencia;
+	}
 
 	public Integer getId() {
 		return id;
