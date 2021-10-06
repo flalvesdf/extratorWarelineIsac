@@ -43,6 +43,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadGrude
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadPrestPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadUniPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreRepository;
 
@@ -99,6 +100,32 @@ public class ExtratorWarelineController {
 	
 	@Autowired
 	private PgParcelMySqlRepository pgParcelMySqlRepo;
+	
+	@Autowired
+	private PgDespPostGreDao pgDao;
+	
+	@GetMapping(value = "/pgDao")
+	public ModelAndView pgDao(ModelMap model, HttpSession session) {
+
+		System.out.println("Comecando a recuperacao de registros de cadgrude: "+ ConversorObjetos.currentTimestamp());
+
+		List<PgDespPostGre> cadastros = pgDao.getPagamentosMesCompetencia("2021/09");
+
+		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadgrude (convert to Caduni - MySQL): "+ ConversorObjetos.currentTimestamp());
+
+		List<PgDespMySql> cadsPt = new ArrayList<PgDespMySql>();
+		for(PgDespPostGre c : cadastros) {
+			cadsPt.add(ConversorObjetos.convertePgDespPostGreToMySql(c));
+		}
+
+		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
+
+		//cadGrudeMySqlRepo.saveAll(cadsPt);
+
+		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
+
+		return new ModelAndView("index", model);
+	}
 	
 	@GetMapping(value = "/cadgrude")
 	public ModelAndView cadgrude(ModelMap model, HttpSession session) {
