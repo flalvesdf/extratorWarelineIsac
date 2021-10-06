@@ -9,7 +9,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPost
 
 public interface PgParcelPostGreRepository extends JpaRepository<PgParcelPostGre, Integer> {
 	
-	@Query("select u from PgParcelPostGre u inner join PagtosPostGre ue on (u.numpagto = ue.numpagto) where u.mescomp = ?1")
+	@Query("select u from PgParcelPostGre u inner join PagtosPostGre ue on (u.numpagto = ue.numpagto) where ue.mescomp = ?1")
 	public List<PgParcelPostGre> obterPagamentosMesCompetencia(String mesComp);
 
 }

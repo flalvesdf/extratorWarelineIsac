@@ -45,7 +45,7 @@ public class PgParcelPostGre {
 	@Column(name="codopebx")
 	private String codopebx;
 	
-	@Column(name="numpagto")
+	@Column(name="vlimpostos")
 	private Double vlimpostos;
 	
 	@Column(name="codmotdesc")
