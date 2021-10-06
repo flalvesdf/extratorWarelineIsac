@@ -81,8 +81,8 @@ public class ConversorObjetos {
 		c.setVlexcede(p.getVlexcede());
 		c.setVlimpostos(p.getVlimpostos());
 		c.setVlimpprev(p.getVlimpprev());
-		c.setMescompetencia(Integer.parseInt(mescomp.substring(0, 4)));
-		c.setAnocompetencia(Integer.parseInt(mescomp.substring(5)));
+		c.setMescompetencia(Integer.parseInt(mescomp.substring(5)));
+		c.setAnocompetencia(Integer.parseInt(mescomp.substring(0,4)));
 		return c;
 	}
 	
@@ -96,8 +96,8 @@ public class ConversorObjetos {
 		c.setUnidade(ID_FILIAL_1);
 		c.setValor(p.getValor());
 		c.setValorperc(p.getValorperc());
-		c.setMescompetencia(Integer.parseInt(mescomp.substring(0, 4)));
-		c.setAnocompetencia(Integer.parseInt(mescomp.substring(5)));
+		c.setMescompetencia(Integer.parseInt(mescomp.substring(5)));
+		c.setAnocompetencia(Integer.parseInt(mescomp.substring(0,4)));
 		
 		return c;
 	}
