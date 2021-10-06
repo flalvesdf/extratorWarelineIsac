@@ -45,6 +45,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadUniPo
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreDao;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreRepository;
 
 
@@ -89,43 +90,23 @@ public class ExtratorWarelineController {
 	@Autowired
 	private CadDespMySqlRepository cadDespMySqlRepo;
 	
-	@Autowired
-	private PgDespPostGreRepository pgDespPostGreRepo;
+	//@Autowired
+	//private PgDespPostGreRepository pgDespPostGreRepo;
 	
 	@Autowired
 	private PgDespMySqlRepository pgDespMyRepo;
 	
-	@Autowired
-	private PgParcelPostGreRepository pgParcelPostGreRepo;
+	//@Autowired
+	//private PgParcelPostGreRepository pgParcelPostGreRepo;
 	
 	@Autowired
 	private PgParcelMySqlRepository pgParcelMySqlRepo;
 	
 	@Autowired
-	private PgDespPostGreDao pgDao;
+	private PgDespPostGreDao pgDespPostGresDao;
 	
-	@GetMapping(value = "/pgDao")
-	public ModelAndView pgDao(ModelMap model, HttpSession session) {
-
-		System.out.println("Comecando a recuperacao de registros de cadgrude: "+ ConversorObjetos.currentTimestamp());
-
-		List<PgDespPostGre> cadastros = pgDao.getPagamentosMesCompetencia("2021/09");
-
-		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadgrude (convert to Caduni - MySQL): "+ ConversorObjetos.currentTimestamp());
-
-		List<PgDespMySql> cadsPt = new ArrayList<PgDespMySql>();
-		for(PgDespPostGre c : cadastros) {
-			cadsPt.add(ConversorObjetos.convertePgDespPostGreToMySql(c));
-		}
-
-		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-
-		//cadGrudeMySqlRepo.saveAll(cadsPt);
-
-		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-
-		return new ModelAndView("index", model);
-	}
+	@Autowired
+	private PgParcelPostGreDao pgParcelPostGreDao;
 	
 	@GetMapping(value = "/cadgrude")
 	public ModelAndView cadgrude(ModelMap model, HttpSession session) {
@@ -271,7 +252,7 @@ public class ExtratorWarelineController {
 		System.out.println("Comecando a recuperacao de registros de pgdesp: "+ ConversorObjetos.currentTimestamp());
 
 		//List<PgDespPostGre> pgtos = pgDespPostGreRepo.obterPagamentosMesCompetencia(mesComp);
-		List<PgDespPostGre> pgtos = pgDao.getPagamentosMesCompetencia(mesComp);
+		List<PgDespPostGre> pgtos = pgDespPostGresDao.getPagamentosMesCompetencia(mesComp);
 
 		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pgdesp (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
 
@@ -290,11 +271,11 @@ public class ExtratorWarelineController {
 	}
 	
 	@GetMapping(value = "/pgparcel")
-	public ModelAndView pgparcel(@ModelAttribute("mesComp") String mesComp, ModelMap model, HttpSession session) {
+	public ModelAndView pgparcel(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
 
 		System.out.println("Comecando a recuperacao de registros de pgparcel: "+ ConversorObjetos.currentTimestamp());
 
-		List<PgParcelPostGre> pgtos = pgParcelPostGreRepo.obterPagamentosMesCompetencia(mesComp);
+		List<PgParcelPostGre> pgtos = pgParcelPostGreDao.getPagamentosMesCompetencia(mesComp);
 
 		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pgparcel (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
 
