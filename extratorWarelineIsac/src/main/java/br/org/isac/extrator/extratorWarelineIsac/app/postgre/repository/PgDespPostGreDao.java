@@ -20,7 +20,7 @@ public class PgDespPostGreDao {
 		
 		List<PgDespPostGre> results = null;
 		try {
-			results = em.createQuery("SELECT * from PgDespPostGre a join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp =:mescomp").setParameter("mescomp", mescomp).getResultList();
+			results = em.createQuery("SELECT a from PgDespPostGre a inner join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp").setParameter("mescomp", mescomp).getResultList();
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}

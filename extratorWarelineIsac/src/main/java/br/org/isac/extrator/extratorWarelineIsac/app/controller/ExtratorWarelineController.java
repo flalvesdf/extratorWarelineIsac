@@ -266,11 +266,12 @@ public class ExtratorWarelineController {
 	}
 	
 	@GetMapping(value = "/pgdesp")
-	public ModelAndView pgdesp(@ModelAttribute("mesComp") String mesComp, ModelMap model, HttpSession session) {
+	public ModelAndView pgdesp(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
 
 		System.out.println("Comecando a recuperacao de registros de pgdesp: "+ ConversorObjetos.currentTimestamp());
 
-		List<PgDespPostGre> pgtos = pgDespPostGreRepo.obterPagamentosMesCompetencia(mesComp);
+		//List<PgDespPostGre> pgtos = pgDespPostGreRepo.obterPagamentosMesCompetencia(mesComp);
+		List<PgDespPostGre> pgtos = pgDao.getPagamentosMesCompetencia(mesComp);
 
 		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pgdesp (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
 
