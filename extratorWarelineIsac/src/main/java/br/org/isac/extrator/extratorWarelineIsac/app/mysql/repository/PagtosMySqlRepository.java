@@ -8,7 +8,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline
 
 public interface PagtosMySqlRepository extends JpaRepository<PagtosWareline, Integer> {
 	
-	@Query("delete u from PagtosWareline u where u.mescomp = ?1")
+	@Query("delete from PagtosWareline u where u.mescomp = ?1")
 	public void deletePagamentosMesCompetencia(@Param("mescomp") String mesComp);
 
 }

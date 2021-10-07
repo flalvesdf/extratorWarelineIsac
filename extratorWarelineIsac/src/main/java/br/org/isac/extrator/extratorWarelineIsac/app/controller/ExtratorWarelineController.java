@@ -237,16 +237,16 @@ public class ExtratorWarelineController {
 	@Scheduled(cron = "0 01 21 * * *", zone = "America/Sao_Paulo")
 	public void scheduleTaskUsingCronExpression() {
 	 
-	    long now = System.currentTimeMillis() / 1000;
-	    System.out.println("Tarefa agendada para as 15 horas - " + now);
+	    //long now = System.currentTimeMillis() / 1000;
+	    System.out.println("Tarefa agendada para as 21:01 horas - " + ConversorObjetos.currentTimestamp());
 	}
 	
 	/*neste outro exemplo, sera executado a cada 15 minutos*/
 	@Scheduled(fixedDelay = (900000))
 	public void scheduleTaskUsingCronExpression2() {
 	 
-	    long now = System.currentTimeMillis() / 1000;
-	    System.out.println("Tarefa agendada para rodar a cada 1 hora - " + now);
+	    //long now = System.currentTimeMillis() / 1000;
+	    System.out.println("Tarefa agendada para rodar a cada 15 minutos - " + ConversorObjetos.currentTimestamp());
 	}
 	
 	@GetMapping(value = "/cadgrude")
