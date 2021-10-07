@@ -1,5 +1,7 @@
 package br.org.isac.extrator.extratorWarelineIsac.app.conversores;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -456,5 +458,25 @@ public class ConversorObjetos {
 		}
 
 		return now1;
+	}
+	
+	public static Integer getCurrentYear() {
+		ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+		int ano = Integer.parseInt(now.toString().substring(0, 4));
+		return ano;
+	}
+	
+	public static Integer getCurrentMonth() {
+		ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+		int mes = Integer.parseInt(now.toString().substring(5, 7));
+		return mes;
+	}
+	
+	public static String getIp() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			return "0.0.0.0";
+		}
 	}
 }
