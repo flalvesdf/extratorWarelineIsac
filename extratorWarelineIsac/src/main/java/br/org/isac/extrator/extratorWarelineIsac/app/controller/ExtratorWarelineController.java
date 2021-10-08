@@ -105,7 +105,7 @@ public class ExtratorWarelineController {
 	private LogRepository logRepo;
 	
 	/**Agendamento para ser executado às 20 horas de todo dia.**/
-	@Scheduled(cron = "0 0 20 * * *", zone = "America/Sao_Paulo")
+	@Scheduled(cron = "0 25 20 * * *", zone = "America/Sao_Paulo")
 	public void executaAtualizacaoPagamentosWareline() {
 		System.out.println("-----------START-----------------");
 		System.out.println(ConversorObjetos.currentTimestamp()+ " > Comecando a tarefa automatizada de recuperacao de dados. ");
@@ -146,7 +146,7 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
 	}
 	
 	private void atualizaPgParcelMesAnoAtual() {
@@ -179,7 +179,7 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
 	}
 	
 	private void atualizaPgDespMesAnoAtual() {
@@ -212,7 +212,7 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
 	}
 	
 	/***
