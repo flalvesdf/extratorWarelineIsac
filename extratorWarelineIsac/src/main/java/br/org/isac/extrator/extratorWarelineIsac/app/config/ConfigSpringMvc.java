@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
+@SuppressWarnings("deprecation")
 public class ConfigSpringMvc extends WebMvcConfigurerAdapter {
 
 	@Bean

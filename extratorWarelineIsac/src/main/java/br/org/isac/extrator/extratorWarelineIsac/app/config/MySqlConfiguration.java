@@ -1,8 +1,5 @@
 package br.org.isac.extrator.extratorWarelineIsac.app.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
