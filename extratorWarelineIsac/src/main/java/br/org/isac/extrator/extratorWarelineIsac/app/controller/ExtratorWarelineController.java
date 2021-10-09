@@ -146,7 +146,16 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		Log l = new Log();
+		l.setDataHora(ConversorObjetos.currentTimestamp());
+		l.setIdRegistro(0);
+		l.setIdUsuario(0);
+		l.setIp(ConversorObjetos.getIp());
+		l.setObservacao(log.toString());
+		l.setSecao("TBL_WARELINE_PAGTOS");
+		l.setTipoLog("DADOS_WARELINE");
+		l.setTipoRegistro(18);
+		logRepo.save(l);
 	}
 	
 	private void atualizaPgParcelMesAnoAtual() {
@@ -179,7 +188,16 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		Log l = new Log();
+		l.setDataHora(ConversorObjetos.currentTimestamp());
+		l.setIdRegistro(0);
+		l.setIdUsuario(0);
+		l.setIp(ConversorObjetos.getIp());
+		l.setObservacao(log.toString());
+		l.setSecao("TBL_WARELINE_PGPARCEL");
+		l.setTipoLog("DADOS_WARELINE");
+		l.setTipoRegistro(18);
+		logRepo.save(l);
 	}
 	
 	private void atualizaPgDespMesAnoAtual() {
@@ -212,7 +230,16 @@ public class ExtratorWarelineController {
 		log.append(pgtos.size()+" registros inseridos. Conclusão: "+ ConversorObjetos.currentTimestamp());
 		
 		//6 - salvando o log:
-		//logRepo.save(new Log(0, 18, 0, ConversorObjetos.currentTimestamp(), log.toString(), "DADOS_WARELINE", ConversorObjetos.getIp(), "AGENDADOR"));
+		Log l = new Log();
+		l.setDataHora(ConversorObjetos.currentTimestamp());
+		l.setIdRegistro(0);
+		l.setIdUsuario(0);
+		l.setIp(ConversorObjetos.getIp());
+		l.setObservacao(log.toString());
+		l.setSecao("TBL_WARELINE_PGDESP");
+		l.setTipoLog("DADOS_WARELINE");
+		l.setTipoRegistro(18);
+		logRepo.save(l);
 	}
 	
 	/***
@@ -234,19 +261,17 @@ public class ExtratorWarelineController {
 	 */
 	
 	/*neste exemplo, sera executado sempre as 21:01 horas do dia*/
-	@Scheduled(cron = "0 01 21 * * *", zone = "America/Sao_Paulo")
-	public void scheduleTaskUsingCronExpression() {
-	 
-	    //long now = System.currentTimeMillis() / 1000;
-	    System.out.println("Tarefa agendada para as 21:01 horas - " + ConversorObjetos.currentTimestamp());
-	}
+//	@Scheduled(cron = "0 01 21 * * *", zone = "America/Sao_Paulo")
+//	public void scheduleTaskUsingCronExpression() {
+//	 
+//	    //long now = System.currentTimeMillis() / 1000;
+//	    System.out.println("Tarefa agendada para as 21:01 horas - " + ConversorObjetos.currentTimestamp());
+//	}
 	
-	/*neste outro exemplo, sera executado a cada 15 minutos*/
-	@Scheduled(fixedDelay = (900000))
+	/*neste outro exemplo, sera executado a cada 30 minutos*/
+	@Scheduled(fixedDelay = (1800000))
 	public void scheduleTaskUsingCronExpression2() {
-	 
-	    //long now = System.currentTimeMillis() / 1000;
-	    System.out.println("Tarefa agendada para rodar a cada 15 minutos - " + ConversorObjetos.currentTimestamp());
+	    System.out.println("Tarefa agendada para rodar a cada 30 minutos - " + ConversorObjetos.currentTimestamp());
 	}
 	
 	@GetMapping(value = "/cadgrude")

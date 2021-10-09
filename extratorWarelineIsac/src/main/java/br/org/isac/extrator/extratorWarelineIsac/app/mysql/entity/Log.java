@@ -19,23 +19,23 @@ public class Log {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "idRegistro")
+	@Column(name = "id_registro")
 	private Integer idRegistro;
 	
-	@Column(name = "tipoRegistro")
+	@Column(name = "tipo_registro")
 	private Integer tipoRegistro;
 	
-	@Column(name = "idUsuario")
+	@Column(name = "id_usuario")
 	private Integer idUsuario;
 	
-	@Column(name = "dataHora")
+	@Column(name = "data_hora")
 	private Timestamp dataHora;
 	
 	@Column(name = "observacao")
 	@Size(max=1000)
 	private String observacao;
 	
-	@Column(name = "tipoLog")
+	@Column(name = "tipo_log")
 	@Size(max=20)
 	private String tipoLog;
 
