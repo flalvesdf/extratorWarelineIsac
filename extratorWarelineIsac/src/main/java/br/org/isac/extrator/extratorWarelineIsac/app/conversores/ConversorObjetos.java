@@ -289,7 +289,7 @@ public class ConversorObjetos {
 		c.setHppagtoav(p.getHppagtoav());
 		c.setHppagtopar(p.getHppagtopar());
 		c.setHppagtoprz(p.getHppagtoprz());
-		c.setIdUnidade(ID_FILIAL_1);
+		c.setunidade(ID_FILIAL_1);
 		c.setInativo(p.getInativo());
 		c.setIndcprb(p.getIndcprb());
 		c.setMaxpedido(p.getMaxpedido());
@@ -335,7 +335,7 @@ public class ConversorObjetos {
 		c.setTiposervico(p.getTiposervico());
 		c.setTiprecolhe(p.getTiprecolhe());
 		c.setTiprepasse(p.getTiprepasse());
-		c.setTsObtencaoInformacao(currentTimestamp());
+		c.setTsobtencaoinformacao(currentTimestamp());
 		c.setTxtevoana(p.getTxtevoana());
 		c.setTxtevoenf(p.getTxtevoenf());
 		c.setTxtevomed(p.getTxtevomed());

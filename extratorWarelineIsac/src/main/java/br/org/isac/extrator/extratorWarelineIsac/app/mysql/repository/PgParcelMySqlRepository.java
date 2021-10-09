@@ -14,5 +14,9 @@ public interface PgParcelMySqlRepository extends JpaRepository<PgParcelMySql, In
 	@Modifying
 	@Query("delete from PgParcelMySql u where u.anocompetencia = ?1 and u.mescompetencia = ?2")
 	public void deletePagamentosMesCompetencia(@Param("ano") Integer ano, @Param("mes") Integer mes);
+	
+	@Modifying
+	@Query("delete from PgParcelMySql u where u.anocompetencia = ?1 and u.mescompetencia = ?2 and u.unidade = ?3")
+	public void deletePagamentosUnidadeMesCompetencia(Integer ano,  Integer mes, Integer unidade);
 
 }

@@ -14,5 +14,9 @@ public interface PagtosMySqlRepository extends JpaRepository<PagtosWareline, Int
 	@Modifying
 	@Query("delete from PagtosWareline u where u.mescomp = ?1")
 	public void deletePagamentosMesCompetencia(@Param("mescomp") String mesComp);
+	
+	@Modifying
+	@Query("delete from PagtosWareline u where u.mescomp = ?1 and u.unidade = ?2")
+	public void deletePagamentosMesCompetencia(String mesComp, Integer unidade);
 
 }

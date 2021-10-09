@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.org.isac.extrator.extratorWarelineIsac.app.config.ParametrosUnidade;
+import br.org.isac.extrator.extratorWarelineIsac.app.config.Tabelas;
 import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjetos;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
@@ -23,15 +25,17 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.Log;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgParcelMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.SolicitacaoAtualizacaoWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadDespMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadFuncMySqlRepository;
-import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadGrudeMySqlRèpository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadGrudeMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadPrestMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadUniMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.LogRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PagtosMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PgDespMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PgParcelMySqlRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.SolicitacaoAtualizacaoWarelineRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePostGre;
@@ -52,7 +56,6 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcel
 @RestController
 public class ExtratorWarelineController {
 	
-
 	@Autowired
 	private CadUniPostGreRepository cadUniPostGreRepo;
 
@@ -81,7 +84,7 @@ public class ExtratorWarelineController {
 	private CadGrudePostGreRepository cadGrudePostGreRepo;
 	
 	@Autowired
-	private CadGrudeMySqlRèpository cadGrudeMySqlRepo;
+	private CadGrudeMySqlRepository cadGrudeMySqlRepo;
 	
 	@Autowired 
 	private CadDespPostGreRepository cadDespPostGreRepo;
@@ -104,15 +107,269 @@ public class ExtratorWarelineController {
 	@Autowired
 	private LogRepository logRepo;
 	
+	@Autowired
+	private SolicitacaoAtualizacaoWarelineRepository solicitacaoRepo;
+	
+	@Scheduled(fixedDelay = (1800000))
+	public void verificaExistenciaSolicitacaoPendenteParaUnidade() {
+		System.out.println("------------INICIANDO-----------------");
+		 System.out.println("Verificação e execução de Solicitações pendentes iniciada - " + ConversorObjetos.currentTimestamp());
+		List<Integer> unidades = ParametrosUnidade.unidades;
+		
+		for(Integer un: unidades) {
+			List<SolicitacaoAtualizacaoWareline> sols = solicitacaoRepo.obterSolicitacoesPorStatus(un);
+			
+			if(sols != null && sols.size()>0) {
+				for(SolicitacaoAtualizacaoWareline s: sols) {
+					s.setStatus("E");
+					solicitacaoRepo.save(s);
+					
+					if(s.getTabela().equals(Tabelas.CADFUNC)) {
+						executaSolicitacaoAtualizacaoTabelaCADFUNC(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.CADGRUDE)) {
+						executaSolicitacaoAtualizacaoTabelaCADGRUDE(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.CADDESP)) {
+						executaSolicitacaoAtualizacaoTabelaCADDESP(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.CADPREST)) {
+						executaSolicitacaoAtualizacaoTabelaCADPREST(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.PAGTOS)) {
+						executaSolicitacaoAtualizacaoTabelaPAGTOS(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.PGDESP)) {
+						executaSolicitacaoAtualizacaoTabelaPGDESP(s);
+						continue;
+					}
+					
+					if(s.getTabela().equals(Tabelas.PGPARCEL)) {
+						executaSolicitacaoAtualizacaoTabelaPGPARCEL(s);
+						continue;
+					}
+				}
+			}
+		}
+		
+	    System.out.println("Verificação e execução de Solicitações Pendentes Concluída - " + ConversorObjetos.currentTimestamp());
+	    System.out.println("------------CONCLUIDO-----------------");
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADPREST(SolicitacaoAtualizacaoWareline s) {
+		
+		List<CadPrestPostGre> cadastros = cadPrestPostGreRepo.findAll();
+		
+		if(cadastros != null && cadastros.size()>0) {
+			
+			cadPrestMySqlRepo.deleteCadastroPrestadoresUnidade(s.getUnidade());
+			
+			List<CadPrestWareline> cadsPt = new ArrayList<CadPrestWareline>();
+			for(CadPrestPostGre c : cadastros) {
+				cadsPt.add(ConversorObjetos.convertePrestadoresPostPreToMySql(c));
+			}
+
+			cadPrestMySqlRepo.saveAll(cadsPt);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(cadastros.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaPGPARCEL(SolicitacaoAtualizacaoWareline s) {
+		//exemplo 2021/09
+		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
+		
+		List<PgParcelPostGre> pagamentos = pgParcelPostGreDao.getPagamentosMesCompetencia(mescomp);
+		
+		if(pagamentos != null && pagamentos.size()>0) {
+			pgParcelMySqlRepo.deletePagamentosUnidadeMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
+			
+			List<PgParcelMySql> pgtos = new ArrayList<PgParcelMySql>();
+			for(PgParcelPostGre p: pagamentos) {
+				pgtos.add(ConversorObjetos.convertePgParcelPostGreToMySql(p, mescomp));
+			}
+			
+			pgParcelMySqlRepo.saveAll(pgtos);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(pagamentos.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+			
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaPGDESP(SolicitacaoAtualizacaoWareline s) {
+		//exemplo 2021/09
+		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
+		
+		List<PgDespPostGre> pagamentos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp);
+		
+		if(pagamentos != null && pagamentos.size()>0) {
+			pgDespMyRepo.deletePagamentosUnidadeMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
+			
+			List<PgDespMySql> pgtos = new ArrayList<PgDespMySql>();
+			for(PgDespPostGre p: pagamentos) {
+				pgtos.add(ConversorObjetos.convertePgDespPostGreToMySql(p, mescomp));
+			}
+			
+			pgDespMyRepo.saveAll(pgtos);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(pagamentos.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+			
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaPAGTOS(SolicitacaoAtualizacaoWareline s) {
+		//exemplo 2021/09
+		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
+		
+		List<PagtosPostGre> pagamentos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mescomp);
+		
+		if(pagamentos != null && pagamentos.size()>0) {
+			pagtosMySqlRepo.deletePagamentosMesCompetencia(mescomp, s.getUnidade());
+			
+			List<PagtosWareline> pgtos = new ArrayList<PagtosWareline>();
+			for(PagtosPostGre p: pagamentos) {
+				pgtos.add(ConversorObjetos.convertePagamentosPostPreToMySql(p));
+			}
+			
+			pagtosMySqlRepo.saveAll(pgtos);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(pagamentos.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+			
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADDESP(SolicitacaoAtualizacaoWareline s) {
+		
+		List<CadDespPostGre> cadastros = cadDespPostGreRepo.findAll();
+		
+		if(cadastros != null && cadastros.size()>0) {
+			
+			cadDespMySqlRepo.deleteAll();
+			
+			List<CadDespMySql> cadsPt = new ArrayList<CadDespMySql>();
+			for(CadDespPostGre c : cadastros) {
+				cadsPt.add(ConversorObjetos.converteDespesasPostGreToMySql(c));
+			}
+
+			cadDespMySqlRepo.saveAll(cadsPt);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(cadastros.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADGRUDE(SolicitacaoAtualizacaoWareline s) {
+		
+		List<CadGrudePostGre> cadastros = cadGrudePostGreRepo.findAll();
+		
+		if(cadastros != null && cadastros.size()>0) {
+			
+			cadGrudeMySqlRepo.deleteAll();
+			
+			List<CadGrudeMySql> cadsPt = new ArrayList<CadGrudeMySql>();
+			for(CadGrudePostGre c : cadastros) {
+				cadsPt.add(ConversorObjetos.converteGrupoDespesasPostGreToMySql(c));
+			}
+
+			cadGrudeMySqlRepo.saveAll(cadsPt);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(cadastros.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADFUNC(SolicitacaoAtualizacaoWareline s) {
+		
+		List<CadFuncPostGre> cadastros = cadFuncPostGreRepo.findAll();
+		
+		if(cadastros != null && cadastros.size()>0) {
+			
+			cadFuncMySqlRepo.deleteCadastroFuncionariosUnidade(s.getUnidade());
+			
+			List<CadFuncWareline> cadsPt = new ArrayList<CadFuncWareline>();
+			for(CadFuncPostGre c : cadastros) {
+				cadsPt.add(ConversorObjetos.converteFuncionariosPostGreToMySql(c));
+			}
+
+			cadFuncMySqlRepo.saveAll(cadsPt);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(cadastros.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
 	/**Agendamento para ser executado às 01:30 horas de todo dia.**/
 	@Scheduled(cron = "0 30 01 * * *", zone = "America/Sao_Paulo")
 	public void executaAtualizacaoPagamentosWareline() {
-		System.out.println("-----------START-----------------");
+		System.out.println("------------INICIANDO-----------------");
 		System.out.println(ConversorObjetos.currentTimestamp()+ " > Comecando a tarefa automatizada de recuperacao de dados. ");
 		atualizaPgtosMesAnoAtual();
 		atualizaPgParcelMesAnoAtual();
 		atualizaPgDespMesAnoAtual();
-		System.out.println("------------END-------------------");
+		System.out.println("------------CONCLUIDO-------------------");
 		System.out.println(ConversorObjetos.currentTimestamp()+ " > fim da tarefa automatizada de recuperacao de dados. ");
 	}
 	
@@ -213,7 +470,7 @@ public class ExtratorWarelineController {
 		log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". ");
 
 		//2 - deleta os dados do mes e ano atuais:
-		pgDespMyRepo.deltePagamentosMesCompetencia(ano, mes);
+		pgDespMyRepo.deletePagamentosMesCompetencia(ano, mes);
 		
 		//3 - localiza os dados do mes e ano atuais:
 		List<PgDespPostGre> pgtos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp);
@@ -269,10 +526,10 @@ public class ExtratorWarelineController {
 //	}
 	
 	/*neste outro exemplo, sera executado a cada 30 minutos*/
-	@Scheduled(fixedDelay = (1800000))
-	public void scheduleTaskUsingCronExpression2() {
-	    System.out.println("Tarefa agendada para rodar a cada 30 minutos - " + ConversorObjetos.currentTimestamp());
-	}
+//	@Scheduled(fixedDelay = (1800000))
+//	public void scheduleTaskUsingCronExpression2() {
+//	    System.out.println("Tarefa agendada para rodar a cada 30 minutos - " + ConversorObjetos.currentTimestamp());
+//	}
 	
 	@GetMapping(value = "/cadgrude")
 	public ModelAndView cadgrude(ModelMap model, HttpSession session) {

@@ -433,11 +433,11 @@ public class CadPrestWareline {
 	@Column(name="indcprb")
 	private String indcprb;
 	
-	@Column(name="idUnidade")
-	private Integer idUnidade;
+	@Column(name="unidade")
+	private Integer unidade;
 	
-	@Column(name="tsObtencaoInformacao")
-	private Timestamp tsObtencaoInformacao;
+	@Column(name="tsobtencaoinformacao")
+	private Timestamp tsobtencaoinformacao;
 
 	public Integer getId() {
 		return id;
@@ -1287,19 +1287,19 @@ public class CadPrestWareline {
 		this.indcprb = indcprb;
 	}
 
-	public Integer getIdUnidade() {
-		return idUnidade;
+	public Integer getUnidade() {
+		return unidade;
 	}
 
-	public void setIdUnidade(Integer idUnidade) {
-		this.idUnidade = idUnidade;
+	public void setunidade(Integer unidade) {
+		this.unidade = unidade;
 	}
 
-	public Timestamp getTsObtencaoInformacao() {
-		return tsObtencaoInformacao;
+	public Timestamp getTsobtencaoinformacao() {
+		return tsobtencaoinformacao;
 	}
 
-	public void setTsObtencaoInformacao(Timestamp tsObtencaoInformacao) {
-		this.tsObtencaoInformacao = tsObtencaoInformacao;
+	public void setTsobtencaoinformacao(Timestamp tsobtencaoinformacao) {
+		this.tsobtencaoinformacao = tsobtencaoinformacao;
 	}
 }
