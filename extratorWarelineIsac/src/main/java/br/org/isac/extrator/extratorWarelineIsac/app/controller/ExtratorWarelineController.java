@@ -104,8 +104,8 @@ public class ExtratorWarelineController {
 	@Autowired
 	private LogRepository logRepo;
 	
-	/**Agendamento para ser executado às 20 horas de todo dia.**/
-	@Scheduled(cron = "0 25 20 * * *", zone = "America/Sao_Paulo")
+	/**Agendamento para ser executado às 01:30 horas de todo dia.**/
+	@Scheduled(cron = "0 30 01 * * *", zone = "America/Sao_Paulo")
 	public void executaAtualizacaoPagamentosWareline() {
 		System.out.println("-----------START-----------------");
 		System.out.println(ConversorObjetos.currentTimestamp()+ " > Comecando a tarefa automatizada de recuperacao de dados. ");
