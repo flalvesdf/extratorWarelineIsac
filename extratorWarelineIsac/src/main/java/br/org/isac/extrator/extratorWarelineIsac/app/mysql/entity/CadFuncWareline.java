@@ -157,11 +157,11 @@ public class CadFuncWareline {
 	@Column(name="serietrfunc")
 	private String serietrfunc;
 	
-	@Column(name="idUnidade")
-	private String idUnidade;
+	@Column(name="unidade")
+	private String unidade;
 	
-	@Column(name="tsObtencaoInformacao")
-	private Timestamp tsObtencaoInformacao;
+	@Column(name="tsobtencaoinformacao")
+	private Timestamp tsobtencaoinformacao;
 
 	public Integer getId() {
 		return id;
@@ -539,19 +539,19 @@ public class CadFuncWareline {
 		this.serietrfunc = serietrfunc;
 	}
 
-	public String getIdUnidade() {
-		return idUnidade;
+	public String getUnidade() {
+		return unidade;
 	}
 
-	public void setIdUnidade(String idUnidade) {
-		this.idUnidade = idUnidade;
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
 	}
 
-	public Timestamp getTsObtencaoInformacao() {
-		return tsObtencaoInformacao;
+	public Timestamp getTsobtencaoinformacao() {
+		return tsobtencaoinformacao;
 	}
 
-	public void setTsObtencaoInformacao(Timestamp tsObtencaoInformacao) {
-		this.tsObtencaoInformacao = tsObtencaoInformacao;
+	public void setTsobtencaoinformacao(Timestamp tsobtencaoinformacao) {
+		this.tsobtencaoinformacao = tsobtencaoinformacao;
 	}
 }

@@ -378,7 +378,7 @@ public class ConversorObjetos {
 		c.setFonefunc(p.getFonefunc());
 		c.setGuerrafunc(p.getGuerrafunc());
 		c.setIbgefu(p.getIbgefu());
-		c.setIdUnidade(ID_FILIAL_1+"");
+		c.setUnidade(ID_FILIAL_1+"");
 		c.setLivrofunc(p.getLivrofunc());
 		c.setLografu(p.getLografu());
 		c.setMaefunc(p.getMaefunc());
@@ -393,7 +393,7 @@ public class ConversorObjetos {
 		c.setTermofunc(p.getTermofunc());
 		c.setTipcerfunc(p.getTipcerfunc());
 		c.setTipologrfu(p.getTipologrfu());
-		c.setTsObtencaoInformacao(currentTimestamp());
+		c.setTsobtencaoinformacao(currentTimestamp());
 		c.setUffunc(p.getUffunc());
 		c.setUfnasfunc(p.getUfnasfunc());
 		c.setUfrgfunc(p.getUfrgfunc());
