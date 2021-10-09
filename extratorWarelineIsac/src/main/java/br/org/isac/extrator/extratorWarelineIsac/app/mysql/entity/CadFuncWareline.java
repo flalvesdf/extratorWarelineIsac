@@ -158,7 +158,7 @@ public class CadFuncWareline {
 	private String serietrfunc;
 	
 	@Column(name="unidade")
-	private String unidade;
+	private Integer unidade;
 	
 	@Column(name="tsobtencaoinformacao")
 	private Timestamp tsobtencaoinformacao;
@@ -539,11 +539,11 @@ public class CadFuncWareline {
 		this.serietrfunc = serietrfunc;
 	}
 
-	public String getUnidade() {
+	public Integer getUnidade() {
 		return unidade;
 	}
 
-	public void setUnidade(String unidade) {
+	public void setUnidade(Integer unidade) {
 		this.unidade = unidade;
 	}
 

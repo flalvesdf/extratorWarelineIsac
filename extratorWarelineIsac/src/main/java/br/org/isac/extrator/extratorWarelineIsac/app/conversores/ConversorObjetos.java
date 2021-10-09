@@ -378,7 +378,7 @@ public class ConversorObjetos {
 		c.setFonefunc(p.getFonefunc());
 		c.setGuerrafunc(p.getGuerrafunc());
 		c.setIbgefu(p.getIbgefu());
-		c.setUnidade(ID_FILIAL_1+"");
+		c.setUnidade(ID_FILIAL_1);
 		c.setLivrofunc(p.getLivrofunc());
 		c.setLografu(p.getLografu());
 		c.setMaefunc(p.getMaefunc());
