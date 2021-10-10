@@ -343,6 +343,7 @@ public class ConversorObjetos {
 		c.setUfcr(p.getUfcr());
 		c.setValiprop(p.getValiprop());
 		c.setVincsus(p.getVincsus());
+		c.setTsobtencaoinformacao(currentTimestamp());
 
 		return c;
 	}
