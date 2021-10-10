@@ -113,13 +113,14 @@ public class ExtratorWarelineController {
 	@Scheduled(fixedDelay = (1800000))
 	public void verificaExistenciaSolicitacaoPendenteParaUnidade() {
 		System.out.println("------------INICIANDO-----------------");
-		 System.out.println("Verificação e execução de Solicitações pendentes iniciada - " + ConversorObjetos.currentTimestamp());
+		 System.out.println("Verificação e execução de Solicitações pendentes Iniciada - " + ConversorObjetos.currentTimestamp());
 		List<Integer> unidades = ParametrosUnidade.unidades;
 		
 		for(Integer un: unidades) {
 			List<SolicitacaoAtualizacaoWareline> sols = solicitacaoRepo.obterSolicitacoesPorStatus(un);
 			
 			if(sols != null && sols.size()>0) {
+				System.out.println("Verificação e execução de Solicitações Pendentes - "+sols.size()+" solicitação(ões) para processar. " + ConversorObjetos.currentTimestamp());
 				for(SolicitacaoAtualizacaoWareline s: sols) {
 					s.setStatus("E");
 					solicitacaoRepo.save(s);
@@ -159,6 +160,8 @@ public class ExtratorWarelineController {
 						continue;
 					}
 				}
+			}else {
+				System.out.println("Verificação e execução de Solicitações Pendentes. Nenhuma solicitação pendente." + ConversorObjetos.currentTimestamp());
 			}
 		}
 		
