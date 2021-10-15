@@ -443,8 +443,8 @@ public class ExtratorWarelineController {
 	
 	private void atualizaPgParcelMesAnoAtual() {
 		
-		StringBuffer log = new StringBuffer();
-		log.append("Iniciando a atualização Base Wareline. Tabela pgparcel. "+ ConversorObjetos.currentTimestamp()+". ");
+		StringBuffer log = null;
+		
 		
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
@@ -456,6 +456,8 @@ public class ExtratorWarelineController {
 		List<WarelineServers> servers = wlServerRepo.getServers(server);
 		
 		for(WarelineServers s: servers) {
+			log = new StringBuffer();
+			log.append("Iniciando a atualização Base Wareline. Tabela pgparcel. "+ ConversorObjetos.currentTimestamp()+". ");
 			log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". Unidade: "+s.getUnidade());
 
 			//2 - deleta os dados do mes e ano atuais:
@@ -491,8 +493,8 @@ public class ExtratorWarelineController {
 	
 	private void atualizaPgDespMesAnoAtual() {
 		
-		StringBuffer log = new StringBuffer();
-		log.append("Iniciando a atualização Base Wareline. Tabela pgdesp. "+ ConversorObjetos.currentTimestamp()+". ");
+		StringBuffer log = null;
+		
 		
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
@@ -504,6 +506,8 @@ public class ExtratorWarelineController {
 		List<WarelineServers> servers = wlServerRepo.getServers(server);
 		
 		for(WarelineServers s: servers) {
+			log = new StringBuffer();
+			log.append("Iniciando a atualização Base Wareline. Tabela pgdesp. "+ ConversorObjetos.currentTimestamp()+". ");
 			log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". Unidade: "+ s.getUnidade());
 
 			//2 - deleta os dados do mes e ano atuais:
