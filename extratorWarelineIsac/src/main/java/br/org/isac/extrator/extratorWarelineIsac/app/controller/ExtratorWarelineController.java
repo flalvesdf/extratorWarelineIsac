@@ -207,7 +207,7 @@ public class ExtratorWarelineController {
 		//exemplo 2021/09
 		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
 		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
-		List<PgParcelPostGre> pagamentos = pgParcelPostGreDao.getPagamentosMesCompetencia(mescomp, "00"+server.getCodfilial());
+		List<PgParcelPostGre> pagamentos = pgParcelPostGreDao.getPagamentosMesCompetencia(mescomp, "0"+server.getCodfilial());
 		
 		if(pagamentos != null && pagamentos.size()>0) {
 			pgParcelMySqlRepo.deletePagamentosUnidadeMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
@@ -236,7 +236,7 @@ public class ExtratorWarelineController {
 		//exemplo 2021/09
 		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
 		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
-		List<PgDespPostGre> pagamentos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp, "00"+server.getCodfilial());
+		List<PgDespPostGre> pagamentos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp, "0"+server.getCodfilial());
 		
 		if(pagamentos != null && pagamentos.size()>0) {
 			pgDespMyRepo.deletePagamentosUnidadeMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
@@ -265,7 +265,7 @@ public class ExtratorWarelineController {
 		//exemplo 2021/09
 		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
 		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
-		List<PagtosPostGre> pagamentos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mescomp, "00"+server.getCodfilial());
+		List<PagtosPostGre> pagamentos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mescomp, "0"+server.getCodfilial());
 		
 		if(pagamentos != null && pagamentos.size()>0) {
 			pagtosMySqlRepo.deletePagamentosMesCompetencia(mescomp, s.getUnidade());
@@ -393,8 +393,8 @@ public class ExtratorWarelineController {
 	
 	private void atualizaPgtosMesAnoAtual() {
 		
-		StringBuffer log = new StringBuffer();
-		log.append("Iniciando a atualização Base Wareline. Tabela pagtos. "+ ConversorObjetos.currentTimestamp()+". ");
+		StringBuffer log = null;
+		
 		
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
@@ -406,13 +406,15 @@ public class ExtratorWarelineController {
 		List<WarelineServers> servers = wlServerRepo.getServers(server);
 		
 		for(WarelineServers s: servers) {
+			log = new StringBuffer();
+			log.append("Iniciando a atualização Base Wareline. Tabela pagtos. "+ ConversorObjetos.currentTimestamp()+". ");
 			log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". Unidade: "+ s.getUnidade());
 
 			//2 - deleta os dados do mes e ano atuais:
 			pagtosMySqlRepo.deletePagamentosMesCompetencia(mescomp, s.getUnidade());
 			
 			//3 - localiza os dados do mes e ano atuais:
-			List<PagtosPostGre> pgtos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mescomp, "00"+s.getCodfilial());
+			List<PagtosPostGre> pgtos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mescomp, "0"+s.getCodfilial());
 			log.append("Registros localizados: "+ pgtos.size()+". ");
 			
 			//4 - converte o objeto postgres em mysql:
@@ -460,7 +462,7 @@ public class ExtratorWarelineController {
 			pgParcelMySqlRepo.deletePagamentosUnidadeMesCompetencia(ano, mes, s.getUnidade());
 			
 			//3 - localiza os dados do mes e ano atuais:
-			List<PgParcelPostGre> pgtos = pgParcelPostGreDao.getPagamentosMesCompetencia(mescomp, "00"+s.getCodfilial());
+			List<PgParcelPostGre> pgtos = pgParcelPostGreDao.getPagamentosMesCompetencia(mescomp, "0"+s.getCodfilial());
 			log.append("Registros localizados: "+ pgtos.size()+". ");
 			
 			//4 - converte o objeto postgres em mysql:
@@ -508,7 +510,7 @@ public class ExtratorWarelineController {
 			pgDespMyRepo.deletePagamentosUnidadeMesCompetencia(ano, mes, s.getUnidade());
 			
 			//3 - localiza os dados do mes e ano atuais:
-			List<PgDespPostGre> pgtos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp, "00"+s.getCodfilial());
+			List<PgDespPostGre> pgtos = pgDespPostGresDao.getPagamentosMesCompetencia(mescomp, "0"+s.getCodfilial());
 			log.append("Registros localizados: "+ pgtos.size()+". ");
 			
 			//4 - converte o objeto postgres em mysql:
