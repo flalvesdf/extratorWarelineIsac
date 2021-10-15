@@ -21,7 +21,7 @@ public interface PagtosPostGreRepository extends JpaRepository<PagtosPostGre, St
 	 * @return
 	 */
 	
-	@Query("SELECT a from PagtosPostGre a where a.mescomp =?1")
-	public List<PagtosPostGre> obterPagamentosWarelinePorMesCompetencia(String mesComp);
+	@Query("SELECT a from PagtosPostGre a where a.mescomp =?1 and a.codfilial = ?2")
+	public List<PagtosPostGre> obterPagamentosWarelinePorMesCompetencia(String mesComp, String codfilial);
 
 }

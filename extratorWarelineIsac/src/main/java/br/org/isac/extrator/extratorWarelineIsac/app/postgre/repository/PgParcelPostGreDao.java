@@ -16,11 +16,14 @@ public class PgParcelPostGreDao {
     private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
-	public List<PgParcelPostGre> getPagamentosMesCompetencia(String mescomp) {
+	public List<PgParcelPostGre> getPagamentosMesCompetencia(String mescomp, String codfilial) {
 		
 		List<PgParcelPostGre> results = null;
 		try {
-			results = em.createQuery("SELECT a from PgParcelPostGre a inner join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp").setParameter("mescomp", mescomp).getResultList();
+			results = em.createQuery("SELECT a from PgParcelPostGre a inner join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp and b.codfilial = :codfilial")
+					.setParameter("mescomp", mescomp)
+					.setParameter("codfilial", codfilial)
+					.getResultList();
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}

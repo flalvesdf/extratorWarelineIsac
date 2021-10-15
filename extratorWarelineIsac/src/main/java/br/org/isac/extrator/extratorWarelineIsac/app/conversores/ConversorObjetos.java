@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 
-import br.org.isac.extrator.extratorWarelineIsac.app.config.ParametrosUnidade;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
@@ -16,6 +16,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadUniWareline
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgParcelMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServers;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePostGre;
@@ -27,16 +28,18 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPost
 
 public class ConversorObjetos {
 	
-	/***
-	 * Atencao!!!
-	 * Somente o HMA tem mais de uma filial. Para outras unidades, ignorar as linhas que 
-	 * contenham informacoes de outras filiais (acima de 1)
-	 */
-	private static final Integer ID_FILIAL_1 = ParametrosUnidade.HMA.intValue();
-	private static final Integer ID_FILIAL_2 = ParametrosUnidade.AMB_MUNIC_ARAGUAINA.intValue();
-	private static final Integer ID_FILIAL_3 = ParametrosUnidade.UTI_HRA.intValue();
+	public static String getIpServer() {
+		String server = null;
+		try {
+			server =  InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		
+		return server;
+	}
 	
-	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPostGre p, String mescomp) {
+	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPostGre p, String mescomp, WarelineServers server) {
 		PgParcelMySql c = new PgParcelMySql();
 		c.setCnabitem(p.getCnabitem());
 		c.setCnabseq(p.getCnabseq());
@@ -63,7 +66,7 @@ public class ConversorObjetos {
 		c.setParcela(p.getParcela());
 		c.setTimestamp(currentTimestamp());
 		c.setTipoverba(p.getTipoverba());
-		c.setUnidade(ID_FILIAL_1);
+		c.setUnidade(server.getUnidade());
 		c.setValcofins(p.getValcofins());
 		c.setValcpc(p.getValcpc());
 		c.setValcsll(p.getValcsll());
@@ -88,14 +91,14 @@ public class ConversorObjetos {
 		return c;
 	}
 	
-	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPostGre p, String mescomp) {
+	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPostGre p, String mescomp, WarelineServers server) {
 		PgDespMySql c = new PgDespMySql();
 		c.setCodcc(p.getCodcc());
 		c.setCoddesp(p.getCoddesp());
 		c.setNumpagto(p.getNumpagto());
 		c.setTimestamp(currentTimestamp());
 		c.setTipoentra(p.getTipoentra());
-		c.setUnidade(ID_FILIAL_1);
+		c.setUnidade(server.getUnidade());
 		c.setValor(p.getValor());
 		c.setValorperc(p.getValorperc());
 		c.setMescompetencia(Integer.parseInt(mescomp.substring(5)));
@@ -131,14 +134,25 @@ public class ConversorObjetos {
 	}
 	
 	
-	public static PagtosWareline convertePagamentosPostPreToMySql(PagtosPostGre p) {
+	public static PagtosWareline convertePagamentosPostPreToMySql(PagtosPostGre p, WarelineServers server) {
 		PagtosWareline c = new PagtosWareline();
+		
+//		for(WarelineServers s: servers) {
+//			Integer codFilial = Integer.parseInt(p.getCodfilial());
+//			
+//			if(codFilial == s.getCodfilial()) {
+//				
+//			}
+//			
+//			
+//			//if(codFilial == 1) c.setUnidade(ID_FILIAL_1);
+//			//if(codFilial == 2) c.setUnidade(ID_FILIAL_2);
+//			//if(codFilial == 3) c.setUnidade(ID_FILIAL_3);
+//		}
 
 		//somente para HMA
-		Integer codFilial = Integer.parseInt(p.getCodfilial());
-		if(codFilial == 1) c.setUnidade(ID_FILIAL_1);
-		if(codFilial == 2) c.setUnidade(ID_FILIAL_2);
-		if(codFilial == 3) c.setUnidade(ID_FILIAL_3);
+		
+		c.setUnidade(server.getUnidade());
 		
 		String mescomp = p.getMescomp();
 		Integer ano = Integer.parseInt(mescomp.substring(0, 4));
@@ -233,7 +247,7 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadPrestWareline convertePrestadoresPostPreToMySql(CadPrestPostGre p) {
+	public static CadPrestWareline convertePrestadoresPostPreToMySql(CadPrestPostGre p, WarelineServers server) {
 		CadPrestWareline c = new CadPrestWareline();
 
 		c.setAgendaweb(p.getAgendaweb());
@@ -289,7 +303,7 @@ public class ConversorObjetos {
 		c.setHppagtoav(p.getHppagtoav());
 		c.setHppagtopar(p.getHppagtopar());
 		c.setHppagtoprz(p.getHppagtoprz());
-		c.setunidade(ID_FILIAL_1);
+		c.setunidade(server.getUnidade());
 		c.setInativo(p.getInativo());
 		c.setIndcprb(p.getIndcprb());
 		c.setMaxpedido(p.getMaxpedido());
@@ -348,7 +362,7 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadFuncWareline converteFuncionariosPostGreToMySql(CadFuncPostGre p) {
+	public static CadFuncWareline converteFuncionariosPostGreToMySql(CadFuncPostGre p, WarelineServers server) {
 		CadFuncWareline c = new CadFuncWareline();
 
 		c.setBairrofunc(p.getBairrofunc());
@@ -379,7 +393,7 @@ public class ConversorObjetos {
 		c.setFonefunc(p.getFonefunc());
 		c.setGuerrafunc(p.getGuerrafunc());
 		c.setIbgefu(p.getIbgefu());
-		c.setUnidade(ID_FILIAL_1);
+		c.setUnidade(server.getUnidade());
 		c.setLivrofunc(p.getLivrofunc());
 		c.setLografu(p.getLografu());
 		c.setMaefunc(p.getMaefunc());
@@ -402,15 +416,17 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadUniWareline converteUnidadesPostGreeToMySql(CadUniPostGre p) {
+	public static CadUniWareline converteUnidadesPostGreeToMySql(CadUniPostGre p, List<WarelineServers> servers) {
 		CadUniWareline c = new CadUniWareline();
 
-		//somente para HMA
-		Integer codFilial = Integer.parseInt(p.getCoduni());
-		if(codFilial == 1) c.setIdUnidade(ID_FILIAL_1);
-		if(codFilial == 2) c.setIdUnidade(ID_FILIAL_2);
-		if(codFilial == 3) c.setIdUnidade(ID_FILIAL_3);
-
+		
+		for(WarelineServers s: servers) {
+			Integer codFilial = Integer.parseInt(p.getCoduni());
+			if(codFilial == s.getCodfilial()) {
+				c.setIdUnidade(s.getUnidade());
+			}
+		}
+		
 		c.setCnes(p.getCnes());
 		c.setCodconexa(p.getCodconexa());
 		c.setCodprest(p.getCodprest());
