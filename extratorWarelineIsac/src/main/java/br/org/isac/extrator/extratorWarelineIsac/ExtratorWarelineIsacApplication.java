@@ -3,6 +3,7 @@ package br.org.isac.extrator.extratorWarelineIsac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -11,7 +12,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineSe
 
 @SpringBootApplication
 @EnableScheduling
-public class ExtratorWarelineIsacApplication {
+public class ExtratorWarelineIsacApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(ExtratorWarelineIsacApplication.class, args);
 	}
