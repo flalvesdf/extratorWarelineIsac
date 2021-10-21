@@ -10,9 +10,21 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjetos;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineServersRepository;
 
+/***
+ * @author fabioalves
+ * esta classe precisa extender a classe SpringBootServletInitializer para
+ * permitir que o Spring Boot rode em um tomcat externo
+ * 
+ * o metodo getCronValue() é o responsável por buscar no banco de dados do Portal
+ * de Transparencia a partir do endereco IP do servidor, qual a hora de execucao
+ * das rotinas automatizadas
+ * 
+ */
+
 @SpringBootApplication
 @EnableScheduling
 public class ExtratorWarelineIsacApplication extends SpringBootServletInitializer{
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ExtratorWarelineIsacApplication.class, args);
 	}
