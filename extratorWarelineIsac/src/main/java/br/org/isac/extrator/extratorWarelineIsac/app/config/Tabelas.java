@@ -9,4 +9,5 @@ public class Tabelas {
 	public static String CADGRUDE = "CADGRUDE";
 	public static String CADFUNC = "CADFUNC";
 	public static String CADPREST = "CADPREST";
+	public static String CADJURID = "CADJURID";
 }

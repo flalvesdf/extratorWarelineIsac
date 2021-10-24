@@ -12,6 +12,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjeto
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadJuridWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadPrestWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.Log;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
@@ -22,6 +23,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServer
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadDespMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadFuncMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadGrudeMySqlRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadJuridMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadPrestMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.LogRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PagtosMySqlRepository;
@@ -32,6 +34,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineSe
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
@@ -39,6 +42,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPost
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadDespPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadFuncPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadGrudePostGreRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadJuridPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadPrestPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
@@ -104,6 +108,12 @@ public class ExtratorWarelineController {
 	@Autowired
 	private WarelineServersRepository wlServerRepo;
 	
+	@Autowired
+	private CadJuridPostGreRepository cadJuridPostGreRepo;
+	
+	@Autowired
+	private CadJuridMySqlRepository cadJuridMySqlRepo;
+	
 	//private final String SCHEDULE = "0 30 01 * * *";//wlServerRepo.getServerScheduled(getIpServer());//"0 30 01 * * *";
 	
 	@Scheduled(fixedDelay = (1800000))
@@ -148,6 +158,11 @@ public class ExtratorWarelineController {
 								continue;
 							}
 							
+							if(s.getTabela().equals(Tabelas.CADJURID)) {
+								executaSolicitacaoAtualizacaoTabelaCADJURID(s);
+								continue;
+							}
+							
 							if(s.getTabela().equals(Tabelas.PAGTOS)) {
 								executaSolicitacaoAtualizacaoTabelaPAGTOS(s);
 								continue;
@@ -174,6 +189,33 @@ public class ExtratorWarelineController {
 		
 	    
 	    System.out.println("------------CONCLUIDO-----------------");
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADJURID(SolicitacaoAtualizacaoWareline s) {
+		
+		List<CadJuridPostGre> cadastros = cadJuridPostGreRepo.findAll();
+		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
+		if(cadastros != null && cadastros.size()>0) {
+			
+			cadJuridMySqlRepo.deleteCadastroJuridicoUnidade(s.getUnidade());
+			
+			List<CadJuridWareline> cadsPt = new ArrayList<CadJuridWareline>();
+			for(CadJuridPostGre c : cadastros) {
+				cadsPt.add(ConversorObjetos.converteCadJuridicoPostPreToMySql(c, server));
+			}
+
+			cadJuridMySqlRepo.saveAll(cadsPt);
+			
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(cadastros.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
 	}
 	
 	private void executaSolicitacaoAtualizacaoTabelaCADPREST(SolicitacaoAtualizacaoWareline s) {

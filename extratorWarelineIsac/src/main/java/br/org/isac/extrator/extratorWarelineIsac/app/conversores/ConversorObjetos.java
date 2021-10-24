@@ -11,6 +11,7 @@ import java.util.List;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadJuridWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadPrestWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadUniWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
@@ -20,6 +21,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServer
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadUniPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
@@ -243,7 +245,37 @@ public class ConversorObjetos {
 		c.setValororig(p.getValororig());
 		c.setValortot(p.getValortot());
 		c.setValpis(p.getValpis());
-
+		return c;
+	}
+	
+	public static CadJuridWareline converteCadJuridicoPostPreToMySql(CadJuridPostGre p, WarelineServers server) {
+		
+		CadJuridWareline c = new CadJuridWareline();
+		c.setBairrojuri(p.getBairrojuri());
+		c.setCeljuri(p.getCeljuri());
+		c.setCepjuri(p.getCepjuri());
+		c.setCidadejuri(p.getCidadejuri());
+		c.setCnpjjuri(p.getCnpjjuri());
+		c.setCodprest(p.getCodprest());
+		c.setCompleju(p.getCompleju());
+		c.setContatjuri(p.getContatjuri());
+		c.setCooperativ(p.getCooperativ());
+		c.setEmail2juri(p.getEmail2juri());
+		c.setEmailjuri(p.getEmailjuri());
+		c.setEnderjuri(p.getEnderjuri());
+		c.setFaxjuri(p.getFaxjuri());
+		c.setFonconjuri(p.getFonconjuri());
+		c.setFonejuri(p.getFonejuri());
+		c.setIbgeju(p.getIbgeju());
+		c.setIejuri(p.getIejuri());
+		c.setImjuri(p.getImjuri());
+		c.setLograju(p.getLograju());
+		c.setNumlogrju(p.getNumlogrju());
+		c.setRazaojuri(p.getRazaojuri());
+		c.setResponjuri(p.getResponjuri());
+		c.setTipologrju(p.getTipologrju());
+		c.setTsobtencaoinformacao(currentTimestamp());
+		c.setUnidade(server.getUnidade());
 		return c;
 	}
 
