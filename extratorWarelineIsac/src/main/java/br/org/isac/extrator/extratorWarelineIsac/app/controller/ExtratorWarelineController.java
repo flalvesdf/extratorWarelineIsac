@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.isac.extrator.extratorWarelineIsac.app.config.Tabelas;
 import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjetos;
+import br.org.isac.extrator.extratorWarelineIsac.app.conversores.Parametros;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
@@ -139,7 +140,7 @@ public class ExtratorWarelineController {
 		if(null == server) {
 			System.out.println("Verificação e execução de Solicitações pendentes fallhou: Não foi possível obter o IP deste servidor. Horário: " + ConversorObjetos.currentTimestamp());
 		}else {
-			List<WarelineServers> servers = wlServerRepo.getServers(server);
+			List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
 			//List<Integer> unidades = ParametrosUnidade.unidades;
 
@@ -452,9 +453,9 @@ public class ExtratorWarelineController {
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
 
-		String server = ConversorObjetos.getIpServer();
+		//String server = ConversorObjetos.getIpServer();
 
-		List<WarelineServers> servers = wlServerRepo.getServers(server);
+		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
 		for(WarelineServers s: servers) {
 			log = new StringBuffer();
@@ -502,9 +503,9 @@ public class ExtratorWarelineController {
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
 
-		String server = ConversorObjetos.getIpServer();
+		//String server = ConversorObjetos.getIpServer();
 
-		List<WarelineServers> servers = wlServerRepo.getServers(server);
+		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
 		for(WarelineServers s: servers) {
 			log = new StringBuffer();
@@ -552,9 +553,9 @@ public class ExtratorWarelineController {
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
 
-		String server = ConversorObjetos.getIpServer();
+		//String server = ConversorObjetos.getIpServer();
 
-		List<WarelineServers> servers = wlServerRepo.getServers(server);
+		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
 		for(WarelineServers s: servers) {
 			log = new StringBuffer();

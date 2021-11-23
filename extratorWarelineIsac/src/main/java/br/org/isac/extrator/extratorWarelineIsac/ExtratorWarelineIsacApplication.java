@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjetos;
+import br.org.isac.extrator.extratorWarelineIsac.app.conversores.Parametros;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineServersRepository;
 
 /***
@@ -35,6 +35,6 @@ public class ExtratorWarelineIsacApplication extends SpringBootServletInitialize
 	@Bean
 	public String getCronValue()
 	{
-	    return cronRepo.getServerScheduled(ConversorObjetos.getIp());
+	    return cronRepo.getServerScheduledByUnidade(Parametros.UNDIDADE_SCHEDULE);
 	}
 }
