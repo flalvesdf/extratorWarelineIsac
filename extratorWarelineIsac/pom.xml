@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.org.isac.extrator</groupId>
-	<artifactId>unidade-16</artifactId>
+	<artifactId>unidade-14</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging><!-- para rodar o spring boot em tomcat externo -->
-	<name>unidade-16</name>
+	<name>unidade-14</name>
 	<description>ISAC Extrator de dados</description>
 	<properties>
 		<java.version>1.8</java.version>
