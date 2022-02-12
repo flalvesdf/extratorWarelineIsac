@@ -16,7 +16,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineSe
  * permitir que o Spring Boot rode em um tomcat externo
  * 
  * o metodo getCronValue() é o responsável por buscar no banco de dados do Portal
- * de Transparencia a partir do endereco IP do servidor, qual a hora de execucao
+ * de Transparencia, a partir do endereco IP do servidor, qual a hora de execucao
  * das rotinas automatizadas
  * 
  */
