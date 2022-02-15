@@ -27,7 +27,7 @@ public class Parametros {
 	 * unidade-CODIGO DA UNIDADE. Exemplo: <name>unidade-01</name>
 	 * 
 	 */
-	public static final Integer UNDIDADE_SCHEDULE = 19;
-	private static final Integer[] IDS_UNIDADES = {19};
+	public static final Integer UNDIDADE_SCHEDULE = 18;
+	private static final Integer[] IDS_UNIDADES = {18};
 	public static final List<Integer> UNIDADES = Arrays.asList(IDS_UNIDADES);
 }
