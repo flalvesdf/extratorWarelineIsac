@@ -19,6 +19,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.Log;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgParcelMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.RecebimentosMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.SolicitacaoAtualizacaoWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServers;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadDespMySqlRepository;
@@ -30,6 +31,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.LogReposit
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PagtosMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PgDespMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.PgParcelMySqlRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.RecebimentosMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.SolicitacaoAtualizacaoWarelineRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineServersRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
@@ -40,6 +42,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPost
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.RecebimentosPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadDespPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadFuncPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadGrudePostGreRepository;
@@ -48,6 +51,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadPrest
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreDao;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.RecebimentosPostGreRepository;
 
 @RestController
 public class ExtratorWarelineController {
@@ -108,11 +112,38 @@ public class ExtratorWarelineController {
 
 	@Autowired
 	private CadJuridMySqlRepository cadJuridMySqlRepo;
+	
+	@Autowired
+	private RecebimentosPostGreRepository recebimentosPosdtGreRepo;
+	
+	@Autowired
+	private RecebimentosMySqlRepository recebimentosMySqlRepo;
+	
+	/***Exemplo Schedules:
+	 * 
+	 * @param de
+	 *
+	 * @Scheduled(cron = "0 03 22 * * *", zone = "America/Sao_Paulo")
+	 * 
+	 * @Scheduled(cron = “1 2 3 4 5 6")”
+		1: segundo (preenchido de 0 a 59)
+		2: minuto (preenchido de 0 a 59)
+		3 hora (preenchido de 0 a 23)
+		4 dia (preenchido de 0 a 31)
+		5 mês (preenchido de 1 a 12)
+		6 dia da semana (preenchido de 0 a 6)
+		Nessa configuração @Scheduled(cron = “0 12 21 * * *”) esse método será executado todos os dias às 21h12 em ponto
+
+		Outro exemplo:
+
+		@Scheduled(fixedDelay = 1000): indica que o método anotado será executado a cada segundo. 
+		O parâmetro esperado está em milissegundos (1000 = 1 segundo).
+	 */
 
 	/**Atenção:
 	 * 
 	 * Agendamento para ser executado às XX:XX horas de todo dia, de acordo com o que recuperar do banco de dados.
-	 * Esta informacao (IP e horario) precisa estar cadastrado na base do portal de transparencia , tabela pt_wl_servidores
+	 * Esta informacao (IP e horario) precisa estar cadastrado na base do Portal de Transparencia , tabela pt_wl_servidores
 	 * #{@getCronValue} esta na classe de configuracao ExtratorWarelineIsacApplication
 	 * 
 	 * **/
@@ -123,6 +154,7 @@ public class ExtratorWarelineController {
 		atualizaPgtosMesAnoAtual();
 		atualizaPgParcelMesAnoAtual();
 		atualizaPgDespMesAnoAtual();
+		atualizaRecebimentosMesAnoAtual();
 		System.out.println("------------ATUALIZACAO CONCLUIDA-------------------");
 		System.out.println(ConversorObjetos.currentTimestamp()+ " > fim da tarefa automatizada de recuperacao de dados. ");
 	}
@@ -141,8 +173,6 @@ public class ExtratorWarelineController {
 			System.out.println("Verificação e execução de Solicitações pendentes fallhou: Não foi possível obter o IP deste servidor. Horário: " + ConversorObjetos.currentTimestamp());
 		}else {
 			List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
-
-			//List<Integer> unidades = ParametrosUnidade.unidades;
 
 			for(WarelineServers wl: servers) {
 				List<SolicitacaoAtualizacaoWareline> sols = solicitacaoRepo.obterSolicitacoesPorStatus(wl.getUnidade());
@@ -192,6 +222,11 @@ public class ExtratorWarelineController {
 							executaSolicitacaoAtualizacaoTabelaPGPARCEL(s);
 							continue;
 						}
+						
+						if(s.getTabela().equals(Tabelas.RECEBTOS)) {
+							executaSolicitacaoAtualizacaoTabelaRECEBIMENTOS(s);
+							continue;
+						}
 					}
 				}else {
 					System.out.println("Verificação e execução de Solicitações Pendentes. Nenhuma solicitação pendente." + ConversorObjetos.currentTimestamp());
@@ -199,18 +234,6 @@ public class ExtratorWarelineController {
 				
 				wl.setUltimaverificacao(ConversorObjetos.currentTimestamp());
 				wlServerRepo.save(wl);
-
-//				//salvando o log:
-//				Log l = new Log();
-//				l.setDataHora(ConversorObjetos.currentTimestamp());
-//				l.setIdRegistro(wl.getUnidade());
-//				l.setIdUsuario(0);
-//				l.setIp(ConversorObjetos.getIp());
-//				l.setObservacao(wl.getUnidade()+"");
-//				l.setSecao("");
-//				l.setTipoLog("ACESSO_SERVER_WARELINE");
-//				l.setTipoRegistro(19);
-//				logRepo.save(l);
 			}
 
 			System.out.println("Verificação e execução de Solicitações Pendentes Concluída - " + ConversorObjetos.currentTimestamp());
@@ -342,8 +365,6 @@ public class ExtratorWarelineController {
 
 			List<PagtosWareline> pgtos = new ArrayList<PagtosWareline>();
 			for(PagtosPostGre p: pagamentos) {
-				//WarelineServers server = new WarelineServers();
-				//server.setUnidade(s.getUnidade());
 				pgtos.add(ConversorObjetos.convertePagamentosPostPreToMySql(p, server));
 			}
 
@@ -352,6 +373,35 @@ public class ExtratorWarelineController {
 			s.setStatus("C");
 			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
 			s.setResultado(pagamentos.size() + " registros localizados e adicionados");
+			solicitacaoRepo.save(s);
+
+		}else {
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado("Nenhum registro localizado para atualização");
+			solicitacaoRepo.save(s);
+		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaRECEBIMENTOS(SolicitacaoAtualizacaoWareline s) {
+		//exemplo 2021/09
+		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
+		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
+		List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(mescomp, "0"+server.getCodfilial());
+
+		if(recebimentos != null && recebimentos.size()>0) {
+			recebimentosMySqlRepo.deleteRecebimentosMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
+
+			List<RecebimentosMySql> rcbs = new ArrayList<RecebimentosMySql>();
+			for(RecebimentosPostGre rec: recebimentos) {
+				rcbs.add(ConversorObjetos.converteRecebimentosPostGreToMySql(rec, server));
+			}
+
+			recebimentosMySqlRepo.saveAll(rcbs);
+
+			s.setStatus("C");
+			s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+			s.setResultado(rcbs.size() + " registros localizados e adicionados");
 			solicitacaoRepo.save(s);
 
 		}else {
@@ -442,18 +492,62 @@ public class ExtratorWarelineController {
 			solicitacaoRepo.save(s);
 		}
 	}
-
-	private void atualizaPgtosMesAnoAtual() {
+	
+	private void atualizaRecebimentosMesAnoAtual() {
 
 		StringBuffer log = null;
-
 
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
 
-		//String server = ConversorObjetos.getIpServer();
+		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
+
+		for(WarelineServers s: servers) {
+			log = new StringBuffer();
+			log.append("Iniciando a atualização Base Wareline. Tabela Recebtos. "+ ConversorObjetos.currentTimestamp()+". ");
+			log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". Unidade: "+ s.getUnidade());
+
+			//2 - deleta os dados do mes e ano atuais:
+			recebimentosMySqlRepo.deleteRecebimentosMesCompetencia(mes, ano, s.getUnidade());
+
+			//3 - localiza os dados do mes e ano atuais:
+			List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(mescomp, "0"+s.getCodfilial());
+			log.append("Registros localizados: "+ recebimentos.size()+". ");
+
+			//4 - converte o objeto postgres em mysql:
+			List<RecebimentosMySql> rcbs = new ArrayList<RecebimentosMySql>();
+			for(RecebimentosPostGre rec : recebimentos) {
+				rcbs.add(ConversorObjetos.converteRecebimentosPostGreToMySql(rec, s));
+			}
+
+			//5 - grava os dados no BD do Portal (MySql):
+			recebimentosMySqlRepo.saveAll(rcbs);
+			log.append(rcbs.size()+" registros inseridos. Conclusão em "+ ConversorObjetos.currentTimestamp());
+
+			//6 - salvando o log:
+			Log l = new Log();
+			l.setDataHora(ConversorObjetos.currentTimestamp());
+			l.setIdRegistro(0);
+			l.setIdUsuario(0);
+			l.setIp(ConversorObjetos.getIp());
+			l.setObservacao(log.toString());
+			l.setSecao("TBL_WARELINE_RECEBTOS");
+			l.setTipoLog("DADOS_WARELINE");
+			l.setTipoRegistro(18);
+			logRepo.save(l);
+		}
+	}
+
+	private void atualizaPgtosMesAnoAtual() {
+
+		StringBuffer log = null;
+
+		//1 - recebe o mes e ano atuais:
+		Integer mes = ConversorObjetos.getCurrentMonth();
+		Integer ano = ConversorObjetos.getCurrentYear();
+		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
 
 		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
@@ -497,13 +591,10 @@ public class ExtratorWarelineController {
 
 		StringBuffer log = null;
 
-
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
-
-		//String server = ConversorObjetos.getIpServer();
 
 		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
@@ -547,13 +638,10 @@ public class ExtratorWarelineController {
 
 		StringBuffer log = null;
 
-
 		//1 - recebe o mes e ano atuais:
 		Integer mes = ConversorObjetos.getCurrentMonth();
 		Integer ano = ConversorObjetos.getCurrentYear();
 		String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
-
-		//String server = ConversorObjetos.getIpServer();
 
 		List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
 
@@ -592,221 +680,4 @@ public class ExtratorWarelineController {
 			logRepo.save(l);
 		}
 	}
-
-	/***
-	 * @Scheduled(cron = "0 03 22 * * *", zone = "America/Sao_Paulo")
-	 * 
-	 * @Scheduled(cron = “1 2 3 4 5 6")”
-		1: segundo (preenchido de 0 a 59)
-		2: minuto (preenchido de 0 a 59)
-		3 hora (preenchido de 0 a 23)
-		4 dia (preenchido de 0 a 31)
-		5 mês (preenchido de 1 a 12)
-		6 dia da semana (preenchido de 0 a 6)
-		Nessa configuração @Scheduled(cron = “0 12 21 * * *”) esse método será executado todos os dias às 21h12 em ponto
-
-		Outro exemplo:
-
-		@Scheduled(fixedDelay = 1000): indica que o método anotado será executado a cada segundo. 
-		O parâmetro esperado está em milissegundos (1000 = 1 segundo).
-	 */
-
-	/*neste exemplo, sera executado sempre as 21:01 horas do dia*/
-	//	@Scheduled(cron = "0 01 21 * * *", zone = "America/Sao_Paulo")
-	//	public void scheduleTaskUsingCronExpression() {
-	//	 
-	//	    //long now = System.currentTimeMillis() / 1000;
-	//	    System.out.println("Tarefa agendada para as 21:01 horas - " + ConversorObjetos.currentTimestamp());
-	//	}
-
-	/*neste outro exemplo, sera executado a cada 30 minutos*/
-	//	@Scheduled(fixedDelay = (1800000))
-	//	public void scheduleTaskUsingCronExpression2() {
-	//	    System.out.println("Tarefa agendada para rodar a cada 30 minutos - " + ConversorObjetos.currentTimestamp());
-	//	}
-
-	//	@GetMapping(value = "/cadgrude")
-	//	public ModelAndView cadgrude(ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de cadgrude: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadGrudePostGre> cadastros = cadGrudePostGreRepo.findAll();
-	//
-	//		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadgrude (convert to Caduni - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadGrudeMySql> cadsPt = new ArrayList<CadGrudeMySql>();
-	//		for(CadGrudePostGre c : cadastros) {
-	//			cadsPt.add(ConversorObjetos.converteGrupoDespesasPostGreToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		cadGrudeMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//	
-	//	@GetMapping(value = "/caddesp")
-	//	public ModelAndView caddesp(ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de caddesp: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadDespPostGre> cadastros = cadDespPostGreRepo.findAll();
-	//
-	//		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de caddesp (convert to Caduni - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadDespMySql> cadsPt = new ArrayList<CadDespMySql>();
-	//		for(CadDespPostGre c : cadastros) {
-	//			cadsPt.add(ConversorObjetos.converteDespesasPostGreToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		cadDespMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//
-	//	@GetMapping(value = "/cadUni")
-	//	public ModelAndView cadUni(ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de CadUni: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadUniPostGre> cadastros = cadUniPostGreRepo.findAll();
-	//
-	//		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de CadUni (convert to Caduni - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadUniWareline> cadsPt = new ArrayList<CadUniWareline>();
-	//		for(CadUniPostGre c : cadastros) {
-	//			cadsPt.add(ConversorObjetos.converteUnidadesPostGreeToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		cadUniMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//
-	//	@GetMapping(value = "/cadFunc")
-	//	public ModelAndView cadFunc(ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de cadFunc: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadFuncPostGre> cadastros = cadFuncPostGreRepo.findAll();
-	//
-	//		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadFunc (convert to cadFunc - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadFuncWareline> cadsPt = new ArrayList<CadFuncWareline>();
-	//		for(CadFuncPostGre c : cadastros) {
-	//			cadsPt.add(ConversorObjetos.converteFuncionariosPostGreToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		cadFuncMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//
-	//	@GetMapping(value = "/cadPrest")
-	//	public ModelAndView cadPrest(ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de cadPrest: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadPrestPostGre> cadastros = cadPrestPostGreRepo.findAll();
-	//
-	//		System.out.println(cadastros.size() + " registros recuperados. Comecando a iteracao de cadPrest (convert to cadPrest - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<CadPrestWareline> cadsPt = new ArrayList<CadPrestWareline>();
-	//		for(CadPrestPostGre c : cadastros) {
-	//			cadsPt.add(ConversorObjetos.convertePrestadoresPostPreToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		cadPrestMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//
-	//	@GetMapping(value = "/pagtos")
-	//	public ModelAndView pagtos(@ModelAttribute("mesComp") String mesComp, ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de pagtos: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<PagtosPostGre> pgtos = pagtosPostGreRepo.obterPagamentosWarelinePorMesCompetencia(mesComp);
-	//
-	//		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pagtos (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<PagtosWareline> cadsPt = new ArrayList<PagtosWareline>();
-	//		for(PagtosPostGre c : pgtos) {
-	//			cadsPt.add(ConversorObjetos.convertePagamentosPostPreToMySql(c));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		pagtosMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//	
-	//	@GetMapping(value = "/pgdesp")
-	//	public ModelAndView pgdesp(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de pgdesp: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		//List<PgDespPostGre> pgtos = pgDespPostGreRepo.obterPagamentosMesCompetencia(mesComp);
-	//		List<PgDespPostGre> pgtos = pgDespPostGresDao.getPagamentosMesCompetencia(mesComp);
-	//
-	//		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pgdesp (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<PgDespMySql> cadsPt = new ArrayList<PgDespMySql>();
-	//		for(PgDespPostGre c : pgtos) {
-	//			cadsPt.add(ConversorObjetos.convertePgDespPostGreToMySql(c, mesComp));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		pgDespMyRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
-	//	
-	//	@GetMapping(value = "/pgparcel")
-	//	public ModelAndView pgparcel(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
-	//
-	//		System.out.println("Comecando a recuperacao de registros de pgparcel: "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<PgParcelPostGre> pgtos = pgParcelPostGreDao.getPagamentosMesCompetencia(mesComp);
-	//
-	//		System.out.println(pgtos.size() + " registros recuperados. Comecando a iteracao de pgparcel (convert to pagtos - MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		List<PgParcelMySql> cadsPt = new ArrayList<PgParcelMySql>();
-	//		for(PgParcelPostGre c : pgtos) {
-	//			cadsPt.add(ConversorObjetos.convertePgParcelPostGreToMySql(c, mesComp));
-	//		}
-	//
-	//		System.out.println("Dados convertidos. Iniciando a gravacao do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		pgParcelMySqlRepo.saveAll(cadsPt);
-	//
-	//		System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
-	//
-	//		return new ModelAndView("index", model);
-	//	}
 }

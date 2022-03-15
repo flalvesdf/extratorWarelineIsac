@@ -17,6 +17,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadUniWareline
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgParcelMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.RecebimentosMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServers;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
@@ -27,6 +28,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadUniPostGr
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.RecebimentosPostGre;
 
 public class ConversorObjetos {
 	
@@ -133,6 +135,81 @@ public class ConversorObjetos {
 		c.setPercentfix(p.getPercentfix());
 		c.setTimestamp(currentTimestamp());
 		return c;
+	}
+	
+	public static RecebimentosMySql converteRecebimentosPostGreToMySql(RecebimentosPostGre rpg, WarelineServers server) {
+		RecebimentosMySql rms = new RecebimentosMySql();
+		rms.setUnidade(server.getUnidade());
+		
+		String mescomp = rpg.getMesiniprov();
+		Integer ano = Integer.parseInt(mescomp.substring(0, 4));
+		Integer mes = Integer.parseInt(mescomp.substring(5));
+		
+		rms.setAnocompetencia(ano);
+		rms.setMescompetencia(mes);
+		
+		rms.setClassidoc(rpg.getClassidoc());
+		rms.setCodbansuge(rpg.getCodbansuge());
+		rms.setCodcondpg(rpg.getCodcondpg());
+		rms.setCodconv(rpg.getCodconv());
+		rms.setCodevenbai(rpg.getCodevenbai());
+		rms.setCodeveninc(rpg.getCodeveninc());
+		rms.setCodfilial(rpg.getCodfilial());
+		rms.setCodmoeda(rpg.getCodmoeda());
+		rms.setCodope(rpg.getCodope());
+		rms.setCodopeatu(rpg.getCodopeatu());
+		rms.setCodorcaf(rpg.getCodorcaf());
+		rms.setCodpac(rpg.getCodpac());
+		rms.setContabbai(rpg.getContabbai());
+		rms.setContabinc(rpg.getCodeveninc());
+		rms.setCpfresp(rpg.getCpfresp());
+		rms.setDataadian(rpg.getDataadian());
+		rms.setDataglosas(rpg.getDataglosas());
+		rms.setDataultatu(rpg.getDataultatu());
+		rms.setDatdigita(rpg.getDatdigita());
+		rms.setDatemissao(rpg.getDatemissao());
+		rms.setFluxo(rpg.getFluxo());
+		rms.setFormasuge(rpg.getFormasuge());
+		rms.setIdcontapac(rpg.getIdcontapac());
+		rms.setMatriz(rpg.getMatriz());
+		rms.setMesfimprov(rpg.getMesfimprov());
+		rms.setMesiniprov(rpg.getMesiniprov());
+		rms.setMesorcaf(rpg.getMesorcaf());
+		rms.setNomecli(rpg.getNomecli());
+		rms.setNomeresp(rpg.getNomeresp());
+		rms.setNumatend(rpg.getNumatend());
+		rms.setNumdoc(rpg.getNumdoc());
+		rms.setNumnffat(rpg.getNumnffat());
+		rms.setNumprojeto(rpg.getNumprojeto());
+		rms.setNumrecebto(rpg.getNumrecebto());
+		rms.setNumrecibo(rpg.getNumrecibo());
+		rms.setNumreciboa(rpg.getNumreciboa());
+		rms.setNumrecibov(rpg.getNumrecibov());
+		rms.setNumsolver(rpg.getNumsolver());
+		rms.setObserva(rpg.getObserva());
+		rms.setParcelas(rpg.getParcelas());
+		rms.setPortador(rpg.getPortador());
+		rms.setPosicao(rpg.getPosicao());
+		rms.setProvisiona(rpg.getPosicao());
+		rms.setQtd1(rpg.getQtd1());
+		rms.setTimestamp(currentTimestamp());
+		rms.setTipocobr(rpg.getTipocobr());
+		rms.setTipodoc(rpg.getTipodoc());
+		rms.setTraspaso(rpg.getTraspaso());
+		rms.setValcofins(rpg.getValcofins());
+		rms.setValcpc(rpg.getValcpc());
+		rms.setValcsll(rpg.getValcsll());
+		rms.setValicms(rpg.getValicms());
+		rms.setValinss(rpg.getValinss());
+		rms.setValirrf(rpg.getValirrf());
+		rms.setValiss(rpg.getValiss());
+		rms.setValoradian(rpg.getValoradian());
+		rms.setValorglosa(rpg.getValorglosa());
+		rms.setValororig(rpg.getValororig());
+		rms.setValortot(rpg.getValortot());
+		rms.setValpis(rpg.getValpis());
+		
+		return rms;
 	}
 	
 	
