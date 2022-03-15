@@ -4,10 +4,14 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "pt_wl_recebtos")
 public class RecebimentosMySql {
 	
 	@Id
@@ -153,7 +157,7 @@ public class RecebimentosMySql {
 	@Column(name="cpfresp")
 	private String cpfresp;
 	
-	@Column(name="codpac")
+	@Column(name="qtd1")
 	private Integer qtd1;
 	
 	@Column(name="codpac")

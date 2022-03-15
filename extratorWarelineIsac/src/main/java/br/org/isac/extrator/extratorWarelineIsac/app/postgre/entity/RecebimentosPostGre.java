@@ -151,7 +151,7 @@ public class RecebimentosPostGre {
 	@Column(name="cpfresp")
 	private String cpfresp;
 	
-	@Column(name="codpac")
+	@Column(name="qtd1")
 	private Integer qtd1;
 	
 	@Column(name="codpac")
