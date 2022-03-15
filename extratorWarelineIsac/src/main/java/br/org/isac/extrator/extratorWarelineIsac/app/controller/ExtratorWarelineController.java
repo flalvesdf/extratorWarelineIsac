@@ -3,9 +3,15 @@ package br.org.isac.extrator.extratorWarelineIsac.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.org.isac.extrator.extratorWarelineIsac.app.config.Tabelas;
 import br.org.isac.extrator.extratorWarelineIsac.app.conversores.ConversorObjetos;
@@ -506,7 +512,7 @@ public class ExtratorWarelineController {
 
 		for(WarelineServers s: servers) {
 			log = new StringBuffer();
-			log.append("Iniciando a atualização Base Wareline. Tabela Recebtos. "+ ConversorObjetos.currentTimestamp()+". ");
+			log.append("Iniciando a atualização Base Wareline. Tabela RECEBTOS. "+ ConversorObjetos.currentTimestamp()+". ");
 			log.append("Parâmetros: Ano: "+ano+". Mês: "+ mes + ". MesComp: "+ mescomp+". Unidade: "+ s.getUnidade());
 
 			//2 - deleta os dados do mes e ano atuais:
@@ -680,4 +686,16 @@ public class ExtratorWarelineController {
 			logRepo.save(l);
 		}
 	}
+	
+		@GetMapping(value = "/recebimentos")
+		public ModelAndView pgdesp(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
+	
+			System.out.println("Comecando a recuperacao de registros de RECEBTOS: "+ ConversorObjetos.currentTimestamp());
+	
+			atualizaRecebimentosMesAnoAtual();
+	
+			System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
+	
+			return new ModelAndView("index", model);
+		}
 }
