@@ -688,11 +688,65 @@ public class ExtratorWarelineController {
 	}
 	
 		@GetMapping(value = "/recebimentos")
-		public ModelAndView pgdesp(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
+		public ModelAndView recebimentos(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
 	
 			System.out.println("Comecando a recuperacao de registros de RECEBTOS: "+ ConversorObjetos.currentTimestamp());
 	
 			atualizaRecebimentosMesAnoAtual();
+	
+			System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
+	
+			return new ModelAndView("index", model);
+		}
+		
+		@GetMapping(value = "/recebimentosTodos")
+		public ModelAndView recebimentosTodos(@ModelAttribute("competencia") String mesComp, ModelMap model, HttpSession session) {
+	
+			System.out.println("Comecando a recuperacao de registros de RECEBTOS: "+ ConversorObjetos.currentTimestamp());
+	
+			StringBuffer log = null;
+
+			//1 - recebe o mes e ano atuais:
+			Integer mes = ConversorObjetos.getCurrentMonth();
+			Integer ano = ConversorObjetos.getCurrentYear();
+			String mescomp = ano + "/"+ (mes < 10? "0"+mes: mes);
+
+			List<WarelineServers> servers = wlServerRepo.getServersByUnidade(Parametros.UNIDADES);
+
+			for(WarelineServers s: servers) {
+				log = new StringBuffer();
+				log.append("Iniciando a atualização Base Wareline. Tabela RECEBTOS. "+ ConversorObjetos.currentTimestamp()+". ");
+				log.append("Parâmetros: Unidade: "+ s.getUnidade());
+
+				//2 - deleta os dados do mes e ano atuais:
+				recebimentosMySqlRepo.deleteRecebimentosTodosUnidade(s.getUnidade());
+
+				//3 - localiza os dados do mes e ano atuais:
+				List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelineTodos("0"+s.getCodfilial());
+				log.append("Registros localizados: "+ recebimentos.size()+". ");
+
+				//4 - converte o objeto postgres em mysql:
+				List<RecebimentosMySql> rcbs = new ArrayList<RecebimentosMySql>();
+				for(RecebimentosPostGre rec : recebimentos) {
+					rcbs.add(ConversorObjetos.converteRecebimentosPostGreToMySql(rec, s));
+				}
+
+				//5 - grava os dados no BD do Portal (MySql):
+				recebimentosMySqlRepo.saveAll(rcbs);
+				log.append(rcbs.size()+" registros inseridos. Conclusão em "+ ConversorObjetos.currentTimestamp());
+
+				//6 - salvando o log:
+				Log l = new Log();
+				l.setDataHora(ConversorObjetos.currentTimestamp());
+				l.setIdRegistro(0);
+				l.setIdUsuario(0);
+				l.setIp(ConversorObjetos.getIp());
+				l.setObservacao(log.toString());
+				l.setSecao("TBL_WARELINE_RECEBTOS");
+				l.setTipoLog("DADOS_WARELINE");
+				l.setTipoRegistro(18);
+				logRepo.save(l);
+			}
 	
 			System.out.println("Dados gravados do Banco de Dados do PT (MySQL): "+ ConversorObjetos.currentTimestamp());
 	
