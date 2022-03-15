@@ -3,9 +3,11 @@ package br.org.isac.extrator.extratorWarelineIsac.app.conversores;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
@@ -137,13 +139,18 @@ public class ConversorObjetos {
 		return c;
 	}
 	
+	public static String converteDateEmString(Date data) {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+		return formato.format(data);
+	}
+	
 	public static RecebimentosMySql converteRecebimentosPostGreToMySql(RecebimentosPostGre rpg, WarelineServers server) {
 		RecebimentosMySql rms = new RecebimentosMySql();
 		rms.setUnidade(server.getUnidade());
 		
-		String mescomp = rpg.getMesiniprov();
-		Integer ano = Integer.parseInt(mescomp.substring(0, 4));
-		Integer mes = Integer.parseInt(mescomp.substring(5));
+		String mesano = converteDateEmString(rpg.getDatemissao());
+		Integer ano = Integer.parseInt(mesano.substring(6));
+		Integer mes = Integer.parseInt(mesano.substring(3,5));
 		
 		rms.setAnocompetencia(ano);
 		rms.setMescompetencia(mes);
