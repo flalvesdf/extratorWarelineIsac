@@ -25,10 +25,10 @@ public interface RecebimentosPostGreRepository extends JpaRepository<Recebimento
   FROM "PACIENTE".recebtos where extract(year from datemissao) = 2022 and extract(month from datemissao) = 1
 	 */
 	
-	@Query(value = "SELECT a from recebtos a where extract(year from a.datemissao) = ?1 and extract(month from a.datemissao) = ?2 and a.codfilial = ?3", nativeQuery = true)
+	@Query(value = "SELECT a.* from recebtos a where extract(year from a.datemissao) = ?1 and extract(month from a.datemissao) = ?2 and a.codfilial = ?3", nativeQuery = true)
 	public List<RecebimentosPostGre> obterRecebimentosWarelinePorMesCompetencia(Integer ano, Integer mes, String codfilial);
 	
-	@Query(value = "SELECT a from recebtos a where a.codfilial = ?1", nativeQuery = true)
+	@Query(value = "SELECT a.* from recebtos a where a.codfilial = ?1", nativeQuery = true)
 	public List<RecebimentosPostGre> obterRecebimentosWarelineTodos(String codfilial);
 
 }
