@@ -9,7 +9,7 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.Recebimentos
 
 public interface RecebimentosPostGreRepository extends JpaRepository<RecebimentosPostGre, Integer> {
 	
-	@Query("SELECT a from RecebimentosPostGre a where a.mesiniprov =?1 and a.codfilial = ?2")
-	public List<RecebimentosPostGre> obterRecebimentosWarelinePorMesCompetencia(String mesComp, String codfilial);
+	@Query("SELECT a from RecebimentosPostGre a where year(a.datemissao) = ?1 and mounth(a.datemissao) = ?2 and a.codfilial = ?3")
+	public List<RecebimentosPostGre> obterRecebimentosWarelinePorMesCompetencia(Integer ano, Integer mes, String codfilial);
 
 }

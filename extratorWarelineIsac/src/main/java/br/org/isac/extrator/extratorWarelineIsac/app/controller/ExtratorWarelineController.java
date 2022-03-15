@@ -393,7 +393,7 @@ public class ExtratorWarelineController {
 		//exemplo 2021/09
 		String mescomp = s.getAno() + "/"+(s.getMes()>9?s.getMes():"0"+s.getMes());
 		WarelineServers server = wlServerRepo.getServerByUnidade(s.getUnidade());
-		List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(mescomp, "0"+server.getCodfilial());
+		List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(s.getMes(), s.getAno(), "0"+server.getCodfilial());
 
 		if(recebimentos != null && recebimentos.size()>0) {
 			recebimentosMySqlRepo.deleteRecebimentosMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
@@ -519,7 +519,7 @@ public class ExtratorWarelineController {
 			recebimentosMySqlRepo.deleteRecebimentosMesCompetencia(mes, ano, s.getUnidade());
 
 			//3 - localiza os dados do mes e ano atuais:
-			List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(mescomp, "0"+s.getCodfilial());
+			List<RecebimentosPostGre> recebimentos = recebimentosPosdtGreRepo.obterRecebimentosWarelinePorMesCompetencia(ano, mes, "0"+s.getCodfilial());
 			log.append("Registros localizados: "+ recebimentos.size()+". ");
 
 			//4 - converte o objeto postgres em mysql:

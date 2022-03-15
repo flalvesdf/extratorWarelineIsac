@@ -23,7 +23,6 @@ public class Parametros {
 	 * 1) Para gerar o arquivo WAR de uma determinada unidade, deve alterar também
 	 * o arquivo application.properties, descomentando apenas a linha referente a 
 	 * unidade que se deseja gerar o arquivo WAR;
-	 * 
 	 * 2) Alterar o arquivo pom.xml: 
 	 * - na tag <artifactId> com o indicador da unidade no formato
 	 * unidade-CODIGO DA UNIDADE. Exemplo: <artifactId>unidade-01</artifactId>
@@ -31,7 +30,7 @@ public class Parametros {
 	 * unidade-CODIGO DA UNIDADE. Exemplo: <name>unidade-01</name>
 	 * 
 	 */
-	public static final Integer UNDIDADE_SCHEDULE = 14;
+	public static final Integer UNDIDADE_SCHEDULE = 13;
 	private static final Integer[] IDS_UNIDADES = {5,13,14,15};
 	public static final List<Integer> UNIDADES = Arrays.asList(IDS_UNIDADES);
 }
