@@ -13,6 +13,8 @@ import java.util.List;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrupoReceitasMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadItemReceitasMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadJuridWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadPrestWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadUniWareline;
@@ -24,6 +26,8 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServer
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrupoReceitaPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadItemReceitaPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadUniPG;
@@ -42,6 +46,31 @@ public class ConversorObjetos {
 		}
 		
 		return server;
+	}
+	
+	public static CadGrupoReceitasMySql converteCadGrupoReceitasPGToMySQL(CadGrupoReceitaPG gr) {
+		CadGrupoReceitasMySql g = new CadGrupoReceitasMySql();
+		g.setClassirece(gr.getClassirece());
+		g.setCodgrurc(gr.getCodgrurc());
+		g.setDescgrurc(gr.getDescgrurc());
+		g.setInativo(gr.getInativo());
+		g.setTimestamp(currentTimestamp());
+		return g;
+	}
+	
+	public static CadItemReceitasMySql converteCadItemReceitasPGToMySQL(CadItemReceitaPG i) {
+		CadItemReceitasMySql c = new CadItemReceitasMySql();
+		c.setCodcc(i.getCodcc());
+		c.setCodcontab(i.getCodcontab());
+		c.setCodgrurc(i.getCodgrurc());
+		c.setCodrece(i.getCodrece());
+		c.setDescrirece(i.getDescrirece());
+		c.setDistricc(i.getDistricc());
+		c.setInativo(i.getInativo());
+		c.setNumtabrat(i.getNumtabrat());
+		c.setProvisiona(i.getProvisiona());
+		c.setTimestamp(currentTimestamp());
+		return c;
 	}
 	
 	/**Recupera do posGres os dados em formato Object[] e converte para RecebimentosWareline para gravacao do DB do Portal de Transparencia, 

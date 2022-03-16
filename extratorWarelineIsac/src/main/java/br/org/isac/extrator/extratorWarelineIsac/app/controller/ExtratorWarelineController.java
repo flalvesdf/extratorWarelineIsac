@@ -19,6 +19,8 @@ import br.org.isac.extrator.extratorWarelineIsac.app.conversores.Parametros;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadFuncWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrudeMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadGrupoReceitasMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadItemReceitasMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadJuridWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadPrestWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.Log;
@@ -31,6 +33,8 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServer
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadDespMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadFuncMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadGrudeMySqlRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadGrupoReceitasMySqlRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadItemReceitasMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadJuridMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.CadPrestMySqlRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.LogRepository;
@@ -43,6 +47,8 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.repository.WarelineSe
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrupoReceitaPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadItemReceitaPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPG;
@@ -51,8 +57,10 @@ import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPG;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadDespPGRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadFuncPGRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadGrudePGRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadGrupoReceitaPGRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadJuridPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CadPrestPostGreRepository;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.CaditemReceitaPGRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PagtosPostGreRepository;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgDespPostGreDao;
 import br.org.isac.extrator.extratorWarelineIsac.app.postgre.repository.PgParcelPostGreDao;
@@ -121,11 +129,21 @@ public class ExtratorWarelineController {
 	@Autowired
 	private RecebimentosPGRepository recebimentosPosdtGreRepo;
 	
-	//@Autowired
-	//private RecebimentosMySqlRepository recebimentosMySqlRepo;
-	
 	@Autowired
 	private RecebimentosWarelineRepository recebimentosWarelineMySqlRepo;
+	
+	@Autowired
+	private CadGrupoReceitaPGRepository cadGrupoRecPGRepo;
+	
+	@Autowired
+	private CadGrupoReceitasMySqlRepository cadGrupoRecMySqlRepo;
+	
+	@Autowired
+	private CaditemReceitaPGRepository cadItemRecPGRepo;
+	
+	@Autowired
+	private CadItemReceitasMySqlRepository cadItemRecMySqlRepo;
+	
 	
 	/***Exemplo Schedules:
 	 * 
@@ -233,6 +251,11 @@ public class ExtratorWarelineController {
 						
 						if(s.getTabela().equals(Tabelas.RECEBTOS)) {
 							executaSolicitacaoAtualizacaoTabelaRECEBIMENTOS(s);
+							continue;
+						}
+						
+						if(s.getTabela().equals(Tabelas.CADGRURC)) {
+							executaSolicitacaoAtualizacaoTabelaCADGRURC(s);
 							continue;
 						}
 					}
@@ -453,6 +476,46 @@ public class ExtratorWarelineController {
 			s.setResultado("Nenhum registro localizado para atualização");
 			solicitacaoRepo.save(s);
 		}
+	}
+	
+	private void executaSolicitacaoAtualizacaoTabelaCADGRURC(SolicitacaoAtualizacaoWareline s) {
+
+		
+		String msg = "";
+		List<CadGrupoReceitaPG> grs = cadGrupoRecPGRepo.findAll();
+
+		if(grs != null && grs.size()>0) {
+
+			cadGrupoRecMySqlRepo.deleteAll();
+
+			List<CadGrupoReceitasMySql> cads = new ArrayList<CadGrupoReceitasMySql>();
+			for(CadGrupoReceitaPG gr : grs) {
+				cads.add(ConversorObjetos.converteCadGrupoReceitasPGToMySQL(gr));
+			}
+
+			cadGrupoRecMySqlRepo.saveAll(cads);
+			msg += cads.size() + " registros localizados e adicionados em Grupos de Receitas. ";
+		}
+		
+		List<CadItemReceitaPG> itens = cadItemRecPGRepo.findAll();
+		
+		if(itens != null && itens.size()>0) {
+			cadItemRecMySqlRepo.deleteAll();
+			List<CadItemReceitasMySql> cads = new ArrayList<CadItemReceitasMySql>();
+			for(CadItemReceitaPG i : itens) {
+				cads.add(ConversorObjetos.converteCadItemReceitasPGToMySQL(i));
+			}
+
+			cadItemRecMySqlRepo.saveAll(cads);
+			msg += cads.size() + " registros localizados e adicionados em Itens de Receitas. ";
+			
+		}
+		
+		s.setStatus("C");
+		s.setDatahoraatualizacao(ConversorObjetos.currentTimestamp());
+		s.setResultado("".equals(msg)?"Nenhum registro localizado para atualização": msg);
+		solicitacaoRepo.save(s);
+
 	}
 
 	private void executaSolicitacaoAtualizacaoTabelaCADGRUDE(SolicitacaoAtualizacaoWareline s) {
