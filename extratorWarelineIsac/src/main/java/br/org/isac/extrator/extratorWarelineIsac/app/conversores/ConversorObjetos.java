@@ -71,6 +71,7 @@ public class ConversorObjetos {
 		
 		r.setNumrecebto((obj[0]!= null && !"".equals(String.valueOf(obj[0]))?Integer.parseInt(String.valueOf(obj[0])):0));
 		r.setNumrecibo((obj[1]!= null && !"".equals(String.valueOf(obj[1]))?Integer.parseInt(String.valueOf(obj[1])):0));
+		
 		r.setTipodoc((obj[2]!= null && !"".equals(String.valueOf(obj[2]))?String.valueOf(obj[2]):""));
 		r.setNumdoc((obj[3]!= null && !"".equals(String.valueOf(obj[3]))?String.valueOf(obj[3]):""));
 		r.setCodfilial((obj[4]!= null && !"".equals(String.valueOf(obj[4]))?String.valueOf(obj[4]):""));
@@ -80,23 +81,21 @@ public class ConversorObjetos {
 		r.setObserva((obj[8]!= null && !"".equals(String.valueOf(obj[8]))?String.valueOf(obj[8]):""));
 		r.setCodope((obj[9]!= null && !"".equals(String.valueOf(obj[9]))?String.valueOf(obj[9]):""));
 		
-		if(obj[10]!= null && !"".equals(String.valueOf(obj[10]))) {
-			Date d1 = Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[10])));
-			r.setDatemissao(d1);
-		}
+		r.setDatemissao((obj[10]!= null && !"".equals(String.valueOf(obj[10]))?Date.valueOf(String.valueOf(obj[10])):null));
+		r.setDatdigita((obj[11]!= null && !"".equals(String.valueOf(obj[11]))?Date.valueOf(String.valueOf(obj[11])):null));
+		r.setDataadian((obj[12]!= null && !"".equals(String.valueOf(obj[12]))?Date.valueOf(String.valueOf(obj[12])):null));
+		r.setDatavencto((obj[13]!= null && !"".equals(String.valueOf(obj[13]))?Date.valueOf(String.valueOf(obj[13])):null));
+		r.setDataprev((obj[14]!= null && !"".equals(String.valueOf(obj[14]))?Date.valueOf(String.valueOf(obj[14])):null));
+		r.setDatrecebto((obj[15]!= null && !"".equals(String.valueOf(obj[15]))?Date.valueOf(String.valueOf(obj[15])):null));
+		r.setDataglosas((obj[16]!= null && !"".equals(String.valueOf(obj[16]))?Date.valueOf(String.valueOf(obj[16])):null));
 		
-		r.setDatemissao((obj[10]!= null && !"".equals(String.valueOf(obj[10]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[10]))):null));
-		r.setDatdigita((obj[11]!= null && !"".equals(String.valueOf(obj[11]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[11]))):null));
-		r.setDataadian((obj[12]!= null && !"".equals(String.valueOf(obj[12]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[12]))):null));
-		r.setDatavencto((obj[13]!= null && !"".equals(String.valueOf(obj[13]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[13]))):null));
-		r.setDataprev((obj[14]!= null && !"".equals(String.valueOf(obj[14]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[14]))):null));
-		r.setDatrecebto((obj[15]!= null && !"".equals(String.valueOf(obj[15]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[15]))):null));
-		r.setDataglosas((obj[16]!= null && !"".equals(String.valueOf(obj[16]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[16]))):null));
 		r.setMesiniprov((obj[17]!= null && !"".equals(String.valueOf(obj[17]))?String.valueOf(obj[17]):""));
 		r.setMesfimprov((obj[18]!= null && !"".equals(String.valueOf(obj[18]))?String.valueOf(obj[18]):""));
-		r.setAnorecebimento((obj[19]!= null && !"".equals(String.valueOf(obj[19]))?Double.parseDouble(String.valueOf(obj[19])):0));
-		r.setMesrecebimento((obj[20]!= null && !"".equals(String.valueOf(obj[20]))?Double.parseDouble(String.valueOf(obj[20])):0));
-		r.setDiarecebimento((obj[21]!= null && !"".equals(String.valueOf(obj[21]))?Double.parseDouble(String.valueOf(obj[21])):0));
+		
+		r.setAnorecebimento((obj[19]!= null && !"".equals(String.valueOf(obj[19]))?Double.parseDouble(String.valueOf(obj[19])):0.0));
+		r.setMesrecebimento((obj[20]!= null && !"".equals(String.valueOf(obj[20]))?Double.parseDouble(String.valueOf(obj[20])):0.0));
+		r.setDiarecebimento((obj[21]!= null && !"".equals(String.valueOf(obj[21]))?Double.parseDouble(String.valueOf(obj[21])):0.0));
+		
 		r.setValoradian((obj[22]!= null && !"".equals(String.valueOf(obj[22]))?Double.parseDouble(String.valueOf(obj[22])):0.0));
 		r.setValorglosa((obj[23]!= null && !"".equals(String.valueOf(obj[23]))?Double.parseDouble(String.valueOf(obj[23])):0.0));
 		r.setValororig((obj[24]!= null && !"".equals(String.valueOf(obj[24]))?Double.parseDouble(String.valueOf(obj[24])):0.0));
@@ -104,10 +103,12 @@ public class ConversorObjetos {
 		r.setValor((obj[26]!= null && !"".equals(String.valueOf(obj[26]))?Double.parseDouble(String.valueOf(obj[26])):0.0));
 		r.setValorvenc((obj[27]!= null && !"".equals(String.valueOf(obj[27]))?Double.parseDouble(String.valueOf(obj[27])):0.0));
 		r.setVlrecebido((obj[28]!= null && !"".equals(String.valueOf(obj[28]))?Double.parseDouble(String.valueOf(obj[28])):0.0));
+		
 		r.setCodgrurc((obj[29]!= null && !"".equals(String.valueOf(obj[29]))?String.valueOf(obj[29]):""));
 		r.setDescgrurc((obj[30]!= null && !"".equals(String.valueOf(obj[30]))?String.valueOf(obj[30]):""));
 		r.setCodrece((obj[31]!= null && !"".equals(String.valueOf(obj[31]))?String.valueOf(obj[31]):""));
 		r.setDescrirece((obj[32]!= null && !"".equals(String.valueOf(obj[32]))?String.valueOf(obj[32]):""));
+		
 		r.setUnidade(server.getUnidade());
 		r.setTimestamp(currentTimestamp());
 		
