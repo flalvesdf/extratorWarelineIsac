@@ -2,12 +2,12 @@ package br.org.isac.extrator.extratorWarelineIsac.app.conversores;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadDespMySql;
@@ -19,18 +19,17 @@ import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.CadUniWareline
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PagtosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgDespMySql;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.PgParcelMySql;
-import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.RecebimentosMySql;
+import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.RecebimentosWareline;
 import br.org.isac.extrator.extratorWarelineIsac.app.mysql.entity.WarelineServers;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadUniPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPostGre;
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.RecebimentosPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadDespPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadFuncPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadGrudePG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadJuridPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadPrestPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.CadUniPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPG;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgParcelPG;
 
 public class ConversorObjetos {
 	
@@ -45,7 +44,79 @@ public class ConversorObjetos {
 		return server;
 	}
 	
-	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPostGre p, String mescomp, WarelineServers server) {
+	/**Recupera do posGres os dados em formato Object[] e converte para RecebimentosWareline para gravacao do DB do Portal de Transparencia, 
+	 * conforme padrao abaixo:
+	 * 
+	 *  R1.numrecebto[0], R1.numrecibo[1],R1.tipodoc[2], R1.numdoc[3],R1.codfilial[4],R1.codconv[5],
+		R1.nomecli[6], R1.nomeresp[7],R1.observa[8], R1.codope[9], R1.datemissao[10], R1.datdigita[11], 
+		R1.dataadian[12],R3.datavencto[13], R3.dataprev[14],R3.datrecebto[15], R1.dataglosas[16],
+		R1.mesiniprov[17], R1.mesfimprov[18], extract(year from R3.datrecebto) as anorecebimento[19],
+		extract(month from R3.datrecebto) as mesrecebimento[20],extract(day from R3.datrecebto) as diarecebimento[21],
+		R1.valoradian[22], R1.valorglosa[23], R1.valororig[24], R1.valortot[25],R2.valor[26], R3.valorvenc[27],
+		R3.vlrecebido[28],R4.codgrurc[29],R5.descgrurc[30],R2.codrece[31], R4.descrirece[32] 
+		
+		TABELA recebtos R1 
+		TABELA rcrece R2 on (R1.numrecebto = R2.numrecebto)
+		TABELA rcparcel R3 on (R1.numrecebto = R3.numrecebto) 
+		TABELA cadrece R4 on (R2.codrece = R4.codrece)
+		TABELA cadgrurc R5 on (R4.codgrurc = R5.codgrurc)
+		
+		MAIS DETALHE: Veja a Inteface RecebimentosPGRepository, método getRecebimentosPorMesAno(Integer ano, Integer mes, String codFilial)
+	 * @param obj
+	 * @param server
+	 * @return
+	 */
+	public static RecebimentosWareline converteArrayObjectToRecebimentosWarelineForMySql(Object[] obj, WarelineServers server) {
+		RecebimentosWareline r = new RecebimentosWareline();
+		
+		r.setNumrecebto((obj[0]!= null && !"".equals(String.valueOf(obj[0]))?Integer.parseInt(String.valueOf(obj[0])):0));
+		r.setNumrecibo((obj[1]!= null && !"".equals(String.valueOf(obj[1]))?Integer.parseInt(String.valueOf(obj[1])):0));
+		r.setTipodoc((obj[2]!= null && !"".equals(String.valueOf(obj[2]))?String.valueOf(obj[2]):""));
+		r.setNumdoc((obj[3]!= null && !"".equals(String.valueOf(obj[3]))?String.valueOf(obj[3]):""));
+		r.setCodfilial((obj[4]!= null && !"".equals(String.valueOf(obj[4]))?String.valueOf(obj[4]):""));
+		r.setCodconv((obj[5]!= null && !"".equals(String.valueOf(obj[5]))?String.valueOf(obj[5]):""));
+		r.setNomecli((obj[6]!= null && !"".equals(String.valueOf(obj[6]))?String.valueOf(obj[6]):""));
+		r.setNomeresp((obj[7]!= null && !"".equals(String.valueOf(obj[7]))?String.valueOf(obj[7]):""));
+		r.setObserva((obj[8]!= null && !"".equals(String.valueOf(obj[8]))?String.valueOf(obj[8]):""));
+		r.setCodope((obj[9]!= null && !"".equals(String.valueOf(obj[9]))?String.valueOf(obj[9]):""));
+		r.setDatemissao((obj[10]!= null && !"".equals(String.valueOf(obj[10]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[10]))):null));
+		r.setDatdigita((obj[11]!= null && !"".equals(String.valueOf(obj[11]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[11]))):null));
+		r.setDataadian((obj[12]!= null && !"".equals(String.valueOf(obj[12]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[12]))):null));
+		r.setDatavencto((obj[13]!= null && !"".equals(String.valueOf(obj[13]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[13]))):null));
+		r.setDataprev((obj[14]!= null && !"".equals(String.valueOf(obj[14]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[14]))):null));
+		r.setDatrecebto((obj[15]!= null && !"".equals(String.valueOf(obj[15]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[15]))):null));
+		r.setDataglosas((obj[16]!= null && !"".equals(String.valueOf(obj[16]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[16]))):null));
+		r.setMesiniprov((obj[17]!= null && !"".equals(String.valueOf(obj[17]))?String.valueOf(obj[17]):""));
+		r.setMesfimprov((obj[18]!= null && !"".equals(String.valueOf(obj[18]))?String.valueOf(obj[18]):""));
+		r.setAnorecebimento((obj[19]!= null && !"".equals(String.valueOf(obj[19]))?Double.parseDouble(String.valueOf(obj[19])):0));
+		r.setMesrecebimento((obj[20]!= null && !"".equals(String.valueOf(obj[20]))?Double.parseDouble(String.valueOf(obj[20])):0));
+		r.setDiarecebimento((obj[21]!= null && !"".equals(String.valueOf(obj[21]))?Double.parseDouble(String.valueOf(obj[21])):0));
+		r.setValoradian((obj[22]!= null && !"".equals(String.valueOf(obj[22]))?Double.parseDouble(String.valueOf(obj[22])):0.0));
+		r.setValorglosa((obj[23]!= null && !"".equals(String.valueOf(obj[23]))?Double.parseDouble(String.valueOf(obj[23])):0.0));
+		r.setValororig((obj[24]!= null && !"".equals(String.valueOf(obj[24]))?Double.parseDouble(String.valueOf(obj[24])):0.0));
+		r.setValortot((obj[25]!= null && !"".equals(String.valueOf(obj[25]))?Double.parseDouble(String.valueOf(obj[25])):0.0));
+		r.setValor((obj[26]!= null && !"".equals(String.valueOf(obj[26]))?Double.parseDouble(String.valueOf(obj[26])):0.0));
+		r.setValorvenc((obj[27]!= null && !"".equals(String.valueOf(obj[27]))?Double.parseDouble(String.valueOf(obj[27])):0.0));
+		r.setVlrecebido((obj[28]!= null && !"".equals(String.valueOf(obj[28]))?Double.parseDouble(String.valueOf(obj[28])):0.0));
+		r.setCodgrurc((obj[29]!= null && !"".equals(String.valueOf(obj[29]))?String.valueOf(obj[29]):""));
+		r.setDescgrurc((obj[30]!= null && !"".equals(String.valueOf(obj[30]))?String.valueOf(obj[30]):""));
+		r.setCodrece((obj[31]!= null && !"".equals(String.valueOf(obj[31]))?String.valueOf(obj[31]):""));
+		r.setDescrirece((obj[32]!= null && !"".equals(String.valueOf(obj[32]))?String.valueOf(obj[32]):""));
+		r.setUnidade(server.getUnidade());
+		r.setTimestamp(currentTimestamp());
+		
+		return r;
+	}
+	
+	public static String converteDataFormatoAmericanoEmDataPTBR(String data) {
+		//formato recebido: 2020-04-13
+		Integer dia = Integer.parseInt(data.substring(8));
+		Integer mes = Integer.parseInt(data.substring(5,7));
+		Integer ano = Integer.parseInt(data.substring(0,4));
+		return dia+"/"+mes+"/"+ano;
+	}
+	
+	public static PgParcelMySql convertePgParcelPostGreToMySql(PgParcelPG p, String mescomp, WarelineServers server) {
 		PgParcelMySql c = new PgParcelMySql();
 		c.setCnabitem(p.getCnabitem());
 		c.setCnabseq(p.getCnabseq());
@@ -97,7 +168,7 @@ public class ConversorObjetos {
 		return c;
 	}
 	
-	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPostGre p, String mescomp, WarelineServers server) {
+	public static PgDespMySql convertePgDespPostGreToMySql(PgDespPG p, String mescomp, WarelineServers server) {
 		PgDespMySql c = new PgDespMySql();
 		c.setCodcc(p.getCodcc());
 		c.setCoddesp(p.getCoddesp());
@@ -113,7 +184,7 @@ public class ConversorObjetos {
 		return c;
 	}
 	
-	public static CadGrudeMySql converteGrupoDespesasPostGreToMySql(CadGrudePostGre p) {
+	public static CadGrudeMySql converteGrupoDespesasPostGreToMySql(CadGrudePG p) {
 		CadGrudeMySql c = new CadGrudeMySql();
 		c.setClassidesp(p.getClassidesp());
 		c.setCodgrude(p.getCodgrude());
@@ -123,7 +194,7 @@ public class ConversorObjetos {
 		return c;
 	}
 	
-	public static CadDespMySql converteDespesasPostGreToMySql(CadDespPostGre p) {
+	public static CadDespMySql converteDespesasPostGreToMySql(CadDespPG p) {
 		CadDespMySql c = new CadDespMySql();
 		c.setCodcc(p.getCodcc());
 		c.setCodcontab(p.getCodcontab());
@@ -144,83 +215,83 @@ public class ConversorObjetos {
 		return formato.format(data);
 	}
 	
-	public static RecebimentosMySql converteRecebimentosPostGreToMySql(RecebimentosPostGre rpg, WarelineServers server) {
-		RecebimentosMySql rms = new RecebimentosMySql();
-		rms.setUnidade(server.getUnidade());
-		
-		String mesano = converteDateEmString(rpg.getDatemissao());
-		Integer ano = Integer.parseInt(mesano.substring(6));
-		Integer mes = Integer.parseInt(mesano.substring(3,5));
-		
-		rms.setAnocompetencia(ano);
-		rms.setMescompetencia(mes);
-		
-		rms.setClassidoc(rpg.getClassidoc());
-		rms.setCodbansuge(rpg.getCodbansuge());
-		rms.setCodcondpg(rpg.getCodcondpg());
-		rms.setCodconv(rpg.getCodconv());
-		rms.setCodevenbai(rpg.getCodevenbai());
-		rms.setCodeveninc(rpg.getCodeveninc());
-		rms.setCodfilial(rpg.getCodfilial());
-		rms.setCodmoeda(rpg.getCodmoeda());
-		rms.setCodope(rpg.getCodope());
-		rms.setCodopeatu(rpg.getCodopeatu());
-		rms.setCodorcaf(rpg.getCodorcaf());
-		rms.setCodpac(rpg.getCodpac());
-		rms.setContabbai(rpg.getContabbai());
-		rms.setContabinc(rpg.getCodeveninc());
-		rms.setCpfresp(rpg.getCpfresp());
-		rms.setDataadian(rpg.getDataadian());
-		rms.setDataglosas(rpg.getDataglosas());
-		rms.setDataultatu(rpg.getDataultatu());
-		rms.setDatdigita(rpg.getDatdigita());
-		rms.setDatemissao(rpg.getDatemissao());
-		rms.setFluxo(rpg.getFluxo());
-		rms.setFormasuge(rpg.getFormasuge());
-		rms.setIdcontapac(rpg.getIdcontapac());
-		rms.setMatriz(rpg.getMatriz());
-		rms.setMesfimprov(rpg.getMesfimprov());
-		rms.setMesiniprov(rpg.getMesiniprov());
-		rms.setMesorcaf(rpg.getMesorcaf());
-		rms.setNomecli(rpg.getNomecli());
-		rms.setNomeresp(rpg.getNomeresp());
-		rms.setNumatend(rpg.getNumatend());
-		rms.setNumdoc(rpg.getNumdoc());
-		rms.setNumnffat(rpg.getNumnffat());
-		rms.setNumprojeto(rpg.getNumprojeto());
-		rms.setNumrecebto(rpg.getNumrecebto());
-		rms.setNumrecibo(rpg.getNumrecibo());
-		rms.setNumreciboa(rpg.getNumreciboa());
-		rms.setNumrecibov(rpg.getNumrecibov());
-		rms.setNumsolver(rpg.getNumsolver());
-		rms.setObserva(rpg.getObserva());
-		rms.setParcelas(rpg.getParcelas());
-		rms.setPortador(rpg.getPortador());
-		rms.setPosicao(rpg.getPosicao());
-		rms.setProvisiona(rpg.getPosicao());
-		rms.setQtd1(rpg.getQtd1());
-		rms.setTimestamp(currentTimestamp());
-		rms.setTipocobr(rpg.getTipocobr());
-		rms.setTipodoc(rpg.getTipodoc());
-		rms.setTraspaso(rpg.getTraspaso());
-		rms.setValcofins(rpg.getValcofins());
-		rms.setValcpc(rpg.getValcpc());
-		rms.setValcsll(rpg.getValcsll());
-		rms.setValicms(rpg.getValicms());
-		rms.setValinss(rpg.getValinss());
-		rms.setValirrf(rpg.getValirrf());
-		rms.setValiss(rpg.getValiss());
-		rms.setValoradian(rpg.getValoradian());
-		rms.setValorglosa(rpg.getValorglosa());
-		rms.setValororig(rpg.getValororig());
-		rms.setValortot(rpg.getValortot());
-		rms.setValpis(rpg.getValpis());
-		
-		return rms;
-	}
+//	public static RecebimentosMySql converteRecebimentosPostGreToMySql(RecebimentosPG rpg, WarelineServers server) {
+//		RecebimentosMySql rms = new RecebimentosMySql();
+//		rms.setUnidade(server.getUnidade());
+//		
+//		String mesano = converteDateEmString(rpg.getDatemissao());
+//		Integer ano = Integer.parseInt(mesano.substring(6));
+//		Integer mes = Integer.parseInt(mesano.substring(3,5));
+//		
+//		rms.setAnocompetencia(ano);
+//		rms.setMescompetencia(mes);
+//		
+//		rms.setClassidoc(rpg.getClassidoc());
+//		rms.setCodbansuge(rpg.getCodbansuge());
+//		rms.setCodcondpg(rpg.getCodcondpg());
+//		rms.setCodconv(rpg.getCodconv());
+//		rms.setCodevenbai(rpg.getCodevenbai());
+//		rms.setCodeveninc(rpg.getCodeveninc());
+//		rms.setCodfilial(rpg.getCodfilial());
+//		rms.setCodmoeda(rpg.getCodmoeda());
+//		rms.setCodope(rpg.getCodope());
+//		rms.setCodopeatu(rpg.getCodopeatu());
+//		rms.setCodorcaf(rpg.getCodorcaf());
+//		rms.setCodpac(rpg.getCodpac());
+//		rms.setContabbai(rpg.getContabbai());
+//		rms.setContabinc(rpg.getCodeveninc());
+//		rms.setCpfresp(rpg.getCpfresp());
+//		rms.setDataadian(rpg.getDataadian());
+//		rms.setDataglosas(rpg.getDataglosas());
+//		rms.setDataultatu(rpg.getDataultatu());
+//		rms.setDatdigita(rpg.getDatdigita());
+//		rms.setDatemissao(rpg.getDatemissao());
+//		rms.setFluxo(rpg.getFluxo());
+//		rms.setFormasuge(rpg.getFormasuge());
+//		rms.setIdcontapac(rpg.getIdcontapac());
+//		rms.setMatriz(rpg.getMatriz());
+//		rms.setMesfimprov(rpg.getMesfimprov());
+//		rms.setMesiniprov(rpg.getMesiniprov());
+//		rms.setMesorcaf(rpg.getMesorcaf());
+//		rms.setNomecli(rpg.getNomecli());
+//		rms.setNomeresp(rpg.getNomeresp());
+//		rms.setNumatend(rpg.getNumatend());
+//		rms.setNumdoc(rpg.getNumdoc());
+//		rms.setNumnffat(rpg.getNumnffat());
+//		rms.setNumprojeto(rpg.getNumprojeto());
+//		rms.setNumrecebto(rpg.getNumrecebto());
+//		rms.setNumrecibo(rpg.getNumrecibo());
+//		rms.setNumreciboa(rpg.getNumreciboa());
+//		rms.setNumrecibov(rpg.getNumrecibov());
+//		rms.setNumsolver(rpg.getNumsolver());
+//		rms.setObserva(rpg.getObserva());
+//		rms.setParcelas(rpg.getParcelas());
+//		rms.setPortador(rpg.getPortador());
+//		rms.setPosicao(rpg.getPosicao());
+//		rms.setProvisiona(rpg.getPosicao());
+//		rms.setQtd1(rpg.getQtd1());
+//		rms.setTimestamp(currentTimestamp());
+//		rms.setTipocobr(rpg.getTipocobr());
+//		rms.setTipodoc(rpg.getTipodoc());
+//		rms.setTraspaso(rpg.getTraspaso());
+//		rms.setValcofins(rpg.getValcofins());
+//		rms.setValcpc(rpg.getValcpc());
+//		rms.setValcsll(rpg.getValcsll());
+//		rms.setValicms(rpg.getValicms());
+//		rms.setValinss(rpg.getValinss());
+//		rms.setValirrf(rpg.getValirrf());
+//		rms.setValiss(rpg.getValiss());
+//		rms.setValoradian(rpg.getValoradian());
+//		rms.setValorglosa(rpg.getValorglosa());
+//		rms.setValororig(rpg.getValororig());
+//		rms.setValortot(rpg.getValortot());
+//		rms.setValpis(rpg.getValpis());
+//		
+//		return rms;
+//	}
 	
 	
-	public static PagtosWareline convertePagamentosPostPreToMySql(PagtosPostGre p, WarelineServers server) {
+	public static PagtosWareline convertePagamentosPostPreToMySql(PagtosPG p, WarelineServers server) {
 		PagtosWareline c = new PagtosWareline();
 		
 //		for(WarelineServers s: servers) {
@@ -332,7 +403,7 @@ public class ConversorObjetos {
 		return c;
 	}
 	
-	public static CadJuridWareline converteCadJuridicoPostPreToMySql(CadJuridPostGre p, WarelineServers server) {
+	public static CadJuridWareline converteCadJuridicoPostPreToMySql(CadJuridPG p, WarelineServers server) {
 		
 		CadJuridWareline c = new CadJuridWareline();
 		c.setBairrojuri(p.getBairrojuri());
@@ -363,7 +434,7 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadPrestWareline convertePrestadoresPostPreToMySql(CadPrestPostGre p, WarelineServers server) {
+	public static CadPrestWareline convertePrestadoresPostPreToMySql(CadPrestPG p, WarelineServers server) {
 		CadPrestWareline c = new CadPrestWareline();
 
 		c.setAgendaweb(p.getAgendaweb());
@@ -478,7 +549,7 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadFuncWareline converteFuncionariosPostGreToMySql(CadFuncPostGre p, WarelineServers server) {
+	public static CadFuncWareline converteFuncionariosPostGreToMySql(CadFuncPG p, WarelineServers server) {
 		CadFuncWareline c = new CadFuncWareline();
 
 		c.setBairrofunc(p.getBairrofunc());
@@ -532,7 +603,7 @@ public class ConversorObjetos {
 		return c;
 	}
 
-	public static CadUniWareline converteUnidadesPostGreeToMySql(CadUniPostGre p, List<WarelineServers> servers) {
+	public static CadUniWareline converteUnidadesPostGreeToMySql(CadUniPG p, List<WarelineServers> servers) {
 		CadUniWareline c = new CadUniWareline();
 
 		

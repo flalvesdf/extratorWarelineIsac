@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PagtosPG;
 
-public interface PagtosPostGreRepository extends JpaRepository<PagtosPostGre, String> {
+public interface PagtosPostGreRepository extends JpaRepository<PagtosPG, String> {
 	
 	
 	/***
@@ -22,6 +22,6 @@ public interface PagtosPostGreRepository extends JpaRepository<PagtosPostGre, St
 	 */
 	
 	@Query("SELECT a from PagtosPostGre a where a.mescomp =?1 and a.codfilial = ?2")
-	public List<PagtosPostGre> obterPagamentosWarelinePorMesCompetencia(String mesComp, String codfilial);
+	public List<PagtosPG> obterPagamentosWarelinePorMesCompetencia(String mesComp, String codfilial);
 
 }

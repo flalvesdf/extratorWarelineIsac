@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pgparcel")
-public class PgParcelPostGre {
+public class PgParcelPG {
 
 	@Id
 	@Column(name="numpagto")

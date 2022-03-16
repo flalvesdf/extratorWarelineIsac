@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pagtos")
-public class PagtosPostGre {
+public class PagtosPG {
 
 	@Id
 	@Column(name="numpagto")

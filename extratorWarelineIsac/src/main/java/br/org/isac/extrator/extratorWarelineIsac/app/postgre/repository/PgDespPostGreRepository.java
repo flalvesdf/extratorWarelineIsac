@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPG;
 
-public interface PgDespPostGreRepository extends JpaRepository<PgDespPostGre, Integer> {
+public interface PgDespPostGreRepository extends JpaRepository<PgDespPG, Integer> {
 	
 	/***
 	 * SELECT a.numpagto, a.coddesp, a.codcc, a.valor, a.valorperc, a.tipoentra
@@ -20,6 +20,6 @@ public interface PgDespPostGreRepository extends JpaRepository<PgDespPostGre, In
 	
 	@Query(value ="SELECT * FROM pgdesp a join pagtos b on (a.numpagto = b.numpagto) where b.mescomp =:mescomp", nativeQuery = true)
 	//@Query("select u from PgDespPostGre u inner join PagtosPostGre ue on (u.numpagto = ue.numpagto) where ue.mescomp = ?1")
-	public List<PgDespPostGre> obterPagamentosMesCompetencia(@Param("mescomp") String mesComp);
+	public List<PgDespPG> obterPagamentosMesCompetencia(@Param("mescomp") String mesComp);
 
 }

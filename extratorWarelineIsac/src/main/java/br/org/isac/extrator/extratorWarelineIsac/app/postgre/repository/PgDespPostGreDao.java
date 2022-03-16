@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPostGre;
+import br.org.isac.extrator.extratorWarelineIsac.app.postgre.entity.PgDespPG;
 
 @Repository
 public class PgDespPostGreDao {
@@ -16,9 +16,9 @@ public class PgDespPostGreDao {
     private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
-	public List<PgDespPostGre> getPagamentosMesCompetencia(String mescomp, String codfilial) {
+	public List<PgDespPG> getPagamentosMesCompetencia(String mescomp, String codfilial) {
 		
-		List<PgDespPostGre> results = null;
+		List<PgDespPG> results = null;
 		try {
 			results = em.createQuery("SELECT a from PgDespPostGre a inner join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp and b.codfilial = :codfilial")
 					.setParameter("mescomp", mescomp)

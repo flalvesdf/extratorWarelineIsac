@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pgdesp")
-public class PgDespPostGre {
+public class PgDespPG {
 
 	@Id
 	@Column(name="numpagto")
