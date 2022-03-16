@@ -12,7 +12,7 @@ public interface RecebimentosWarelineRepository extends JpaRepository<Recebiment
 	
 	@Modifying
 	@Query("delete from RecebimentosWareline u where u.mesrecebimento = ?1 and u.anorecebimento = ?2 and u.unidade = ?3")
-	public void deleteRecebimentosMesCompetencia(Integer mes, Integer ano, Integer unidade);
+	public void deleteRecebimentosMesCompetencia(Double mes, Double ano, Integer unidade);
 	
 	@Modifying
 	@Query("delete from RecebimentosWareline u where u.unidade = ?1")
@@ -20,6 +20,6 @@ public interface RecebimentosWarelineRepository extends JpaRepository<Recebiment
 	
 	@Modifying
 	@Query("delete from RecebimentosWareline u where u.unidade = ?1 and u.anorecebimento = ?2")
-	public void deleteRecebimentosAnoUnidade(Integer unidade, Integer ano);
+	public void deleteRecebimentosAnoUnidade(Integer unidade, Double ano);
 
 }

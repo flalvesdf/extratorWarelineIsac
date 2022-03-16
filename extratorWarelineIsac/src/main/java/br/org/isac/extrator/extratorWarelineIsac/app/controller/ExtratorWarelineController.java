@@ -406,7 +406,7 @@ public class ExtratorWarelineController {
 		List<Object[]> recebimentos = recebimentosPosdtGreRepo.getRecebimentosPorMesAno(s.getMes(), s.getAno(), "0"+server.getCodfilial());
 
 		if(recebimentos != null && recebimentos.size()>0) {
-			recebimentosWarelineMySqlRepo.deleteRecebimentosMesCompetencia(s.getAno(), s.getMes(), s.getUnidade());
+			recebimentosWarelineMySqlRepo.deleteRecebimentosMesCompetencia(Double.parseDouble(s.getMes()+""), Double.parseDouble(s.getAno()+""), s.getUnidade());
 
 			List<RecebimentosWareline> rcbs = new ArrayList<RecebimentosWareline>();
 			for(Object[] rec: recebimentos) {
@@ -573,7 +573,7 @@ public class ExtratorWarelineController {
 			log.append("Parâmetros: Ano: "+ano+". Unidade: "+ s.getUnidade());
 
 			//2 - deleta os dados do mes e ano atuais:
-			recebimentosWarelineMySqlRepo.deleteRecebimentosAnoUnidade(s.getUnidade(), ano);
+			recebimentosWarelineMySqlRepo.deleteRecebimentosAnoUnidade(s.getUnidade(), Double.parseDouble(ano+""));
 
 			//3 - localiza os dados do mes e ano atuais:
 			List<Object[]> recebimentos = recebimentosPosdtGreRepo.getRecebimentosPorAno(ano, "0"+s.getCodfilial());
