@@ -20,7 +20,7 @@ public class PgDespPostGreDao {
 		
 		List<PgDespPG> results = null;
 		try {
-			results = em.createQuery("SELECT a from PgDespPostGre a inner join PagtosPostGre b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp and b.codfilial = :codfilial")
+			results = em.createQuery("SELECT a from PgDespPG a inner join PagtosPG b on (a.numpagto = b.numpagto) where b.mescomp = :mescomp and b.codfilial = :codfilial")
 					.setParameter("mescomp", mescomp)
 					.setParameter("codfilial", codfilial)
 					.getResultList();
