@@ -79,6 +79,12 @@ public class ConversorObjetos {
 		r.setNomeresp((obj[7]!= null && !"".equals(String.valueOf(obj[7]))?String.valueOf(obj[7]):""));
 		r.setObserva((obj[8]!= null && !"".equals(String.valueOf(obj[8]))?String.valueOf(obj[8]):""));
 		r.setCodope((obj[9]!= null && !"".equals(String.valueOf(obj[9]))?String.valueOf(obj[9]):""));
+		
+		if(obj[10]!= null && !"".equals(String.valueOf(obj[10]))) {
+			Date d1 = Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[10])));
+			r.setDatemissao(d1);
+		}
+		
 		r.setDatemissao((obj[10]!= null && !"".equals(String.valueOf(obj[10]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[10]))):null));
 		r.setDatdigita((obj[11]!= null && !"".equals(String.valueOf(obj[11]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[11]))):null));
 		r.setDataadian((obj[12]!= null && !"".equals(String.valueOf(obj[12]))?Date.valueOf(converteDataFormatoAmericanoEmDataPTBR(String.valueOf(obj[12]))):null));
