@@ -124,6 +124,34 @@ public class RecebimentosWareline {
 	@Column(name = "timestamp")
 	private Timestamp timestamp;
 	
+	@Column(name="idcontrato")
+	private Integer idcontrato;
+	
+	@Column(name="idusuariorespvinculocontrato")
+	private Integer idusuariorespvinculocontrato;
+	
+	@Column(name = "tsvinculocontrato")
+	private Timestamp tsvinculocontrato;
+		
+	public Integer getIdcontrato() {
+		return idcontrato;
+	}
+	public void setIdcontrato(Integer idcontrato) {
+		this.idcontrato = idcontrato;
+	}
+	public Integer getIdusuariorespvinculocontrato() {
+		return idusuariorespvinculocontrato;
+	}
+	public void setIdusuariorespvinculocontrato(Integer idusuariorespvinculocontrato) {
+		this.idusuariorespvinculocontrato = idusuariorespvinculocontrato;
+	}
+	public Timestamp getTsvinculocontrato() {
+		return tsvinculocontrato;
+	}
+	public void setTsvinculocontrato(Timestamp tsvinculocontrato) {
+		this.tsvinculocontrato = tsvinculocontrato;
+	}
+	
 	public Integer getNumrecebto() {
 		return numrecebto;
 	}

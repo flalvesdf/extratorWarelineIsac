@@ -140,6 +140,10 @@ public class ConversorObjetos {
 		
 		r.setUnidade(server.getUnidade());
 		r.setTimestamp(currentTimestamp());
+		//estes itens serão alterados quando da associacao ao contrato no Portal de transparencia:
+		r.setIdcontrato(0);
+		r.setIdusuariorespvinculocontrato(0);
+		r.setTsvinculocontrato(null);
 		
 		return r;
 	}
